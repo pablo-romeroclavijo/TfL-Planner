@@ -60,18 +60,11 @@ def fetch_profile(username=None):
     try:
         user = None
         if(username != None):    ### uses username if it is passed as an argument
-            try:
-                user = User.get_one_by_username(username)
-            except:
-                raise UserNotFound
+            user = User.get_one_by_username(username)
         else:            ### uses the token if username is not passed      
-            try:
-                token = request.headers['Authorization']
-                print(token)
-                user = User.get_one_by_token(token)
-            except:
-                raise UserNotFound
-    
+            token = request.headers['Authorization']
+            print(token)
+            user = User.get_one_by_token(token)
         return jsonify(
                     id=user.id, 
                     username=user.user_name, 
