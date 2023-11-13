@@ -1,0 +1,24 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+flask = "*"
+python-dotenv = "*"
+flask-cors = "*"
+flask-sqlalchemy = "*"
+gunicorn = "*"
+psycopg2-binary = "*"
+bcrypt = "*"
+flask-login = "*"
+
+[dev-packages]
+pytest = "*"
+
+[requires]
+python_version = "3.11"
+
+[scripts]
+dev="flask run --debug"
+test="pytest"
