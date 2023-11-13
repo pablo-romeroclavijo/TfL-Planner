@@ -29,7 +29,10 @@ def create_app(env=None):
     CORS(app)
 
     from application.routes.users import users
+    from application.routes.events import events
+    
     app.register_blueprint(users, url_prefix='/user')
+    app.register_blueprint(events, url_prefix='/event')
     
     return app
 
