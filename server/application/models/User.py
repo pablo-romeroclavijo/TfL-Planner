@@ -1,4 +1,6 @@
 from application import db
+from application.models.Token import Token
+from application.models.Errors import EventNotFound, UserNotFound
 
 
 class User(db.Model):
@@ -26,8 +28,25 @@ class User(db.Model):
         return user
 
     def get_one_by_username(username):
-        user = db.session.execute(db.select(User).filter_by(user_name=username)).scalar_one()
+        try:
+            user = db.session.execute(db.select(User).filter_by(user_name=username)).scalar_one()
+            return user
+        except:
+            raise UserNotFound
+    
+    def get_one_by_id(id):
+        try:
+            user = db.session.execute(db.select(User).filter_by(id=id)).scalar_one()
+            return user
+        except:
+            raise UserNotFound
+    
+    def get_one_by_token(token):
+        token = Token.query.filter_by(token=token).first()
+        user = User.get_one_by_id(token.user_id)
+
         return user
+        
     
 
     
