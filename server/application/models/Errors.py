@@ -13,3 +13,7 @@ class EventNotFound(Exception):
 class AttendeeIsNotUnique(Exception):
     'Attendde is not UNique'
     pass
+
+class ActionNotAllowed(Exception):
+    "action not allowed"
+    pass

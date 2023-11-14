@@ -1,6 +1,6 @@
 from application import db
 from application.models.Token import Token
-from application.models.Errors import EventNotFound, UserNotFound
+from application.models.Errors import EventNotFound, UserNotFound, ActionNotAllowed
 
 
 class User(db.Model):
@@ -22,16 +22,21 @@ class User(db.Model):
         return (f"User {self.user_name} created")
     
     def create_user(data):
-        user = User(data['username'], data['postcode'], data['password'], data['email'], data['remainder'])
-        db.session.add(user)
-        db.session.commit()
-        return user
+        try: 
+            user = User(data['username'], data['postcode'], data['password'], data['email'], data['remainder'])
+            db.session.add(user)
+            db.session.commit()
+            return user
+        except:
+            db.session.rollback()
+            raise ActionNotAllowed
 
     def get_one_by_username(username):
         try:
             user = db.session.execute(db.select(User).filter_by(user_name=username)).scalar_one()
             return user
         except:
+            db.session.rollback()
             raise UserNotFound
     
     def get_one_by_id(id):
@@ -39,13 +44,18 @@ class User(db.Model):
             user = db.session.execute(db.select(User).filter_by(id=id)).scalar_one()
             return user
         except:
+            db.session.rollback()
             raise UserNotFound
     
     def get_one_by_token(token):
-        token = Token.query.filter_by(token=token).first()
-        user = User.get_one_by_id(token.user_id)
+        try:
+            token = Token.query.filter_by(token=token).first()
+            user = User.get_one_by_id(token.user_id)
 
-        return user
+            return user
+        except:
+            db.session.rollback()
+            raise ActionNotAllowed
         
     
 
