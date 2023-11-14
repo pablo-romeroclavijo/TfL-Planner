@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Text, TextInput, View, StyleSheet, Pressable } from "react-native";
 
 export default function LogIn(){
@@ -15,14 +15,18 @@ export default function LogIn(){
         }
         setUsername(usernameInput)
         setPassword(passwordInput)
-        setUsernameInput('')
-        setPasswordInput('')
-        
+        // setUsernameInput('')
+        // setPasswordInput('')
+    }
+
+    useEffect(() => {
+        // This useEffect runs whenever username or password changes
         if (username && password) {
-            alert(`Username set as ${username}. Password set as ${password}`);
-            // Now, call the verifyLogin function
-            await verifyLogin();
-          }
+          alert(`Username set as ${username}. Password set as ${password}`);
+          // Now, call the verifyLogin function
+          verifyLogin();
+        }
+      }, [username, password]);
 
         async function verifyLogin(){
             const options = {
@@ -38,7 +42,6 @@ export default function LogIn(){
             };
             const response = await fetch ('#', options)
         }
-    }
 
     return(
         <View>
@@ -47,6 +50,9 @@ export default function LogIn(){
             <TextInput style={styles.inputStyles} placeholder="Enter Passsord" onChangeText={(text)=>setPasswordInput(text)} />      
             <Pressable title='Login' onPress={handleFormSubmit} > 
              <Text>Login</Text> 
+            </Pressable>
+            <Pressable title='RegisterDirect'>
+                <Text>Register</Text>
             </Pressable>
         </View>
     )
