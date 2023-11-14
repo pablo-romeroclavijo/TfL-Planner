@@ -7,11 +7,13 @@ import { HomeTabs } from "./src/Components"
 const Stack = createStackNavigator()
 
 export default function App() {
+
 	return (
 		//   <View style={styles.container}>
 		//     <Screens.LogIn />
 		//     <StatusBar style="auto" />
 		//   </View>
+
 
 		<NavigationContainer>
 			<Stack.Navigator initialRouteName="Dashboard">
