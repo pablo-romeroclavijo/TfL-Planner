@@ -55,7 +55,7 @@ class User(db.Model):
             return user
         except:
             db.session.rollback()
-            raiser ActionNotAllowed
+            raise Exception
         
     
 

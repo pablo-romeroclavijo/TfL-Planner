@@ -13,6 +13,7 @@ psycopg2-binary = "*"
 bcrypt = "*"
 flask-login = "*"
 uuid = "*"
+requests = "*"
 
 [dev-packages]
 pytest = "*"
