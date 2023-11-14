@@ -55,23 +55,24 @@ export default function LogIn({navigation}){
         }
 
     return(
-        <ImageBackground 
-        blurRadius={7}
-        source={{uri: "https://img.freepik.com/premium-vector/seamless-vector-pattern-with-colorful-train-illustration-children-hand-drawn-style_335402-68.jpg"}}
-        resizeMode="cover"
-        style={styles.backgroundImage} >
+        // <ImageBackground 
+        // blurRadius={7}
+        // source={{uri: "https://img.freepik.com/premium-vector/seamless-vector-pattern-with-colorful-train-illustration-children-hand-drawn-style_335402-68.jpg"}}
+        // resizeMode="cover"
+        // style={styles.backgroundImage} >
             <View style={styles.container}>
             <Text>Login Here:</Text>
-            <TextInput style={styles.inputStyles} placeholder="Enter Username" onChangeText={(text)=>setUsernameInput(text) } />
+            {/* <TextInput style={styles.inputStyles} placeholder="Enter Username" onChangeText={(text)=>setUsernameInput(text) } /> */}
             {/* <TextInput secureTextEntry={true} style={styles.inputStyles} placeholder="Enter Password" onChangeText={(text)=>setPasswordInput(text)} /> */}
+            <AppTextInput placeholder="Enter Username" icon="account-circle-outline" onChangeText={(text)=>setUsernameInput(text)} />
             <AppTextInput secureTextEntry={true} placeholder="Enter Password" icon="form-textbox-password" onChangeText={(text)=>setPasswordInput(text)} />
             <View style={styles.buttonContainer}>
             <AppButton title='Login' onPress={handleFormSubmit} color="primary" /> 
-            <AppButton title='Register' color="secondary"/>
+            <AppButton title='Register' color="secondary" onPress={()=>navigation.navigate("Register")}/>
             </View>
             {/* <AppButton title='Home' onPress={()=>navigation.navigate('Home')}/> */}
             </View>
-        </ImageBackground>
+        // </ImageBackground>
     )
 }
 
