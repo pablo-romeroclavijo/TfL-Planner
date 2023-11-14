@@ -21,11 +21,14 @@ def create():
     user = User.create_user(data)
     user_id = user.id
     token = Token.create_token(user_id)
+    
+    db.session.close()
     return jsonify(
         id=user.id, 
         username=user.user_name, 
         token=token.token), 201
     # except:
+        db.session.close()
     #     return 'Unable to create user', 400
     
 def login():
@@ -44,11 +47,13 @@ def login():
     
     if(authenticated):
         token = Token.create_token(user_id)
+        db.session.close()
         return jsonify(
             id=user.id, 
             username=user.user_name, 
             token=token.token), 200
     else:
+        db.session.close()
         raise AuthenticationError
         
     # except AuthenticationError:
@@ -65,6 +70,7 @@ def fetch_profile(username=None):
         token = request.headers['Authorization']
         print(token)
         user = User.get_one_by_token(token)
+    db.session.close()
     return jsonify(
                 id=user.id, 
                 username=user.user_name, 
@@ -72,6 +78,7 @@ def fetch_profile(username=None):
                 email=user.email,
                 remainder=user.remainder)
     # except UserNotFound:
+      #    db.session.close()
     #     return 'Unable to find user', 404
         
     

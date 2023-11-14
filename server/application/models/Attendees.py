@@ -24,18 +24,16 @@ class Attendee(db.Model):
         self.accepted = accepted 
         self.origin = origin
         db.create_all()
-        db.session.commit()
+
         
     def get_one_by_id(id):
         attendee =  db.session.execute(db.select(Attendee).filter_by(id=id)).scalar_one()
-        db.session.commit()
         return attendee
         
     def create_attendee(event_id, user, data):
   
         check_unique = Attendee.query.filter_by(event_id=event_id, user_id= user.id)
         if check_unique.count() > 0:
-            db.session.commit()
             raise AttendeeIsNotUnique
         
         attendee = Attendee(user.id, event_id, 'Pending', 0, 'null', 'null', True, data['origin'])

@@ -39,6 +39,7 @@ def create():
     user_id = User.get_one_by_token(token).id
     
     event = Event.create_event(user_id, data)
+    db.session.close()
     
     return format_event(event), 201
     # except:
@@ -47,6 +48,7 @@ def create():
 def get_event(share_code):
     try: 
         event = Event.get_one_by_share(share_code)
+        db.session.close()
         return format_event(event), 200
     except EventNotFound:
         return "Event not found", 404
@@ -62,7 +64,7 @@ def join_event(share_code):
         token = request.headers['Authorization']
         user = User.get_one_by_token(token)
         attendee = Attendee.create_attendee(event_id, user, data)
-        print(format_attendee(attendee))
+        db.session.close()
         return format_attendee(attendee), 201
         
     except EventNotFound:
