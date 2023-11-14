@@ -21,6 +21,8 @@ def create():
         user = User.create_user(data)
         user_id = user.id
         token = Token.create_token(user_id)
+        
+
         return jsonify(
             id=user.id, 
             username=user.user_name, 
@@ -50,7 +52,7 @@ def login():
                 token=token.token), 200
         else:
             raise AuthenticationError
-        
+            
     except AuthenticationError:
         return 'Invalid credentials', 400
     except:
@@ -65,6 +67,7 @@ def fetch_profile(username=None):
             token = request.headers['Authorization']
             print(token)
             user = User.get_one_by_token(token)
+
         return jsonify(
                     id=user.id, 
                     username=user.user_name, 
@@ -72,6 +75,7 @@ def fetch_profile(username=None):
                     email=user.email,
                     remainder=user.remainder)
     except UserNotFound:
+
         return 'Unable to find user', 404
         
     

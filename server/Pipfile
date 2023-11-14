@@ -18,7 +18,7 @@ uuid = "*"
 pytest = "*"
 
 [requires]
-python_version = "3.10.5"
+python_version = "3.11"
 
 [scripts]
 dev="flask run --debug"
