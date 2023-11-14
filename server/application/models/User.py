@@ -29,7 +29,7 @@ class User(db.Model):
             return user
         except:
             db.session.rollback()
-            raise ActionNotAllowed
+            raise 
 
     def get_one_by_username(username):
         try:
@@ -55,7 +55,7 @@ class User(db.Model):
             return user
         except:
             db.session.rollback()
-            raise ActionNotAllowed
+            raiser ActionNotAllowed
         
     
 
