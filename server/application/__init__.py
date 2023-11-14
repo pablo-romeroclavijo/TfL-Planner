@@ -2,6 +2,7 @@ from flask import Flask
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 import os
+from dotenv import load_dotenv
 
 
 
@@ -9,7 +10,7 @@ db = SQLAlchemy()
 # application factory
 def create_app(env=None):
     app = Flask(__name__)
-
+    load_dotenv()
     
     if env == 'TEST':        
         # app.config['TESTING']=True
