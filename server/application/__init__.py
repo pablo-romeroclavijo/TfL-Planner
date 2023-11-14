@@ -6,10 +6,10 @@ import os
 
 
 db = SQLAlchemy()
-
 # application factory
 def create_app(env=None):
     app = Flask(__name__)
+
     
     if env == 'TEST':        
         # app.config['TESTING']=True
