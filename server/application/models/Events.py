@@ -21,6 +21,7 @@ class Event(db.Model):
         self.description = description
         self.title = title
         db.create_all()
+        db.session.commit()
     
     def __repr__(self):
         return (f"User {self.creator_id} created the event")
@@ -28,14 +29,15 @@ class Event(db.Model):
     
     def get_event_by_id(id):
         event =  db.session.execute(db.select(Event).filter_by(id=id)).scalar_one()
+        db.session.commit()
         return event
     
     def create_event(user_id, data):
         share_code = Event.create_code(10)
         event = Event(user_id, data['postcode'], share_code, data['date'], data['description'], data['title'])
         db.session.add(event)
-        db.session.commit()
         event_new = Event.get_event_by_id(event.id)
+        db.session.commit()
         return event_new
     
     def create_code(length):
@@ -47,6 +49,7 @@ class Event(db.Model):
         try: 
             event = db.session.execute(db.select(Event).filter_by(share_code=share_code)).scalar_one()
             event_new = Event.get_event_by_id(event.id)
+            db.session.commit()
             return event_new
         except: 
             raise EventNotFound

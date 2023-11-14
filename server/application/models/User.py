@@ -30,6 +30,7 @@ class User(db.Model):
     def get_one_by_username(username):
         try:
             user = db.session.execute(db.select(User).filter_by(user_name=username)).scalar_one()
+            db.session.commit()
             return user
         except:
             raise UserNotFound
@@ -37,6 +38,7 @@ class User(db.Model):
     def get_one_by_id(id):
         try:
             user = db.session.execute(db.select(User).filter_by(id=id)).scalar_one()
+            db.session.commit()
             return user
         except:
             raise UserNotFound
@@ -44,6 +46,7 @@ class User(db.Model):
     def get_one_by_token(token):
         token = Token.query.filter_by(token=token).first()
         user = User.get_one_by_id(token.user_id)
+        db.session.commit()
 
         return user
         

@@ -12,11 +12,13 @@ def create_app(env=None):
     app = Flask(__name__)
     load_dotenv()
     
-    if env == 'TEST':        
+    if env == 'TEST':   
+        print('here1')     
         # app.config['TESTING']=True
         # app.config['DEBUG']=False
         app.config['SQLALCHEMY_DATABASE_URI'] = os.environ["TEST_DATABASE_URL"]
     else:
+        print('here2')
         app.config['TESTING'] = False
         app.config['DEBUG'] = True
         app.config['SQLALCHEMY_DATABASE_URI'] = os.environ["DATABASE_URL"]
