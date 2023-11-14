@@ -15,12 +15,12 @@ def create_app(env=None):
     if env == 'TEST':        
         # app.config['TESTING']=True
         # app.config['DEBUG']=False
-        app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("TEST_DATABASE_URL")
+        app.config['SQLALCHEMY_DATABASE_URI'] = os.environ["TEST_DATABASE_URL"]
     else:
         app.config['TESTING'] = False
         app.config['DEBUG'] = True
         print(os.environ.get("DATABASE_URL"))
-        app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL")
+        app.config['SQLALCHEMY_DATABASE_URI'] = os.environ["DATABASE_URL"]
    
     db.init_app(app)
 
