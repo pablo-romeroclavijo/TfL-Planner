@@ -1,5 +1,4 @@
 from application import db
-from application.models.Token import Token
 import random, string
 from application.models.Errors import EventNotFound
 
