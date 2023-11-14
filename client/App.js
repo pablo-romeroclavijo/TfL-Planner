@@ -16,13 +16,14 @@ export default function App() {
 
 
 		<NavigationContainer>
-			<Stack.Navigator initialRouteName="Dashboard">
+			<Stack.Navigator initialRouteName="LogIn">
 				<Stack.Screen name="LogIn" component={Screens.LogIn} />
 				<Stack.Screen
 					name="Dashboard"
 					component={HomeTabs}
 					options={{ headerShown: false }}
 				/>
+				<Stack.Screen name="Register" component={Screens.Register} />
 			</Stack.Navigator>
 		</NavigationContainer>
 	)

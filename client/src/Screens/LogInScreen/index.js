@@ -58,7 +58,7 @@ export default function LogIn({ navigation }) {
     } else {
       alert("Invalid Credentials");
     }
-    navigation.navigate("Home");
+    navigation.navigate("Dashboard");
     setUsernameInput('')
     setPasswordInput('')
     setPassword('')
@@ -89,7 +89,7 @@ export default function LogIn({ navigation }) {
       />
       <View style={styles.buttonContainer}>
         <AppButton title="Login" onPress={handleFormSubmit} color="primary" />
-        <AppButton title="Register" color="secondary" />
+        <AppButton title="Register" onPress={() => navigation.navigate("Register")} color="secondary" />
       </View>
       {/* <AppButton title='Home' onPress={()=>navigation.navigate('Home')}/> */}
     </View>
