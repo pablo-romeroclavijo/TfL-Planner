@@ -18,6 +18,7 @@ def create_app(env=None):
     else:
         app.config['TESTING'] = False
         app.config['DEBUG'] = True
+        print(os.environ.get("DATABASE_URL"))
         app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL")
    
     db.init_app(app)
