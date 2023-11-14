@@ -67,12 +67,19 @@ export default function Register({navigation}){
 
     return(
         <View style={styles.container}>
-            <AppTextInput placeholder="Enter Username" onChangeText={(text) => setUsernameInput(text)}/> 
-            <AppTextInput secureTextEntry={true} placeholder="Enter Password" onChangeText={(text) => setPasswordInput(text)}/> 
-            <AppTextInput secureTextEntry={true} placeholder="Confirm Password" onChangeText={(text) => setConfirmPasswordInput(text)}/> 
-            <AppTextInput placeholder="Enter Email" onChangeText={(text) => setEmailInput(text)}/> 
-            <AppTextInput placeholder="Enter Postcode" onChangeText={(text) => setPostcodeInput(text)}/> 
+            <AppTextInput placeholder="Enter Username" icon="account-circle-outline" 
+            onChangeText={(text) => setUsernameInput(text)}/> 
+            <AppTextInput secureTextEntry={true} placeholder="Enter Password"
+            icon="form-textbox-password"
+            onChangeText={(text) => setPasswordInput(text)}/> 
+            <AppTextInput secureTextEntry={true} placeholder="Confirm Password"
+            icon="form-textbox-password"
+            onChangeText={(text) => setConfirmPasswordInput(text)}/> 
+            <AppTextInput placeholder="Enter Email" icon="email" onChangeText={(text) => setEmailInput(text)}/> 
+            <AppTextInput placeholder="Enter Postcode" icon="post" onChangeText={(text) => setPostcodeInput(text)}/> 
+            <View style={styles.buttonContainer}>
             <AppButton title='Submit' onPress={handleFormSubmit} color="primary" />
+            </View>
         </View>    
     )
 }
@@ -82,5 +89,9 @@ const styles = StyleSheet.create({
       flex: 1,
       justifyContent: "center",
       alignItems: "center",
+    },
+    buttonContainer: {
+      padding: 20,
+      width: "100%",
     }
 })
