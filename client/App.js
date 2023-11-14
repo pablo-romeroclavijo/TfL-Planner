@@ -18,6 +18,7 @@ export default function App() {
       <Stack.Navigator initialRouteName='LogIn'>
         <Stack.Screen name='LogIn' component={Screens.LogIn} />
         <Stack.Screen name='Home' component={Screens.Home} />
+        <Stack.Screen name="Register" component={Screens.Register} />
       </Stack.Navigator>
     </NavigationContainer>
 

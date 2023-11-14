@@ -95,6 +95,7 @@ export default function LogIn({ navigation }) {
     </View>
     // </ImageBackground>
   );
+
 }
 
 const styles = StyleSheet.create({
