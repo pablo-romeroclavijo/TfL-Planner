@@ -28,7 +28,7 @@ def create():
         username=user.user_name, 
         token=token.token), 201
     # except:
-        db.session.close()
+    #     db.session.close()
     #     return 'Unable to create user', 400
     
 def login():
