@@ -1,6 +1,6 @@
 from application import db
 from application.models.Token import Token
-from application.models.Errors import EventNotFound, AttendeeIsNotUnique
+from application.models.Errors import EventNotFound, AttendeeIsNotUnique, ActionNotAllowed
 
 class Attendee(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -24,20 +24,29 @@ class Attendee(db.Model):
         self.accepted = accepted 
         self.origin = origin
         db.create_all()
+
         
     def get_one_by_id(id):
-        attendee =  db.session.execute(db.select(Attendee).filter_by(id=id)).scalar_one()
-        return attendee
+        try:
+            attendee =  db.session.execute(db.select(Attendee).filter_by(id=id)).scalar_one()
+            return attendee
+        except:
+            db.session.rollback()
+            raise ActionNotAllowed
         
     def create_attendee(event_id, user, data):
-  
-        check_unique = Attendee.query.filter_by(event_id=event_id, user_id= user.id)
-        if check_unique.count() > 0:
-            raise AttendeeIsNotUnique
-        
-        attendee = Attendee(user.id, event_id, 'Pending', 0, 'null', 'null', True, data['origin'])
-        print(attendee)
-        db.session.add(attendee)
-        db.session.commit()
-        return Attendee.get_one_by_id(attendee.id)
+        try:
+            check_unique = Attendee.query.filter_by(event_id=event_id, user_id= user.id)
+            if check_unique.count() > 0:
+                db.session.rollback()
+                raise AttendeeIsNotUnique
+            
+            attendee = Attendee(user.id, event_id, 'Pending', 0, 'null', 'null', True, data['origin'])
+            print(attendee)
+            db.session.add(attendee)
+            db.session.commit()
+            return Attendee.get_one_by_id(attendee.id)
+        except:
+            db.session.rollback()
+            raise ActionNotAllowed
         

@@ -37,6 +37,7 @@ def create():
         
         data = request.json
         user_id = User.get_one_by_token(token).id
+        print(user_id, 'user_id')
         
         event = Event.create_event(user_id, data)
         
@@ -62,7 +63,6 @@ def join_event(share_code):
         token = request.headers['Authorization']
         user = User.get_one_by_token(token)
         attendee = Attendee.create_attendee(event_id, user, data)
-        print(format_attendee(attendee))
         return format_attendee(attendee), 201
         
     except EventNotFound:
