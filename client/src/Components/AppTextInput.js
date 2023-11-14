@@ -1,40 +1,42 @@
 import React from 'react';
-import { View, TextInput, StyleSheet, Platform } from 'react-native'
-import { MaterialCommunityIcons } from '@expo/vector-icons'
+import { View, TextInput, StyleSheet, Platform, Dimensions } from 'react-native';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import colors from '../config/colors';
 
-import colors from '../config/colors'
+const window = Dimensions.get('window');
 
-function AppTextInput({icon, ...otherProps}) {
-    return (
-        <View style={styles.container}>
-            {icon && <MaterialCommunityIcons name={icon} size={20} color="black" style={styles.icon}/>}
-            <TextInput style={styles.TextInput} {...otherProps}/>
-        </View>
-    );
+function AppTextInput({ icon, ...otherProps }) {
+  const containerWidth = window.width * 0.9; // Adjust the percentage as needed
+
+  return (
+    <View style={[styles.container, { width: containerWidth }]}>
+      {icon && <MaterialCommunityIcons name={icon} size={20} color="black" style={styles.icon} />}
+      <TextInput style={styles.TextInput} {...otherProps} />
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
-    container: {
-        borderRadius: 25,
-        flexDirection: "row",
-        width: "100%",
-        marginVertical: 10,
-        justifyContent: 'center',
-        height: 40,
-        borderColor: 'gray',
-        paddingLeft: 10,
-        paddingRight: 10,
-        marginBottom: 20,
-        borderRadius: 5,
-    },
-    icon: {
-        marginRight: 10,
-
-    },
-    TextInput: {
-        fontsize: 18,
-        fontFamily: Platform.OS === "android" ? "Roboto" : "Avenir"
-    }
-})
+  container: {
+    flexDirection: 'row',
+    marginVertical: window.height * 0.02, 
+    height: window.height * 0.05, 
+    paddingLeft: window.width * 0.02, 
+    paddingRight: window.width * 0.02,
+    marginBottom: window.height * 0.02,
+    borderRadius: window.width * 0.02, 
+    borderColor: 'gray',
+    borderWidth: 1,
+    alignItems: 'center'
+  },
+  icon: {
+    marginRight: window.width * 0.02, 
+  },
+  TextInput: {
+    fontSize: window.width * 0.04, 
+    fontFamily: Platform.OS === 'android' ? 'Roboto' : 'Avenir',
+    width: '100%',
+  },
+});
 
 export default AppTextInput;
