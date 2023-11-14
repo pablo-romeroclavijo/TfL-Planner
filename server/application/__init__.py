@@ -11,7 +11,6 @@ db = SQLAlchemy()
 def create_app(env=None):
     app = Flask(__name__)
     load_dotenv()
-    print(os.environ.items())
     
     if env == 'TEST':        
         # app.config['TESTING']=True

@@ -32,17 +32,17 @@ def format_attendee(attendee):
     )
     
 def create():
-    try: 
-        token = request.headers['Authorization']
-        
-        data = request.json
-        user_id = User.get_one_by_token(token).id
-        
-        event = Event.create_event(user_id, data)
-        
-        return format_event(event), 201
-    except:
-        return 'Unable to create event', 400
+    # try: 
+    token = request.headers['Authorization']
+    
+    data = request.json
+    user_id = User.get_one_by_token(token).id
+    
+    event = Event.create_event(user_id, data)
+    
+    return format_event(event), 201
+    # except:
+    #     return 'Unable to create event', 400
     
 def get_event(share_code):
     try: 
