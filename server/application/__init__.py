@@ -11,6 +11,7 @@ db = SQLAlchemy()
 def create_app(env=None):
     app = Flask(__name__)
     load_dotenv()
+    print(os.environ.items())
     
     if env == 'TEST':        
         # app.config['TESTING']=True
@@ -19,7 +20,6 @@ def create_app(env=None):
     else:
         app.config['TESTING'] = False
         app.config['DEBUG'] = True
-        print(os.environ.get("DATABASE_URL"))
         app.config['SQLALCHEMY_DATABASE_URI'] = os.environ["DATABASE_URL"]
    
     db.init_app(app)
