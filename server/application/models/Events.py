@@ -11,6 +11,7 @@ class Event(db.Model):
     date = db.Column(db.DateTime, nullable=False)
     description = db.Column(db.String(250), nullable=True)
     title = db.Column(db.String(30), nullable=False)
+    
 
     
     def __init__(self, creator_id, postcode, share_code, date, description, title):
@@ -38,7 +39,9 @@ class Event(db.Model):
         try:
             share_code = Event.create_code(10)
             event = Event(user_id, data['postcode'], share_code, data['date'], data['description'], data['title'])
+            print(user_id, data)
             db.session.add(event)
+            db.session.commit()
             event_new = Event.get_event_by_id(event.id)
             return event_new
         except:
