@@ -27,11 +27,14 @@ export default function LogIn({ navigation }) {
     } else {
       setUsername(usernameInput);
       setPassword(passwordInput);
-      if (username && password){
-        verifyLogin()
-      }
     }
   }
+
+  useEffect(() => {
+    if (username && password) {
+      verifyLogin();
+    }
+  }, [username, password]);
 
   async function verifyLogin() {
     const options = {
