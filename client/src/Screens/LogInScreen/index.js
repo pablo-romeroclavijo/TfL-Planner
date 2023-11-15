@@ -6,7 +6,8 @@ import {
   StyleSheet,
   Pressable,
   ImageBackground,
-  Image
+  Image,
+  Platform,
 } from "react-native";
 
 import AppButton from "../../Components/AppButton";
@@ -24,7 +25,6 @@ export default function LogIn({ navigation }) {
     }
     setUsername(usernameInput);
     setPassword(passwordInput);
-
   }
 
   useEffect(() => {
@@ -59,10 +59,10 @@ export default function LogIn({ navigation }) {
       alert("Invalid Credentials");
     }
     navigation.navigate("Dashboard");
-    setUsernameInput('')
-    setPasswordInput('')
-    setPassword('')
-    setUsername('')
+    setUsernameInput("");
+    setPasswordInput("");
+    setPassword("");
+    setUsername("");
   }
 
   return (
@@ -73,29 +73,37 @@ export default function LogIn({ navigation }) {
     // style={styles.backgroundImage} >
     <View style={styles.container}>
       <Image style={styles.logo} source={require("../../assets/logo.png")} />
-      <Text>Login Here:</Text>
-      <AppTextInput
-        placeholder="Enter Username"
-        icon="account-circle-outline"
-        onChangeText={(text) => setUsernameInput(text)}
-        value={usernameInput}
-      />
-      <AppTextInput
-        secureTextEntry={true}
-        placeholder="Enter Password"
-        icon="form-textbox-password"
-        onChangeText={(text) => setPasswordInput(text)}
-        value={passwordInput}
-      />
-      <View style={styles.buttonContainer}>
-        <AppButton title="Login" onPress={handleFormSubmit} color="primary" />
-        <AppButton title="Register" onPress={() => navigation.navigate("Register")} color="secondary" />
+      <Text style={styles.textStyle}>
+        Login into your MetroMingle Account!:
+      </Text>
+      <View style={styles.inputContainer}>
+        <Text style={styles.label}>Username:</Text>
+        <AppTextInput
+          placeholder="Enter Username"
+          icon="account-circle-outline"
+          onChangeText={(text) => setUsernameInput(text)}
+          value={usernameInput}
+        />
+        <AppTextInput
+          secureTextEntry={true}
+          placeholder="Enter Password"
+          icon="form-textbox-password"
+          onChangeText={(text) => setPasswordInput(text)}
+          value={passwordInput}
+        />
+        <View style={styles.buttonContainer}>
+          <AppButton title="Login" onPress={handleFormSubmit} color="primary" />
+          <AppButton
+            title="Register"
+            onPress={() => navigation.navigate("Register")}
+            color="secondary"
+          />
+        </View>
+        {/* <AppButton title='Home' onPress={()=>navigation.navigate('Home')}/> */}
       </View>
-      {/* <AppButton title='Home' onPress={()=>navigation.navigate('Home')}/> */}
     </View>
     // </ImageBackground>
   );
-
 }
 
 const styles = StyleSheet.create({
@@ -116,5 +124,10 @@ const styles = StyleSheet.create({
     width: 200,
     height: 200,
     justifyContent: "flex-start",
+  },
+  textStyle: {
+    fontFamily: Platform.OS === "android" ? "Roboto" : "San Francisco",
+    fontSize: 30,
+    fontWeight: "bold",
   },
 });
