@@ -13,6 +13,7 @@ import {
 
 import AppButton from "../../Components/AppButton/AppButton";
 import AppTextInput from "../../Components/AppTextInput/AppTextInput"
+import colors from "../../config/colors";
 
 export default function LogIn({ navigation }) {
   const [usernameInput, setUsernameInput] = useState("");
