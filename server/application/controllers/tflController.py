@@ -15,4 +15,14 @@ def get_route():
     routes = TfL_Request.get_routes(user, data)
     return routes
 
+def set_route():
+    data = request.json
+    token = request.headers['Authorization']  
+         
+    user_id = User.get_one_by_token(token)
+    event_id = data.event_id
+    journey = data.journey
+    
+    response = TfL_Request.set_route(user_id, event_id, journey)
+    pass
     
