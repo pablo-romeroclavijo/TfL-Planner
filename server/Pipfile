@@ -13,9 +13,11 @@ psycopg2-binary = "*"
 bcrypt = "*"
 flask-login = "*"
 uuid = "*"
+requests = "*"
 
 [dev-packages]
 pytest = "*"
+pytest-cov = "*"
 
 [requires]
 python_version = "3.11"
@@ -23,3 +25,5 @@ python_version = "3.11"
 [scripts]
 dev="flask run --debug"
 test="pytest"
+cov="pytest --cov-report term-missing --cov=./application"
+
