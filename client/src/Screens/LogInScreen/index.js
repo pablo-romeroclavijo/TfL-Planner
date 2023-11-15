@@ -51,6 +51,10 @@ export default function LogIn({ navigation }) {
       const data = await response.json();
       const token = data.token;
       console.log(token);
+      setUsernameInput("");
+      setPasswordInput("");
+      setPassword("");
+      setUsername("");
       navigation.navigate("Dashboard");
     } else {
       alert("Invalid Credentials");
