@@ -59,6 +59,7 @@ export default function Register({ navigation }) {
         const response = await fetch(
           "https://metro-mingle.onrender.com/user/register", options
         );
+        
         if (response.status == 201) {
           const data = await response.json();
           const token = data.token;
@@ -72,6 +73,12 @@ export default function Register({ navigation }) {
       // setPasswordInput('')
     }
   }
+
+  useEffect(() => {
+    if (username && password && email && postcode) {
+      handleFormSubmit();
+    }
+  }, [username, password, email, postcode]);
 
   return (
     <View style={styles.container}>
@@ -99,7 +106,7 @@ export default function Register({ navigation }) {
         icon="form-textbox-password"
         onChangeText={(text) => setConfirmPasswordInput(text)}
       />
-      {/* <AppTextInput placeholder="Enter Postcode" icon="post" onChangeText={(text) => setPostcodeInput(text)}/>  */}
+      <AppTextInput placeholder="Enter Postcode" icon="post" onChangeText={(text) => setPostcodeInput(text)}/> 
       <View style={styles.buttonContainer}>
         <AppButton
           title="Register"
