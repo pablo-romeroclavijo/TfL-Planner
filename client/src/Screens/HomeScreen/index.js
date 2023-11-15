@@ -1,4 +1,4 @@
-import { View, Button, Text, ImageBackground } from "react-native"
+import { View, Button, Text, ImageBackground, ScrollView } from "react-native"
 import React from "react"
 
 export default function Home({ navigation }) {
@@ -7,7 +7,9 @@ export default function Home({ navigation }) {
 	return (
 		// <ImageBackground source={image} style={{ width: "100%", height: "100%" }}>
 			<View>
-				<h1>My Events</h1>
+				<ScrollView>
+					<Text>My Events</Text>
+				</ScrollView>
 			</View>
 		// </ImageBackground>
 	)
