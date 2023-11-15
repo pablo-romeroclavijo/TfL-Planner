@@ -25,4 +25,5 @@ python_version = "3.11"
 [scripts]
 dev="flask run --debug"
 test="pytest"
-coverage = "pytest --cov-report term-missing --cov=./application"
+cov="pytest --cov-report term-missing --cov=./application"
+
