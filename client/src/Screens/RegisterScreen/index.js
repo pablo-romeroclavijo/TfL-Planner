@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import AppTextInput from "../../Components/AppTextInput";
 import validator from "validator";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Text, Platform } from "react-native";
 import AppButton from "../../Components/AppButton";
 
 export default function Register({navigation}){
@@ -67,12 +67,12 @@ export default function Register({navigation}){
 
     return(
         <View style={styles.container}>
-            <AppTextInput placeholder="Enter Username" icon="account-circle-outline" 
-            onChangeText={(text) => setUsernameInput(text)}/> 
+            <Text style={styles.textStyle}>Please Register for a MetroMingle Account:</Text>
+            <AppTextInput placeholder="Enter Username" icon="account-circle-outline" onChangeText={(text) => setUsernameInput(text)}/> 
             <AppTextInput secureTextEntry={true} placeholder="Enter Password"
-            icon="form-textbox-password"
+            icon="form-textbox-password" 
             onChangeText={(text) => setPasswordInput(text)}/> 
-            <AppTextInput secureTextEntry={true} placeholder="Confirm Password"
+            <AppTextInput secureTextEntry={true} placeholder="Confirm Password" 
             icon="form-textbox-password"
             onChangeText={(text) => setConfirmPasswordInput(text)}/> 
             <AppTextInput placeholder="Enter Email" icon="email" onChangeText={(text) => setEmailInput(text)}/> 
@@ -91,7 +91,12 @@ const styles = StyleSheet.create({
       alignItems: "center",
     },
     buttonContainer: {
-      padding: 20,
-      width: "100%",
-    }
+        padding: 20,
+        width: "100%"
+    },
+  textStyle: {
+    fontFamily: Platform.OS === "android" ? "Roboto" : "San Francisco",
+    fontSize: 30,
+    fontWeight: "bold"
+  }
 })

@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, TextInput, StyleSheet, Platform, Dimensions } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import colors from '../config/colors';
+import colors from '../../config/colors';
 
 const window = Dimensions.get('window');
 
