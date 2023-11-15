@@ -6,7 +6,6 @@ import { Entypo } from '@expo/vector-icons';
 
 
 export default function CreateEventModal({isVisible, closeModal, createEvent}){
-    console.log(createEvent)
 
     return(
         <View>
