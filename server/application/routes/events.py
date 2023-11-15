@@ -1,6 +1,6 @@
 from application import db
 from flask import request, jsonify, Blueprint
-from application.controllers.EventController import create, get_event, join_event
+from application.controllers.EventController import create, get_event, join_event, set_route
 
 events = Blueprint('events', __name__ )
 
@@ -20,6 +20,10 @@ def get_join_event(share_code):
         return get_event(share_code)
     else:
         return join_event(share_code)
+
+@events.route('/setroute', methods =['PATCH'])
+def set():
+    return set_route()
 
     
 # @events.route("/login", methods=['POST'])
