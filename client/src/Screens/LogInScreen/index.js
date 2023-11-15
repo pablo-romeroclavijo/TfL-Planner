@@ -11,9 +11,8 @@ import {
   TouchableOpacity
 } from "react-native";
 
-import AppButton from "../../Components/AppButton";
-import AppTextInput from "../../Components/AppTextInput";
-import colors from "../../config/colors";
+import AppButton from "../../Components/AppButton/AppButton";
+import AppTextInput from "../../Components/AppTextInput/AppTextInput"
 
 export default function LogIn({ navigation }) {
   const [usernameInput, setUsernameInput] = useState("");
@@ -24,18 +23,14 @@ export default function LogIn({ navigation }) {
   async function handleFormSubmit() {
     if (!usernameInput || !passwordInput) {
       alert("Fill in all fields.");
+    } else {
+      setUsername(usernameInput);
+      setPassword(passwordInput);
+      if (username && password){
+        verifyLogin()
+      }
     }
-    setUsername(usernameInput);
-    setPassword(passwordInput);
   }
-
-  useEffect(() => {
-    // This useEffect runs whenever username or password changes
-    if (username && password) {
-      // Now, call the verifyLogin function
-      verifyLogin();
-    }
-  }, [username, password]);
 
   async function verifyLogin() {
     const options = {
@@ -57,10 +52,14 @@ export default function LogIn({ navigation }) {
       const data = await response.json();
       const token = data.token;
       console.log(token);
+      setUsernameInput("");
+      setPasswordInput("");
+      setPassword("");
+      setUsername("");
+      navigation.navigate("Dashboard");
     } else {
       alert("Invalid Credentials");
     }
-    navigation.navigate("Dashboard");
     setUsernameInput("");
     setPasswordInput("");
     setPassword("");
