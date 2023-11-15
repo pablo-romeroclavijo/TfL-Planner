@@ -25,8 +25,8 @@ const styles = StyleSheet.create({
     paddingRight: window.width * 0.02,
     marginBottom: window.height * 0.02,
     borderRadius: window.width * 0.02, 
-    borderColor: 'gray',
-    borderWidth: 1,
+    borderBottomColor: '#ccc',
+    borderBottomWidth: 1,
     alignItems: 'center'
   },
   icon: {
