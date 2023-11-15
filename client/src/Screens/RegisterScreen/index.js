@@ -67,7 +67,8 @@ export default function Register({navigation}){
 
     return(
         <View style={styles.container}>
-            <Text style={styles.textStyle}>Please Register for a MetroMingle Account:</Text>
+            <Text style={styles.textStyle}>Register</Text>
+            <AppTextInput placeholder="Enter Email" icon="email" onChangeText={(text) => setEmailInput(text)}/> 
             <AppTextInput placeholder="Enter Username" icon="account-circle-outline" onChangeText={(text) => setUsernameInput(text)}/> 
             <AppTextInput secureTextEntry={true} placeholder="Enter Password"
             icon="form-textbox-password" 
@@ -75,7 +76,6 @@ export default function Register({navigation}){
             <AppTextInput secureTextEntry={true} placeholder="Confirm Password" 
             icon="form-textbox-password"
             onChangeText={(text) => setConfirmPasswordInput(text)}/> 
-            <AppTextInput placeholder="Enter Email" icon="email" onChangeText={(text) => setEmailInput(text)}/> 
             <AppTextInput placeholder="Enter Postcode" icon="post" onChangeText={(text) => setPostcodeInput(text)}/> 
             <View style={styles.buttonContainer}>
             <AppButton title='Submit' onPress={handleFormSubmit} color="primary" />
