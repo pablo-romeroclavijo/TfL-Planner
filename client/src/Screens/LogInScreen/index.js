@@ -10,6 +10,7 @@ import {
   Platform,
   TouchableOpacity
 } from "react-native";
+import { MaterialCommunityIcons } from "@expo/vector-icons"
 
 import AppButton from "../../Components/AppButton/AppButton";
 import AppTextInput from "../../Components/AppTextInput/AppTextInput"
@@ -27,11 +28,14 @@ export default function LogIn({ navigation }) {
     } else {
       setUsername(usernameInput);
       setPassword(passwordInput);
-      if (username && password){
-        verifyLogin()
-      }
     }
   }
+
+  useEffect(() => {
+    if (username && password) {
+      verifyLogin();
+    }
+  }, [username, password]);
 
   async function verifyLogin() {
     const options = {
@@ -86,13 +90,13 @@ export default function LogIn({ navigation }) {
           onChangeText={(text) => setUsernameInput(text)}
           value={usernameInput}
         />
-        <AppTextInput
-          secureTextEntry={true}
-          placeholder="Enter Password"
-          icon="form-textbox-password"
-          onChangeText={(text) => setPasswordInput(text)}
-          value={passwordInput}
-        />
+          <AppTextInput
+            secureTextEntry={true}
+            placeholder="Enter Password"
+            icon="form-textbox-password"
+            onChangeText={(text) => setPasswordInput(text)}
+            value={passwordInput}
+          />
         <View style={styles.buttonContainer}>
           <AppButton title="Login" onPress={handleFormSubmit} color="primary" />
           {/* <AppButton
@@ -137,4 +141,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     alignContent: "flex-start"
   },
+  iconContainer: {
+    padding: 10,
+  }
 });
