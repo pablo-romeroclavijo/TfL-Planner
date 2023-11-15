@@ -8,10 +8,13 @@ import {
   ImageBackground,
   Image,
   Platform,
+  TouchableOpacity
 } from "react-native";
+import { MaterialCommunityIcons } from "@expo/vector-icons"
 
-import AppButton from "../../Components/AppButton";
-import AppTextInput from "../../Components/AppTextInput";
+import AppButton from "../../Components/AppButton/AppButton";
+import AppTextInput from "../../Components/AppTextInput/AppTextInput"
+import colors from "../../config/colors";
 
 export default function LogIn({ navigation }) {
   const [usernameInput, setUsernameInput] = useState("");
@@ -22,15 +25,14 @@ export default function LogIn({ navigation }) {
   async function handleFormSubmit() {
     if (!usernameInput || !passwordInput) {
       alert("Fill in all fields.");
+    } else {
+      setUsername(usernameInput);
+      setPassword(passwordInput);
     }
-    setUsername(usernameInput);
-    setPassword(passwordInput);
   }
 
   useEffect(() => {
-    // This useEffect runs whenever username or password changes
     if (username && password) {
-      // Now, call the verifyLogin function
       verifyLogin();
     }
   }, [username, password]);
@@ -55,10 +57,14 @@ export default function LogIn({ navigation }) {
       const data = await response.json();
       const token = data.token;
       console.log(token);
+      setUsernameInput("");
+      setPasswordInput("");
+      setPassword("");
+      setUsername("");
+      navigation.navigate("Dashboard");
     } else {
       alert("Invalid Credentials");
     }
-    navigation.navigate("Dashboard");
     setUsernameInput("");
     setPasswordInput("");
     setPassword("");
@@ -74,32 +80,37 @@ export default function LogIn({ navigation }) {
     <View style={styles.container}>
       <Image style={styles.logo} source={require("../../assets/logo.png")} />
       <Text style={styles.textStyle}>
-        Login into your MetroMingle Account!:
+        Login
       </Text>
       <View style={styles.inputContainer}>
-        <Text style={styles.label}>Username:</Text>
+        {/* <Text style={styles.label}>Username:</Text> */}
         <AppTextInput
           placeholder="Enter Username"
           icon="account-circle-outline"
           onChangeText={(text) => setUsernameInput(text)}
           value={usernameInput}
         />
-        <AppTextInput
-          secureTextEntry={true}
-          placeholder="Enter Password"
-          icon="form-textbox-password"
-          onChangeText={(text) => setPasswordInput(text)}
-          value={passwordInput}
-        />
+          <AppTextInput
+            secureTextEntry={true}
+            placeholder="Enter Password"
+            icon="form-textbox-password"
+            onChangeText={(text) => setPasswordInput(text)}
+            value={passwordInput}
+          />
         <View style={styles.buttonContainer}>
           <AppButton title="Login" onPress={handleFormSubmit} color="primary" />
-          <AppButton
+          {/* <AppButton
             title="Register"
             onPress={() => navigation.navigate("Register")}
             color="secondary"
-          />
+          /> */}
         </View>
-        {/* <AppButton title='Home' onPress={()=>navigation.navigate('Home')}/> */}
+        <View style={{flexDirection: "row", justifyContent: "center", marginBottom: 30}}>
+        <Text>New to App?</Text>
+        <TouchableOpacity onPress={() => navigation.navigate("Register")}>
+        <Text style={{color: colors.secondary, fontWeight: '700', paddingLeft: 4}}>Register</Text>
+        </TouchableOpacity>
+        </View>
       </View>
     </View>
     // </ImageBackground>
@@ -113,8 +124,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   buttonContainer: {
-    padding: 20,
-    width: "100%",
+    padding: 20
   },
   backgroundImage: {
     flex: 1,
@@ -129,5 +139,9 @@ const styles = StyleSheet.create({
     fontFamily: Platform.OS === "android" ? "Roboto" : "San Francisco",
     fontSize: 30,
     fontWeight: "bold",
+    alignContent: "flex-start"
   },
+  iconContainer: {
+    padding: 10,
+  }
 });

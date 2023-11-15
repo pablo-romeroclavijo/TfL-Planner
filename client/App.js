@@ -4,7 +4,9 @@ import * as Screens from "./src/Screens";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { HomeTabs } from "./src/Components";
+
 const Stack = createStackNavigator();
+
 
 export default function App() {
   return (
