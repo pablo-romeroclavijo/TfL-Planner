@@ -24,25 +24,27 @@ class TfL_Request():
         
         if response.status_code == 300 or response.status_code == 200:
             data = response.json()
-            journeys = [Journey.create_journey(journey) for journey in data["journeys"]]
+            journeys = [Journey.create_journey(journey, data['journeyVector']['from']) for journey in data["journeys"]]
             return jsonify({'journeys': journeys})
         else:
             return jsonify({'error': 'Failed to fetch data from the external API'})
     
 class Journey():
-    def __init__(self, journey):
+    def __init__(self, journey, origin):
         self.startDateTime = journey['startDateTime']
         self.arrivalDateTime = journey['arrivalDateTime']
         self.duration = journey['duration']
+        self.origin = origin
         self.legs = [Leg.create_leg(x) for x in journey['legs']]
     
-    def create_journey(data):
-        journey = Journey(data)
+    def create_journey(data, origin):
+        journey = Journey(data, origin)
         journey_dict={ 
             'startDateTime': journey.startDateTime, 
             'arrivalDateTime': journey.arrivalDateTime,
             'duration':journey.duration,
-            'legs' :journey.legs
+            'legs' :journey.legs,
+            'origin': journey.origin
         }
         return journey_dict
 

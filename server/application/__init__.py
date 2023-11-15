@@ -28,6 +28,9 @@ def create_app(env=None):
     
     app.app_context().push()
     from application.models.User import User
+    from application.models.Token import Token
+    from application.models.Events import Event
+    from application.models.Attendees import Attendee
     db.create_all()
     CORS(app)
 

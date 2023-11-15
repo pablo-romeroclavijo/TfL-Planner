@@ -1,6 +1,6 @@
 from application import db
 from flask import request, jsonify, Blueprint
-from application.controllers.tflController import get_route, set_route
+from application.controllers.tflController import get_route
 
 tfl = Blueprint('tfl', __name__ )
 
@@ -14,6 +14,3 @@ def hello_world():
 def get():
     return get_route()
 
-@tfl.route('/setroute', methods =['POST'])
-def set():
-    return set_route()
