@@ -30,14 +30,11 @@ export default function Register({ navigation }) {
       !usernameInput ||
       !passwordInput ||
       !confirmPasswordInput ||
-      !emailInput ||
-      !postcodeInput
+      !emailInput 
     ) {
       alert("Fill in all fields.");
     } else if (passwordInput !== confirmPasswordInput) {
       alert("Passwords do not match.");
-    } else if (!validator.isPostalCode(postcodeInput, "GB")) {
-      alert("Enter a valid postcode.");
     } else if (!validator.isEmail(emailInput)) {
       alert("Enter a valid email.");
     } else {
@@ -45,7 +42,6 @@ export default function Register({ navigation }) {
       setPassword(passwordInput);
       setConfirmPassword(confirmPasswordInput);
       setEmail(emailInput);
-      setPostcode(postcodeInput);
 
       if (username && password && email && postcode) {
         const options = {
@@ -57,14 +53,11 @@ export default function Register({ navigation }) {
           body: JSON.stringify({
             username: username,
             password: password,
-            postcode: postcode,
-            email: email,
-            remainder: 1,
+            email: email
           }),
         };
         const response = await fetch(
-          "https://metro-mingle.onrender.com/user/register",
-          options
+          "https://metro-mingle.onrender.com/user/register", options
         );
         
         if (response.status == 201) {
