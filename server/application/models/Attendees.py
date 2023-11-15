@@ -14,7 +14,6 @@ class Attendee(db.Model):
     suggested_departure = db.Column(db.DateTime, nullable=True)
     accepted = db.Column(db.Boolean, nullable = False)
     origin = db.Column(db.String(9), nullable=True)
-    db.create_all()
     
 
     def __init__(self, user_id, event_id, status, ETA, route, suggested_departure, accepted, origin):

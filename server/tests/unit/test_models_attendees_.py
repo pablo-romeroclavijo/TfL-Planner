@@ -49,28 +49,20 @@ def init_database(test_client):
     db.engine.dispose()
 
 def test_create_attendee(test_client, init_database):
-
     test_user = db.session.get(User, 1) 
     test_event_id = 1
 
+    attendee = Attendee.create_attendee(test_event_id, test_user)
 
-    attendee_data = {
-        'origin': 'origin', 
-        'status': 'Pending',  
-        'ETA': 0,  
-        'route': 'null',  
-        'suggested_departure': 'null', 
-        'accepted': True  
-    }
 
-    attendee = Attendee.create_attendee(test_event_id, test_user, attendee_data)
     assert attendee is not None
     assert attendee.user_id == test_user.id
     assert attendee.event_id == test_event_id
-    assert attendee.status == attendee_data['status']
-    assert attendee.ETA == attendee_data['ETA']  
-    assert attendee.route == attendee_data['route']  
-    assert attendee.suggested_departure == attendee_data['suggested_departure'] 
-    assert attendee.accepted == attendee_data['accepted']
-    assert attendee.origin == attendee_data['origin']
+    assert attendee.status == 'Pending'
+    assert attendee.accepted == True
+    assert attendee.ETA is None
+    assert attendee.route is None
+    assert attendee.suggested_departure is None
+    assert attendee.origin is None
+
 
