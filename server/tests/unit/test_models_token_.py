@@ -18,8 +18,8 @@ def test_client():
 def init_database(test_client):
     db.create_all()
 
-    user1 = User(username='testuser1', postcode='12345', password='testpassword1'.encode('utf-8'), email='test1@test.com')
-    user2 = User(username='testuser2', postcode='67890', password='testpassword2'.encode('utf-8'), email='test2@test.com')
+    user1 = User(username='testuser1', password='testpassword1'.encode('utf-8'), email='test1@test.com')
+    user2 = User(username='testuser2', password='testpassword2'.encode('utf-8'), email='test2@test.com')
     db.session.add(user1)
     db.session.add(user2)
     db.session.commit()
@@ -28,10 +28,11 @@ def init_database(test_client):
 
     db.session.remove()
     db.drop_all()
+    db.engine.dispose()
 
 
 def test_token_generation(test_client, init_database):
-    test_user = User(username='testuser', postcode='abc123', password='testpassword'.encode('utf-8'), email='test@test.com', remainder=1)
+    test_user = User(username='testuser', password='testpassword'.encode('utf-8'), email='test@test.com')
     db.session.add(test_user)
     db.session.commit()
 

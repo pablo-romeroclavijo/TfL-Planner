@@ -1,7 +1,6 @@
 from application import db
 from application.models.Token import Token
 from flask import jsonify
-
 import requests
 from application.models.Errors import EventNotFound, ActionNotAllowed
 

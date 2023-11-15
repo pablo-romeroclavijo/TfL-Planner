@@ -3,9 +3,9 @@ from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 import os
 from dotenv import load_dotenv
+from flask_bcrypt import Bcrypt
 
-
-
+bcrypt = Bcrypt()
 db = SQLAlchemy()
 # application factory
 def create_app(env=None):
@@ -24,6 +24,7 @@ def create_app(env=None):
         app.config['SQLALCHEMY_DATABASE_URI'] = os.environ["DATABASE_URL"]
    
     db.init_app(app)
+    bcrypt.init_app(app)
 
     
     app.app_context().push()
