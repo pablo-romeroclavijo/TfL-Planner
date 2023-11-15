@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import AppTextInput from "../../Components/AppTextInput";
+import AppTextInput from "../../Components/AppTextInput/AppTextInput";
 import validator from "validator";
 import { View, StyleSheet, Text, Platform } from "react-native";
-import AppButton from "../../Components/AppButton";
+import AppButton from "../../Components/AppButton/AppButton";
 
 export default function Register({navigation}){
     

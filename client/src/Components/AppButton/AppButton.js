@@ -1,11 +1,11 @@
 import React from "react";
 import { StyleSheet, Text, Pressable } from "react-native";
 
-import colors from "../config/colors";
+import colors from "../../config/colors";
 
 
 
-function AppButton({ title, onPress, color = "primary" }) {
+export default function AppButton({ title, onPress, color = "primary" }) {
   return (
     <Pressable
       style={({ pressed }) => [
@@ -36,4 +36,3 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AppButton;
