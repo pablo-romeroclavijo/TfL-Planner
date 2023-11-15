@@ -1,11 +1,11 @@
 import React from 'react';
 import { View, TextInput, StyleSheet, Platform, Dimensions } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import colors from '../config/colors';
+import colors from '../../config/colors';
 
 const window = Dimensions.get('window');
 
-function AppTextInput({ icon, ...otherProps }) {
+export default function AppTextInput({ icon, ...otherProps }) {
   const containerWidth = window.width * 0.9; // Adjust the percentage as needed
 
   return (
@@ -25,8 +25,8 @@ const styles = StyleSheet.create({
     paddingRight: window.width * 0.02,
     marginBottom: window.height * 0.02,
     borderRadius: window.width * 0.02, 
-    borderColor: 'gray',
-    borderWidth: 1,
+    borderBottomColor: '#ccc',
+    borderBottomWidth: 1,
     alignItems: 'center'
   },
   icon: {
@@ -39,4 +39,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AppTextInput;
+
