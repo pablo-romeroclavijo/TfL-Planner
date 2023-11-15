@@ -11,19 +11,19 @@ class User(db.Model):
     email = db.Column(db.String(150), nullable=False)
     remainder = db.Column(db.Integer, nullable=False)
     
-    def __init__(self, username, postcode, password, email, remainder=30):
+    def __init__(self, username, password, email):
         self.user_name = username
-        self.postcode = postcode
+        self.postcode = 'null'
         self.password = password
         self.email = email
-        self.remainder = remainder
+        self.remainder = 30
     
     def __repr__(self):
         return (f"User {self.user_name} created")
     
     def create_user(data):
         try: 
-            user = User(data['username'], data['postcode'], data['password'], data['email'], data['remainder'])
+            user = User(data['username'], data['password'], data['email'])
             db.session.add(user)
             db.session.commit()
             return user
