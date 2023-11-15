@@ -53,7 +53,7 @@ export default function Register({navigation}){
                 const data = await response.json()
                 const token = data.token
                 console.log(token);
-                navigation.navigate("Home")
+                navigation.navigate("Dashboard")
             } else {
                 alert("Register failed, try again later.");
             }
