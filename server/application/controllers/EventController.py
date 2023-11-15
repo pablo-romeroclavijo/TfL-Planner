@@ -55,7 +55,7 @@ def get_event(share_code):
         return "General Error", 400
     
 def join_event(share_code):
-    # try: 
+    try: 
         event_id = Event.get_one_by_share(share_code).id
         
         token = request.headers['Authorization']
@@ -63,12 +63,12 @@ def join_event(share_code):
         attendee = Attendee.create_attendee(event_id, user)
         return format_attendee(attendee), 201
         
-    # except EventNotFound:
-    #     return "Event not found", 404
-    # except AttendeeIsNotUnique:
-    #     return "You are already attending this event", 400
-    # except:
-    #     return "attendee not created", 400
+    except EventNotFound:
+        return "Event not found", 404
+    except AttendeeIsNotUnique:
+        return "You are already attending this event", 400
+    except:
+        return "attendee not created", 400
     
 def set_route():
     data = request.json
