@@ -25,29 +25,27 @@ class TfL_Request():
         
         if response.status_code == 300 or response.status_code == 200:
             data = response.json()
-            print(data)
             journeys = [Journey.create_journey(journey) for journey in data["journeys"]]
-            print(journeys)
-            return 'hello'
-        # jsonify({'journeys': journeys})
+            return jsonify({'journeys': journeys})
         else:
             return jsonify({'error': 'Failed to fetch data from the external API'})
-
+    
 class Journey():
     def __init__(self, journey):
-        self.startDateTime = journey['arrivalDateTime']
+        self.startDateTime = journey['startDateTime']
         self.arrivalDateTime = journey['arrivalDateTime']
         self.duration = journey['duration']
-        # self.legs = [Leg(x) for x in journey['legs']]
+        self.legs = [Leg.create_leg(x) for x in journey['legs']]
     
     def create_journey(data):
         journey = Journey(data)
-        print(journey.duration)
-        JSON = jsonify(startDateTime=journey.startDateTime, arrivalDateTime=journey.arrivalDateTime, duration=journey.duration)
-        print('here', JSON)
-        return JSON
-    # jsonify(startDateTime=journey.startDateTime, arrivalDateTime=journey.arrivalDateTime, duration=journey.duration)
-
+        journey_dict={ 
+            'startDateTime': journey.startDateTime, 
+            'arrivalDateTime': journey.arrivalDateTime,
+            'duration':journey.duration,
+            'legs' :journey.legs
+        }
+        return journey_dict
 
 class Leg():
     def __init__(self, leg):
@@ -55,9 +53,22 @@ class Leg():
         self.summary = leg['instruction']['detailed']
         self.departure = leg['departureTime']
         self.arrival = leg['arrivalTime']
-        self.mode = leg['mode']
+        self.mode = leg['mode']['id']
         self.disruptions = [x['description'] for x in leg['disruptions']]
         self.isDisrupted = leg['isDisrupted']
         self.stops = [x['name'] for x in leg['path']['stopPoints']]
         
+    def create_leg(data):
+        leg = Leg(data)
+        leg_dict={
+            'duration':leg.duration,
+            "summary": leg.summary,
+            "departure": leg.departure,
+            "arrival": leg.arrival,
+            'mode': leg.mode,
+            'distuptions': leg.disruptions,
+            'isDisrupted': leg.isDisrupted,
+            'stops': leg.stops  
+        }
+        return(leg_dict)
         
