@@ -5,7 +5,7 @@ import colors from "../../config/colors";
 
 
 
-function AppButton({ title, onPress, color = "primary" }) {
+export default function AppButton({ title, onPress, color = "primary" }) {
   return (
     <Pressable
       style={({ pressed }) => [
@@ -36,4 +36,3 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AppButton;

@@ -5,7 +5,7 @@ import colors from '../../config/colors';
 
 const window = Dimensions.get('window');
 
-function AppTextInput({ icon, ...otherProps }) {
+export default function AppTextInput({ icon, ...otherProps }) {
   const containerWidth = window.width * 0.9; // Adjust the percentage as needed
 
   return (
@@ -39,4 +39,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AppTextInput;
+
