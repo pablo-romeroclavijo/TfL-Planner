@@ -7,7 +7,7 @@ export default function Home({ navigation }) {
 	return (
 		// <ImageBackground source={image} style={{ width: "100%", height: "100%" }}>
 			<View>
-				<h1>My Events</h1>
+				<Text>My Events</Text>
 			</View>
 		// </ImageBackground>
 	)
