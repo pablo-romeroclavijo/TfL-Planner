@@ -12,11 +12,11 @@ def create_app(env=None):
     app = Flask(__name__)
     load_dotenv()
     
-    if env == 'TEST':   
-        print('here1')     
-        # app.config['TESTING']=True
-        # app.config['DEBUG']=False
-        app.config['SQLALCHEMY_DATABASE_URI'] = os.environ["TEST_DATABASE_URL"]
+
+    if env == 'TEST':        
+        app.config['TESTING']=True
+        app.config['DEBUG']=False
+        app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("TEST_DATABASE_URL")
     else:
         print('here2')
         app.config['TESTING'] = False
@@ -33,9 +33,11 @@ def create_app(env=None):
 
     from application.routes.users import users
     from application.routes.events import events
+    from application.routes.tfl import tfl
     
     app.register_blueprint(users, url_prefix='/user')
     app.register_blueprint(events, url_prefix='/event')
+    app.register_blueprint(tfl, url_prefix='/tfl')
     
     return app
 
