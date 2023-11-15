@@ -26,4 +26,3 @@ python_version = "3.11"
 dev="flask run --debug"
 test="pytest"
 cov="pytest --cov-report term-missing --cov=./application"
-
