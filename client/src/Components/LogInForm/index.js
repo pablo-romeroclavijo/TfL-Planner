@@ -1,8 +1,18 @@
-import React, { useState, useEffect } from "react";
-import { Text, View, StyleSheet, TouchableOpacity, Image, Platform } from "react-native";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { AppTextInput, AppButton, LoadingModal } from "../../Components";
-import colors from "../../config/colors";
+import React, { useState, useEffect } from "react"
+import {
+	Text,
+	View,
+	StyleSheet,
+	Pressable,
+	Image,
+	Platform,
+} from "react-native"
+import { MaterialCommunityIcons } from "@expo/vector-icons"
+
+
+import { AppTextInput, AppButton, LoadingModal, CreateAsync } from "../../Components"
+import colors from "../../config/colors"
+
 export default function LogInForm({ navigation }) {
 	const [usernameInput, setUsernameInput] = useState("");
 	const [passwordInput, setPasswordInput] = useState("");
@@ -37,14 +47,14 @@ export default function LogInForm({ navigation }) {
 		};
 		const response = await fetch("https://metro-mingle.onrender.com/user/login", options);
 		if (response.status == 200) {
-			const data = await response.json();
-			const token = data.token;
-			// localStorage.setItem("token", token)
-			console.log(token);
-			setUsernameInput("");
-			setPasswordInput("");
-			navigation.navigate("Dashboard");
-			setLoading(false);
+			const data = await response.json()
+			const token = data.token
+			CreateAsync("token", token)
+			console.log(token)
+			setUsernameInput("")
+			setPasswordInput("")
+			navigation.navigate("Dashboard")
+			setLoading(false)
 		} else {
 			alert("Invalid Credentials");
 			setLoading(false);
