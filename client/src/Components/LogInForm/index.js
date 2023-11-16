@@ -9,7 +9,8 @@ import {
 } from "react-native"
 import { MaterialCommunityIcons } from "@expo/vector-icons"
 
-import { AppTextInput, AppButton, LoadingModal } from "../../Components"
+
+import { AppTextInput, AppButton, LoadingModal, CreateAsync } from "../../Components"
 import colors from "../../config/colors"
 
 export default function LogInForm({ navigation }) {
@@ -53,7 +54,7 @@ export default function LogInForm({ navigation }) {
 		if (response.status == 200) {
 			const data = await response.json()
 			const token = data.token
-			localStorage.setItem("token", token)
+			CreateAsync("token", token)
 			console.log(token)
 			setUsernameInput("")
 			setPasswordInput("")
