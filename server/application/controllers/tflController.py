@@ -1,6 +1,4 @@
-from application import db
 from flask import request, jsonify
-
 
 from application.models.User import User
 from application.models.Errors import AuthenticationError, UserNotFound
