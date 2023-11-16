@@ -15,7 +15,12 @@ export default function App() {
 		//   </View>
 
 		<NavigationContainer>
-			<Stack.Navigator initialRouteName="Register">
+			<Stack.Navigator initialRouteName="Initial">
+			<Stack.Screen
+					name="Initial"
+					component={Screens.Initial}
+					options={{ headerShown: false }}
+				/>
 				<Stack.Screen
 					name="LogIn"
 					component={Screens.LogIn}

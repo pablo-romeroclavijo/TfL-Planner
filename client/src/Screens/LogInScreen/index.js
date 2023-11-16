@@ -79,7 +79,7 @@ export default function LogIn({ navigation }) {
 		// resizeMode="cover"
 		// style={styles.backgroundImage} >
 		<View style={styles.container}>
-			<Image style={styles.logo} source={require("../../assets/logo.png")} />
+			<Image style={styles.logo} source={require("../../assets/logo2.png")} />
 			{loading ? <LoadingModal loading={loading} /> : null}
 
 			<Text style={styles.textStyle}>Login</Text>
@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
 		flex: 1,
 	},
 	logo: {
-		marginBottom: 50,
+		marginBottom: 25,
 		width: 200,
 		height: 200,
 		justifyContent: "flex-start",
