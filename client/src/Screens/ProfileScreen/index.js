@@ -19,16 +19,6 @@ export default function Profile() {
     setModalVisible(false);
   };
 
-  const handleGesture = (event) => {
-    if (
-      event.nativeEvent.translationY > 50 &&
-      event.nativeEvent.state === State.END
-    ) {
-      // Your logic to handle the swipe down gesture
-      console.log("Swipe down detected!");
-      closeModal();
-    }
-  };
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Profile Details</Text>
