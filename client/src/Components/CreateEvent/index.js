@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View } from "react-native";
-import { AppButton, AppTextInput } from "../"
+import { AppButton, AppTextInput, GetAsync } from "../"
 import validator from "validator";
 
 export default function CreateEventForm({closeModal}) {
@@ -10,7 +10,17 @@ export default function CreateEventForm({closeModal}) {
   const [timeInput, setTimeInput] = useState(null)
   const [descriptionInput, setDescriptionInput] = useState('')
   const [titleInput, setTitleInput] = useState('')
-  console.log(localStorage.getItem("token"))
+  const [token, setToken] = useState('')
+  
+  useEffect(()=>{
+    async function getToken(){
+      setToken(await GetAsync("token"))
+      {token && console.log(token)}
+    }
+    getToken()
+  },[])
+
+  console.log("Token is ", token)
 
   function dataValidation(){
     const dateOptions ={ 
@@ -19,7 +29,6 @@ export default function CreateEventForm({closeModal}) {
     }
     const timeOptions = {
       hourFormat: 'hour24',
-      mode: 'withSeconds',
     }
     if (!postcodeInput || !dateInput || !timeInput || !titleInput ){
       alert("Fill in all fields.")
@@ -39,13 +48,12 @@ export default function CreateEventForm({closeModal}) {
 		const date = dateInput.trim() + ' ' + timeInput.trim()
 		const description = descriptionInput.trim() || null
     const title = titleInput.trim()
-    console.log(description);
     const options = {
 			method: "POST",
 			headers: {
 				"Accept": "application/json",
 				"Content-Type": "application/json",
-        "Authorization": localStorage.getItem('token'),
+        "Authorization": token,
 			},
 			body: JSON.stringify({
 				postcode: postcode,
@@ -81,7 +89,7 @@ export default function CreateEventForm({closeModal}) {
         onChangeText={(text) => setDateInput(text)}
       />
       <AppTextInput
-        placeholder="Enter Time (24H) hh:mm:ss"
+        placeholder="Enter Time (24H) hh:mm"
         onChangeText={(text) => setTimeInput(text)}
       />
       <AppTextInput
