@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Text, View, StyleSheet, Modal, TouchableOpacity } from "react-native";
 import GestureRecognizer from "react-native-swipe-gestures";
 
-import { AppTextInput, AppButton } from "../../Components";
+import { AppTextInput, AppButton, LogoutButton } from "../../Components";
 
 export default function Profile() {
   const [modalVisible, setModalVisible] = useState(false);
@@ -79,6 +79,7 @@ export default function Profile() {
           </View>
         </Modal>
       </GestureRecognizer>
+     <LogoutButton />
     </View>
   );
 }

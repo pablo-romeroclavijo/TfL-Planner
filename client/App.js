@@ -41,6 +41,7 @@ export default function App() {
 					component={HomeTabs}
 					options={{ headerShown: false }}
 				/>
+				
 			</Stack.Navigator>
 		</NavigationContainer>
 	)
