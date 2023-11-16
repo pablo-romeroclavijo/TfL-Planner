@@ -82,7 +82,7 @@ export default function Register({ navigation }) {
 
 	return (
 		<View style={styles.container}>
-			<Image style={styles.logo} source={require("../../assets/logo.png")} />
+			<Image style={styles.logo} source={require("../../assets/logo2.png")} />
 			<Text style={styles.textStyle}>Register</Text>
 			<AppTextInput
 				placeholder="Enter Username"

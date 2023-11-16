@@ -11,5 +11,6 @@ def hello_world():
     return "<p>TfL Route</p>"
 
 @tfl.route("/get", methods=['GET'])
-def route():
+def get():
     return get_route()
+

@@ -56,21 +56,33 @@ def get_event(share_code):
     
 def join_event(share_code):
     try: 
-        data = request.json
-        
         event_id = Event.get_one_by_share(share_code).id
         
         token = request.headers['Authorization']
         user = User.get_one_by_token(token)
-        attendee = Attendee.create_attendee(event_id, user, data)
+        attendee = Attendee.create_attendee(event_id, user)
         return format_attendee(attendee), 201
         
     except EventNotFound:
         return "Event not found", 404
     except AttendeeIsNotUnique:
-        return "You are already attending this event", 404
+        return "You are already attending this event", 400
     except:
-        return "attendee not created", 404
+        return "attendee not created", 400
+    
+def set_route():
+    data = request.json
+    token = request.headers['Authorization']
+    
+         
+    user_id = User.get_one_by_token(token).id
+    event_id = data['event_id']
+    journey = data['journey']
+   
+    
+    attendee = Attendee.get_one_by_user_and_event(user_id, event_id)
+    response = attendee.set_route(journey)
+    return format_attendee(response)
     
     
     
