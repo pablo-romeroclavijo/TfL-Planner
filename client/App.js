@@ -41,6 +41,11 @@ export default function App() {
 					component={HomeTabs}
 					options={{ headerShown: false }}
 				/>
+				<Stack.Screen
+				name="LogOut"
+				component={HomeTabs}
+				options={{ headerShown: false }}
+				/>
 			</Stack.Navigator>
 		</NavigationContainer>
 	)

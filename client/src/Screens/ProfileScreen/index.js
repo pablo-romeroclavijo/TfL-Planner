@@ -63,7 +63,7 @@ export default function Profile() {
           <AppButton title="Cancel" onPress={closeModal} style={styles.info} />
         </View>  
       </Modal>
-          {/* <LogoutButton /> */}
+          <LogoutButton />
     </View>
   );
 }
