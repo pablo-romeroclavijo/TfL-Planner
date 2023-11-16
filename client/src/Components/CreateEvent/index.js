@@ -15,12 +15,10 @@ export default function CreateEventForm({closeModal}) {
   useEffect(()=>{
     async function getToken(){
       setToken(await GetAsync("token"))
-      {token && console.log(token)}
     }
     getToken()
   },[])
 
-  console.log("Token is ", token)
 
   function dataValidation(){
     const dateOptions ={ 
