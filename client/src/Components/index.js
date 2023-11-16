@@ -1,4 +1,4 @@
-export { default as LogIn } from "./LogIn/index"
+export { default as LogInForm } from "./LogInForm"
 export { default as CurrentEvent } from "./CurrentEvent"
 export { default as HomeTabs } from "./HomeTabs/index"
 export { default as AppButton } from "./AppButton"
