@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { Text, View, StyleSheet, Modal, TouchableOpacity, Button } from "react-native";
+import { Text, View, StyleSheet, Modal, TouchableOpacity } from "react-native";
+import GestureRecognizer from "react-native-swipe-gestures";
 
-import { AppTextInput, AppButton, LogoutButton } from "../../Components";
-
+import { AppTextInput, AppButton } from "../../Components";
 
 export default function Profile() {
   const [modalVisible, setModalVisible] = useState(false);
@@ -19,51 +19,66 @@ export default function Profile() {
     setModalVisible(false);
   };
 
+  const handleGesture = (event) => {
+    if (
+      event.nativeEvent.translationY > 50 &&
+      event.nativeEvent.state === State.END
+    ) {
+      // Your logic to handle the swipe down gesture
+      console.log("Swipe down detected!");
+      closeModal();
+    }
+  };
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Profile Details</Text>
       <TouchableOpacity onPress={openModal}>
         <Text style={styles.click}>Edit Profile</Text>
       </TouchableOpacity>
-      <Modal
-        animationType="slide"
-        transparent={false}
-        visible={modalVisible}
-        onRequestClose={closeModal}
-      >
-        <View style={styles.modalContainer}>
-          <Text style={[styles.info]}>Email:</Text>
-          <AppTextInput
-            placeholder="Enter Email"
-            icon="email"
-            onChangeText={(text) => setEmailInput(text)}
-          />
-          <Text style={styles.info}>Password:</Text>
-          <AppTextInput
-            secureTextEntry={true}
-            placeholder="Enter Password"
-            icon="form-textbox-password"
-            onChangeText={(text) => setPasswordInput(text)}
-          />
-          <Text style={styles.info}>Confirm Password:</Text>
-          <AppTextInput
-            secureTextEntry={true}
-            placeholder="Confirm Password"
-            icon="form-textbox-password"
-            onChangeText={(text) => setConfirmPasswordInput(text)}
-          />
-          <Text style={styles.info}>Postcode:</Text>
-          <AppTextInput
-            placeholder="Enter Postcode"
-            icon="post"
-            onChangeText={(text) => setConfirmPasswordInput(text)}
-          />
-        </View>
-        <View style={{alignSelf: "center", marginBottom: 20}}>
-          <AppButton title="Cancel" onPress={closeModal} style={styles.info} />
-        </View>  
-      </Modal>
-          {/* <LogoutButton /> */}
+      <GestureRecognizer style={{ flex: 1 }} onSwipeDown={() => closeModal()}>
+        <Modal
+          animationType="slide"
+          transparent={false}
+          visible={modalVisible}
+          onRequestClose={closeModal}
+        >
+          <View style={styles.modalContainer}>
+            <Text style={styles.info}>Email:</Text>
+            <AppTextInput
+              placeholder="Enter Email"
+              icon="email"
+              onChangeText={(text) => setEmailInput(text)}
+            />
+            <Text style={styles.info}>Password:</Text>
+            <AppTextInput
+              secureTextEntry={true}
+              placeholder="Enter Password"
+              icon="form-textbox-password"
+              onChangeText={(text) => setPasswordInput(text)}
+            />
+            <Text style={styles.info}>Confirm Password:</Text>
+            <AppTextInput
+              secureTextEntry={true}
+              placeholder="Confirm Password"
+              icon="form-textbox-password"
+              onChangeText={(text) => setConfirmPasswordInput(text)}
+            />
+            <Text style={styles.info}>Postcode:</Text>
+            <AppTextInput
+              placeholder="Enter Postcode"
+              icon="post"
+              onChangeText={(text) => setPostcodeInput(text)}
+            />
+            <View style={{ alignSelf: "center", marginBottom: 20 }}>
+              <AppButton
+                title="Cancel"
+                onPress={closeModal}
+                style={styles.info}
+              />
+            </View>
+          </View>
+        </Modal>
+      </GestureRecognizer>
     </View>
   );
 }
@@ -83,17 +98,18 @@ const styles = StyleSheet.create({
   },
   info: {
     fontWeight: "bold",
-    alignItems: "flex-start"
+    alignItems: "flex-start",
   },
   modalContainer: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
     padding: 20,
+    marginTop: 55,
   },
   click: {
     fontWeight: "bold",
     textAlign: "left",
-    fontSize: 23
-  }
+    fontSize: 23,
+  },
 });
