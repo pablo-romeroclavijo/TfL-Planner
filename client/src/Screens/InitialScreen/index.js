@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { View, Animated, Image, StyleSheet } from "react-native";
 
-import { AppButton } from "../../Components";
+import { AppButton, GetAsync } from "../../Components";
 
 
 export default function Initial({ navigation }) {
@@ -27,13 +27,14 @@ export default function Initial({ navigation }) {
       }),
     ]).start();
   }, [navigation]);
+  
 
   return (
     <View style={styles.container}>
       <Animated.View style={{ ...styles.logo, top: logoPositionY }}>
         <Image source={require("../../assets/logo2.png")} style={styles.logoImage} />
       </Animated.View>
-      <Animated.View style={{ opacity: buttonOpacity, width: "90%", bottom: -150 }}>
+      <Animated.View style={{ opacity: buttonOpacity, bottom: -150 }}>
         <AppButton
           title="Login"
           onPress={() => navigation.navigate("LogIn")}
