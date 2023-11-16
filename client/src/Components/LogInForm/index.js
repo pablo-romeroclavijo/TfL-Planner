@@ -53,10 +53,10 @@ export default function LogInForm({ navigation }) {
 		if (response.status == 200) {
 			const data = await response.json()
 			const token = data.token
+			localStorage.setItem("token", token)
 			console.log(token)
 			setUsernameInput("")
 			setPasswordInput("")
-
 			navigation.navigate("Dashboard")
 			setLoading(false)
 		} else {

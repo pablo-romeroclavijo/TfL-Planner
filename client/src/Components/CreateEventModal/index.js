@@ -22,8 +22,7 @@ export default function CreateEventModal({isVisible, closeModal, createEvent}){
                         <Entypo name="cross" size={24} color="black" />
                     </Pressable>
                 </View>
-                <CreateEventForm />
-                <AppButton title="Submit" onPress={()=> {alert("Event Created."); closeModal()}} />
+                <CreateEventForm closeModal={closeModal}/>
             </Modal>
         </View>
     )
