@@ -59,7 +59,7 @@ export default function Profile() {
             onChangeText={(text) => setConfirmPasswordInput(text)}
           />
         </View>
-        <View style={{width: "90%", alignSelf: "center", marginBottom: 20}}>
+        <View style={{alignSelf: "center", marginBottom: 20}}>
           <AppButton title="Cancel" onPress={closeModal} style={styles.info} />
         </View>  
       </Modal>

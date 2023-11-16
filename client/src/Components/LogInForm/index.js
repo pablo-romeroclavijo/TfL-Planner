@@ -7,8 +7,11 @@ import {
   Image,
   Platform,
 } from "react-native";
-import { AppTextInput, AppButton, LoadingModal } from "../../Components";
+
+import { AppTextInput, AppButton, LoadingModal, CreateAsync } from "../../Components";
 import colors from "../../config/colors";
+
+
 export default function LogInForm({ navigation }) {
 	const [usernameInput, setUsernameInput] = useState("");
 	const [passwordInput, setPasswordInput] = useState("");

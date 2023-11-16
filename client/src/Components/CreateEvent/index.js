@@ -77,7 +77,7 @@ export default function CreateEventForm({closeModal}) {
 
 
   return (
-    <View>
+    <View style={{alignContent: "center"}}>
       <AppTextInput
         placeholder="Enter Postcode"
         onChangeText={(text) => setPostcodeInput(text)}
