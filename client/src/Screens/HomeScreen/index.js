@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, Modal } from "react-native";
-import AppButton from "../../Components/AppButton/AppButton";
-import { CreateEventForm, CreateEventModal } from "../../Components";
+import { CreateEventForm, CreateEventModal, AppButton } from "../../Components";
 
 export default function Home({ navigation }) {
   const [createEvent, setCreateEvent] = useState(false);

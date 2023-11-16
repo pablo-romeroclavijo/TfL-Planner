@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import { Text, Modal, View, TouchableOpacity, Pressable, StyleSheet } from "react-native";
+import { Text, Modal, View, Pressable, StyleSheet } from "react-native";
 import { CreateEventForm, AppButton } from "../"
 import { Entypo } from '@expo/vector-icons';
 

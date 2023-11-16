@@ -1,6 +1,6 @@
 import React from "react";
 import { View } from "react-native";
-import AppTextInput from "../AppTextInput/AppTextInput";
+import { AppTextInput } from "../"
 
 export default function CreateEventForm() {
   return (

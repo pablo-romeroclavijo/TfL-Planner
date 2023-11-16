@@ -1,14 +1,11 @@
 import React, { useState, useEffect } from "react"
 import {
 	Text,
-	TextInput,
 	View,
 	StyleSheet,
 	Pressable,
-	ImageBackground,
 	Image,
 	Platform,
-	TouchableOpacity,
 } from "react-native"
 import { MaterialCommunityIcons } from "@expo/vector-icons"
 
@@ -25,8 +22,8 @@ export default function LogIn({ navigation }) {
 		if (!usernameInput || !passwordInput) {
 			alert("Fill in all fields.")
 		} else {
-			setUsername(usernameInput)
-			setPassword(passwordInput)
+			setUsername(usernameInput.trim())
+			setPassword(passwordInput.trim())
 		}
 	}
 
@@ -114,7 +111,7 @@ export default function LogIn({ navigation }) {
 					}}
 				>
 					<Text>New to App?</Text>
-					<TouchableOpacity onPress={() => navigation.navigate("Register")}>
+					<Pressable onPress={() => navigation.navigate("Register")}>
 						<Text
 							style={{
 								color: colors.secondary,
@@ -124,7 +121,7 @@ export default function LogIn({ navigation }) {
 						>
 							Register
 						</Text>
-					</TouchableOpacity>
+					</Pressable>
 				</View>
 			</View>
 		</View>
