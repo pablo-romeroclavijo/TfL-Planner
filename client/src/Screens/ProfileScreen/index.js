@@ -69,7 +69,9 @@ export default function Profile() {
           </View>
         </Modal>
       </GestureRecognizer>
+      <View style={styles.logoutButton}>
      <LogoutButton />
+     </View>
     </View>
   );
 }
@@ -103,4 +105,7 @@ const styles = StyleSheet.create({
     textAlign: "left",
     fontSize: 23,
   },
+  logoutButton: {
+    alignSelf: "center"
+  }
 });

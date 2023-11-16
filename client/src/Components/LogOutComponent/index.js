@@ -3,6 +3,7 @@ import { Text, TouchableOpacity, Alert } from "react-native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import colors from "../../config/colors";
+import AppButton from "../AppButton";
 
 const LogoutButton = () => {
   const navigation = useNavigation();
@@ -35,11 +36,7 @@ const LogoutButton = () => {
   };
 
   return (
-    <TouchableOpacity onPress={handleLogout}>
-      <Text style={{ color: colors.secondary, fontWeight: "700", paddingTop: 10 }}>
-        Logout
-      </Text>
-    </TouchableOpacity>
+    <AppButton title="Logout" onPress={handleLogout} color="primary" />
   );
 };
 
