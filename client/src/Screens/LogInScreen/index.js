@@ -100,11 +100,6 @@ export default function LogIn({ navigation }) {
 				/>
 				<View style={styles.buttonContainer}>
 					<AppButton title="Login" onPress={handleFormSubmit} color="primary" />
-					{/* <AppButton
-            title="Register"
-            onPress={() => navigation.navigate("Register")}
-            color="secondary"
-          /> */}
 				</View>
 				<View
 					style={{
