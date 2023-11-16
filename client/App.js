@@ -15,7 +15,7 @@ export default function App() {
 		//   </View>
 
 		<NavigationContainer>
-			<Stack.Navigator initialRouteName="LogIn">
+			<Stack.Navigator initialRouteName="Initial">
 			<Stack.Screen
 					name="Initial"
 					component={Screens.Initial}
@@ -33,6 +33,11 @@ export default function App() {
 				/>
 				<Stack.Screen
 					name="Dashboard"
+					component={HomeTabs}
+					options={{ headerShown: false }}
+				/>
+				<Stack.Screen
+					name="Profile"
 					component={HomeTabs}
 					options={{ headerShown: false }}
 				/>

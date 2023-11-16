@@ -1,7 +1,4 @@
-from application import db
 from flask import request, jsonify
-import bcrypt
-
 
 from application.models.User import User
 from application.models.Token import Token
