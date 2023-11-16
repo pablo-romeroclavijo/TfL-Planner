@@ -2,6 +2,7 @@ import React from "react";
 import { Text, TouchableOpacity, Alert } from "react-native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
+import colors from "../../config/colors";
 
 const LogoutButton = () => {
   const navigation = useNavigation();
