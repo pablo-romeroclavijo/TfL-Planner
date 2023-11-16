@@ -1,24 +1,37 @@
-//for log out functionality on or ProfileScreen index.json
-
-//import it: import { LogoutButton } from './LogOutComponent'
-
 import React from "react";
-import { Text, TouchableOpacity } from "react-native";
+import { Text, TouchableOpacity, Alert } from "react-native";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native';
 import colors from "../../config/colors";
 
-
-const LogoutButton = ({ navigation }) => {
-  const { signOut } = useAuth();
+const LogoutButton = () => {
+  const navigation = useNavigation();
 
   const handleLogout = async () => {
     try {
-      await signOut();
-
-      navigation.navigate("Login");
+      // Remove token from AsyncStorage
+      await AsyncStorage.removeItem('token');
+      
+      // Ask for confirmation
+      Alert.alert(
+        "Logout",
+        "Are you sure you want to log out?",
+        [
+          {
+            text: "Cancel",
+            style: "cancel",
+          },
+          { text: "Logout", onPress: () => logoutConfirmed() },
+        ]
+      );
     } catch (error) {
       console.error("Error signing out:", error.message);
     }
-    navigation.navigate("Login");
+  };
+
+  const logoutConfirmed = () => {
+    // Navigate to the login screen
+    navigation.navigate("LogIn");
   };
 
   return (
@@ -31,3 +44,4 @@ const LogoutButton = ({ navigation }) => {
 };
 
 export default LogoutButton;
+
