@@ -7,6 +7,7 @@ import {
 	Image,
 	Platform,
 	TouchableOpacity
+
 } from "react-native"
 import { MaterialCommunityIcons } from "@expo/vector-icons"
 
