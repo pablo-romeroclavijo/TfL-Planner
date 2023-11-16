@@ -20,7 +20,7 @@ def test_client():
 def init_database(test_client):
     db.create_all()
 
-    user1 = User(username='testuser1', postcode='12345', password='testpassword1'.encode('utf-8'), email='test1@test.com')
+    user1 = User(username='testuser1', password='testpassword1'.encode('utf-8'), email='test1@test.com')
     db.session.add(user1)
     db.session.commit()
 
@@ -28,6 +28,7 @@ def init_database(test_client):
 
     db.session.remove()
     db.drop_all()
+    db.engine.dispose()
 
 def test_create_event(test_client, init_database):
     test_user_id = 1 

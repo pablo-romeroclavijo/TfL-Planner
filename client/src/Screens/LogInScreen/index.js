@@ -7,5 +7,3 @@ export default function LogInPage({navigation}){
     <LogInForm navigation={navigation}/>
   );
 };
-
-
