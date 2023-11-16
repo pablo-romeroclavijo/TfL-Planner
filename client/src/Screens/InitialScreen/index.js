@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { View, Animated, Image, StyleSheet } from "react-native";
 
-import { AppButton } from "../../Components";
+import { AppButton, GetAsync } from "../../Components";
 
 
 export default function Initial({ navigation }) {
@@ -27,6 +27,7 @@ export default function Initial({ navigation }) {
       }),
     ]).start();
   }, [navigation]);
+  
 
   return (
     <View style={styles.container}>
