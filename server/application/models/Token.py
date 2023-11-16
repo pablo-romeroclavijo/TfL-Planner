@@ -15,7 +15,11 @@ class Token(db.Model):
         return f"{self.user_id}, {self.token}"
     
     def create_token(user_id):
-        token = Token(user_id)
-        db.session.add(token)
-        db.session.commit()
-        return token
+        try:
+            token = Token(user_id)
+            db.session.add(token)
+            db.session.commit()
+            return token
+        except:
+            db.session.rollback()
+            raise Exception
