@@ -1,27 +1,35 @@
-// redirect to login page
-// remove token from local storage - async token
-// asks as promt to log out(confurmation) -> pass state
-//for log out functionality on or ProfileScreen index.json
-//import it: import { LogoutButton } from './LogOutComponent'
-
-
 import React from "react";
-import { Text, TouchableOpacity } from "react-native";
-import colors from "../../config/colors";
-import { useHistory } from 'react-router-dom';
+import { Text, TouchableOpacity, Alert } from "react-native";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native';
 
-
-const LogoutButton = ({navigation}) => {
- const history = useHistory();
+const LogoutButton = () => {
+  const navigation = useNavigation();
 
   const handleLogout = async () => {
     try {
-     localStorage.removeItem('token');
-
-     history.push('/login');
+      // Remove token from AsyncStorage
+      await AsyncStorage.removeItem('token');
+      
+      // Ask for confirmation
+      Alert.alert(
+        "Logout",
+        "Are you sure you want to log out?",
+        [
+          {
+            text: "Cancel",
+            style: "cancel",
+          },
+          { text: "Logout", onPress: () => logoutConfirmed() },
+        ]
+      );
     } catch (error) {
       console.error("Error signing out:", error.message);
     }
+  };
+
+  const logoutConfirmed = () => {
+    // Navigate to the login screen
     navigation.navigate("Login");
   };
 
@@ -35,3 +43,4 @@ const LogoutButton = ({navigation}) => {
 };
 
 export default LogoutButton;
+
