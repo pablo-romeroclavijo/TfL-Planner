@@ -1,19 +1,16 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect } from "react";
 import {
-	Text,
-	View,
-	StyleSheet,
-	Pressable,
-	Image,
-	Platform,
-	TouchableOpacity
+  Text,
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  Platform,
+} from "react-native";
 
-} from "react-native"
-import { MaterialCommunityIcons } from "@expo/vector-icons"
+import { AppTextInput, AppButton, LoadingModal, CreateAsync } from "../../Components";
+import colors from "../../config/colors";
 
-
-import { AppTextInput, AppButton, LoadingModal, CreateAsync } from "../../Components"
-import colors from "../../config/colors"
 
 export default function LogInForm({ navigation }) {
 	const [usernameInput, setUsernameInput] = useState("");
