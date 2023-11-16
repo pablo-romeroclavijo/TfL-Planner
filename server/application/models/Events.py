@@ -1,5 +1,8 @@
 from application import db
 import random, string
+from flask import jsonify
+
+from application.models.Attendees import Attendee
 from application.models.Errors import EventNotFound, ActionNotAllowed
 
 class Event(db.Model):
@@ -60,4 +63,26 @@ class Event(db.Model):
         except: 
             db.session.rollback()
             raise EventNotFound
+    
+    def fetch_all(user_id):
+        try:
+            response = Event.query\
+                .join(Attendee, Attendee.event_id == Event.id)\
+                .filter(Attendee.user_id == user_id)\
+                .all()
+
+            return response
+        except:
+            db.session.rollback()
+            raise ActionNotAllowed
+    
+    def fetch_attendees(event_id):
+        try:
+            response = Attendee.query\
+                .filter(Attendee.event_id == event_id)\
+                .all()
             
+            return response
+        except:
+            db.session.rollback()
+            raise ActionNotAllowed

@@ -1,6 +1,6 @@
 from application import db
 from flask import request, jsonify, Blueprint
-from application.controllers.EventController import create, get_event, join_event, set_route
+from application.controllers.EventController import create, get_event, join_event, set_route, fetch_events, event_detailed
 
 events = Blueprint('events', __name__ )
 
@@ -25,16 +25,11 @@ def get_join_event(share_code):
 def set():
     return set_route()
 
-    
-# @events.route("/login", methods=['POST'])
-# def log_user():
-#     return login()
+@events.route('/all', methods=['GET'])
+def fetch_all():
+    return fetch_events()
 
-# @events.route('/profile', methods=['GET'])
-# def profile_by_token():
-#     return(fetch_profile())  ##uses a token to find the profile
-
-# @events.route('/profile/<username>')
-# def profile_by_username(username):  ##uses a username to find the profile
-#     return(fetch_profile(username))
+@events.route('/<sharecode>/details')
+def fetch_attendees(sharecode):
+    return event_detailed(sharecode)
     
