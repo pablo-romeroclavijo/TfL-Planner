@@ -7,6 +7,7 @@ import {
 	Platform,
 	Image,
 	Pressable,
+	TouchableOpacity,
 } from "react-native"
 
 import colors from "../../config/colors"
@@ -77,7 +78,7 @@ export default function Register({ navigation }) {
 
 	return (
 		<View style={styles.container}>
-			<Image style={styles.logo} source={require("../../assets/logo.png")} />
+			<Image style={styles.logo} source={require("../../assets/logo2.png")} />
 			<Text style={styles.textStyle}>Register</Text>
 			<AppTextInput
 				placeholder="Enter Username"
@@ -118,7 +119,7 @@ export default function Register({ navigation }) {
 					}}
 				>
 					<Text>Already Registered?</Text>
-					<Pressable onPress={() => navigation.navigate("LogIn")}>
+					<TouchableOpacity onPress={() => navigation.navigate("LogIn")}>
 						<Text
 							style={{
 								color: colors.secondary,
@@ -128,7 +129,7 @@ export default function Register({ navigation }) {
 						>
 							Login
 						</Text>
-					</Pressable>
+					</TouchableOpacity>
 				</View>
 			</View>
 		</View>
