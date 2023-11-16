@@ -36,6 +36,11 @@ export default function App() {
 					component={HomeTabs}
 					options={{ headerShown: false }}
 				/>
+				<Stack.Screen
+					name="Profile"
+					component={HomeTabs}
+					options={{ headerShown: false }}
+				/>
 			</Stack.Navigator>
 		</NavigationContainer>
 	)
