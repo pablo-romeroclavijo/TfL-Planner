@@ -4,7 +4,9 @@ blinker==1.7.0; python_version >= '3.8'
 certifi==2023.7.22; python_version >= '3.6'
 charset-normalizer==3.3.2; python_full_version >= '3.7.0'
 click==8.1.7; python_version >= '3.7'
+colorama==0.4.6; platform_system == 'Windows'
 flask==3.0.0; python_version >= '3.8'
+flask-bcrypt==1.0.1
 flask-cors==4.0.0
 flask-login==0.6.3; python_version >= '3.7'
 flask-sqlalchemy==3.1.1; python_version >= '3.8'
