@@ -31,7 +31,7 @@ const LogoutButton = () => {
 
   const logoutConfirmed = () => {
     // Navigate to the login screen
-    navigation.navigate("Login");
+    navigation.navigate("LogIn");
   };
 
   return (
