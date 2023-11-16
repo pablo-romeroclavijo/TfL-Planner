@@ -32,16 +32,19 @@ def create_app(env=None):
     from application.models.Token import Token
     from application.models.Events import Event
     from application.models.Attendees import Attendee
+    from application.models.Weather import Weather
     db.create_all()
     CORS(app)
 
     from application.routes.users import users
     from application.routes.events import events
     from application.routes.tfl import tfl
+    from application.routes.weather import weather
     
     app.register_blueprint(users, url_prefix='/user')
     app.register_blueprint(events, url_prefix='/event')
     app.register_blueprint(tfl, url_prefix='/tfl')
+    app.register_blueprint(weather, url_prefix='/weather')
     
     return app
 

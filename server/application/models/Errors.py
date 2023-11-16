@@ -17,3 +17,7 @@ class AttendeeIsNotUnique(Exception):
 class ActionNotAllowed(Exception):
     "action not allowed"
     pass
+
+class WeatherForecastError(Exception):
+    'Unable to fetch weather forecast'
+    pass

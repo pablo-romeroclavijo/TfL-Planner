@@ -1,4 +1,3 @@
-from application import db
 from flask import request, jsonify
 import bcrypt
 
