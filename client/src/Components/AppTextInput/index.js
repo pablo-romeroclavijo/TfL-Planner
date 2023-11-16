@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TextInput, StyleSheet, Platform, Dimensions, TouchableOpacity } from 'react-native';
+import { View, TextInput, StyleSheet, Platform, Dimensions, Pressable } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import colors from '../../config/colors';
 
@@ -23,13 +23,13 @@ export default function AppTextInput({ icon, secureTextEntry, ...otherProps }) {
         {...otherProps}
       />
       {secureTextEntry && (
-        <TouchableOpacity onPress={toggleSecureEntry} style={styles.iconContainer}>
+        <Pressable onPress={toggleSecureEntry} style={styles.iconContainer}>
           <MaterialCommunityIcons
             name={isSecure ? 'eye-outline' : 'eye-off-outline'}
             size={20}
             color="black"
           />
-        </TouchableOpacity>
+        </Pressable>
       )}
     </View>
   );
