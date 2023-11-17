@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react"
 import {
+	SafeAreaView,
 	Modal,
 	View,
 	StyleSheet,
 	Text,
 	FlatList,
-	TouchableOpacitya,
+	TouchableOpacity,
 } from "react-native"
 
 import EventCard from "../EventCard"
@@ -20,9 +21,14 @@ export default function EventHolder({ events }) {
 		console.log("EventHolder.js: ", event)
 	}, [modalshow])
 
+	const [selectedFilter, setSelectedFilter] = useState("all")
+
 	return (
-		<View style={styles.container}>
-			<FilterDropdown />
+		<SafeAreaView>
+			<FilterDropdown
+				selectedFilter={selectedFilter}
+				setSelectedFilter={setSelectedFilter}
+			/>
 			<View style={styles.list}>
 				<FlatList
 					data={events}
@@ -52,7 +58,7 @@ export default function EventHolder({ events }) {
 					</Modal>
 				</GestureRecognizer>
 			) : null}
-		</View>
+		</SafeAreaView>
 	)
 }
 
@@ -68,8 +74,5 @@ const styles = StyleSheet.create({
 		backgroundColor: "#FF6363",
 		padding: 20,
 	},
-	list: {
-		paddingTop: 35,
-		
-	},
+	list: { paddingTop: 20 },
 })

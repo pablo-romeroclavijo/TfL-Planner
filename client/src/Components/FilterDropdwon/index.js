@@ -8,9 +8,8 @@ import {
 	TouchableOpacity,
 } from "react-native"
 import { Picker } from "@react-native-picker/picker"
-const FilterDropdown = () => {
-	const [visible, setVisible] = useState(true)
-	const [selectedFilter, setSelectedFilter] = useState("all")
+const FilterDropdown = ({ selectedFilter, setSelectedFilter }) => {
+	const [visible, setVisible] = useState(false)
 
 	const filters = ["all", "recent", "popular", "favorites"]
 
@@ -18,11 +17,11 @@ const FilterDropdown = () => {
 		<View style={styles.container}>
 			<View>
 				<Pressable
-					style={styles.button}
 					title="Filter"
+					style={styles.dropwonButton}
 					onPress={() => setVisible(true)}
 				>
-					<Text style={styles.buttonText}>{selectedFilter}</Text>
+					<Text style={styles.buttonText}>{selectedFilter.toString()}</Text>
 				</Pressable>
 			</View>
 
@@ -64,6 +63,7 @@ const styles = StyleSheet.create({
 		flex: 1,
 		justifyContent: "center",
 		alignItems: "center",
+		paddingBottom: 20,
 	},
 	modalContainer: {
 		flex: 1,
@@ -87,11 +87,20 @@ const styles = StyleSheet.create({
 		padding: 10,
 		borderRadius: 5,
 		width: 100,
+		height: 40,
+	},
+	dropwonButton: {
+		backgroundColor: "#007bff",
+		padding: 10,
+		borderRadius: 5,
+		width: 100,
+		height: 40,
 	},
 	buttonText: {
 		color: "white",
 		textAlign: "center",
 		fontSize: 16,
+		opacity: 1,
 	},
 })
 
