@@ -41,7 +41,11 @@ def test_token_generation(test_client, init_database):
     assert token is not None
     assert isinstance(token.token, uuid.UUID)
     assert token.user_id == test_user.id
+    assert str(token) == f"{test_user.id}, {token.token}"
 
     db.session.delete(token)
     db.session.delete(test_user)
     db.session.commit()
+    
+    with pytest.raises(Exception):
+        Token.create_token(20)
