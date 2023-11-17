@@ -1,9 +1,9 @@
 import React from "react";
-import { StyleSheet, Text, Pressable } from "react-native";
+import { StyleSheet, Text, Pressable, Dimensions } from "react-native";
 
 import colors from "../../config/colors";
 
-
+const windowWidth = Dimensions.get("window").width;
 
 export default function AppButton({ title, onPress, color = "primary" }) {
   return (
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     padding: 15,
-    width: "100%",
+    width: windowWidth * 0.8, 
     marginVertical: 10,
   },
   text: {
@@ -35,4 +35,3 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
 });
-

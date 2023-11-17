@@ -34,7 +34,7 @@ export default function Initial({ navigation }) {
       <Animated.View style={{ ...styles.logo, top: logoPositionY }}>
         <Image source={require("../../assets/logo2.png")} style={styles.logoImage} />
       </Animated.View>
-      <Animated.View style={{ opacity: buttonOpacity, width: "90%", bottom: -150 }}>
+      <Animated.View style={{ opacity: buttonOpacity, bottom: -150 }}>
         <AppButton
           title="Login"
           onPress={() => navigation.navigate("LogIn")}

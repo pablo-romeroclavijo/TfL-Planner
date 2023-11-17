@@ -41,17 +41,18 @@ class Attendee(db.Model):
                 .filter_by(user_id=user_id)
                 .filter_by(event_id=event_id)).scalar_one()
             return attendee
+
         except:
             db.session.rollback()
             raise ActionNotAllowed
             
-    def create_attendee(event_id, user):
+    def create_attendee(event_id, user_id):
         try:
-            check_unique = Attendee.query.filter_by(event_id=event_id, user_id= user.id)
+            check_unique = Attendee.query.filter_by(event_id=event_id, user_id= user_id)
             if check_unique.count() > 0:
                 raise AttendeeIsNotUnique
             
-            attendee = Attendee(user.id, event_id, 'Pending', None, None, None, True, None)
+            attendee = Attendee(user_id, event_id, 'Pending', None, None, None, True, None)
             db.session.add(attendee)
             db.session.commit()
             return Attendee.get_one_by_user(attendee.id)

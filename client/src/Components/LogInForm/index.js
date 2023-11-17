@@ -3,51 +3,55 @@ import {
 	Text,
 	View,
 	StyleSheet,
-	Pressable,
+	TouchableOpacity,
 	Image,
 	Platform,
-	TouchableOpacity
-
+	Alert,
 } from "react-native"
-import { MaterialCommunityIcons } from "@expo/vector-icons"
 
+import AppTextInput from "../AppTextInput"
+import AppButton from "../AppButton"
+import LoadingModal from "../LoadingModal"
+import CreateAsync from "..//AsyncStorageCreate"
 
-import { AppTextInput, AppButton, LoadingModal, CreateAsync } from "../../Components"
 import colors from "../../config/colors"
 
 export default function LogInForm({ navigation }) {
-	const [usernameInput, setUsernameInput] = useState("");
-	const [passwordInput, setPasswordInput] = useState("");
-	const [username, setUsername] = useState("");
-	const [password, setPassword] = useState("");
-	const [loading, setLoading] = useState(false);
+	const [usernameInput, setUsernameInput] = useState("")
+	const [passwordInput, setPasswordInput] = useState("")
+	const [username, setUsername] = useState("")
+	const [password, setPassword] = useState("")
+	const [loading, setLoading] = useState(false)
 	async function handleFormSubmit() {
 		if (!usernameInput || !passwordInput) {
-			alert("Fill in all fields.");
+			alert("Fill in all fields.")
 		} else {
-			setUsername(usernameInput.trim());
-			setPassword(passwordInput.trim());
+			setUsername(usernameInput.trim())
+			setPassword(passwordInput.trim())
 		}
 	}
 	useEffect(() => {
 		if (username && password) {
-			verifyLogin();
+			verifyLogin()
 		}
-	}, [username, password]);
+	}, [username, password])
 	async function verifyLogin() {
-		setLoading(true);
+		setLoading(true)
 		const options = {
 			method: "POST",
 			headers: {
-				Accept: "application/json",
+				"Accept": "application/json",
 				"Content-Type": "application/json",
 			},
 			body: JSON.stringify({
 				username: username,
 				password: password,
 			}),
-		};
-		const response = await fetch("https://metro-mingle.onrender.com/user/login", options);
+		}
+		const response = await fetch(
+			"https://metro-mingle.onrender.com/user/login",
+			options
+		)
 		if (response.status == 200) {
 			const data = await response.json()
 			const token = data.token
@@ -58,13 +62,14 @@ export default function LogInForm({ navigation }) {
 			navigation.navigate("Dashboard")
 			setLoading(false)
 		} else {
-			alert("Invalid Credentials");
-			setLoading(false);
+			Alert.alert("Login Failed", "Invalid username or password", [
+				{ text: "Try Again", onPress: () => setLoading(false) },
+			])
 		}
-		setUsernameInput("");
-		setPasswordInput("");
-		setPassword("");
-		setUsername("");
+		setUsernameInput("")
+		setPasswordInput("")
+		setPassword("")
+		setUsername("")
 	}
 	return (
 		// <ImageBackground
@@ -78,8 +83,19 @@ export default function LogInForm({ navigation }) {
 			<Text style={styles.textStyle}>Login</Text>
 			<View style={styles.inputContainer}>
 				{/* <Text style={styles.label}>Username:</Text> */}
-				<AppTextInput placeholder="Enter Username" icon="account-circle-outline" onChangeText={(text) => setUsernameInput(text)} value={usernameInput} />
-				<AppTextInput secureTextEntry={true} placeholder="Enter Password" icon="form-textbox-password" onChangeText={(text) => setPasswordInput(text)} value={passwordInput} />
+				<AppTextInput
+					placeholder="Enter Username"
+					icon="account-circle-outline"
+					onChangeText={(text) => setUsernameInput(text)}
+					value={usernameInput}
+				/>
+				<AppTextInput
+					secureTextEntry={true}
+					placeholder="Enter Password"
+					icon="form-textbox-password"
+					onChangeText={(text) => setPasswordInput(text)}
+					value={passwordInput}
+				/>
 				<View style={styles.buttonContainer}>
 					<AppButton title="Login" onPress={handleFormSubmit} color="primary" />
 					{/* <AppButton
@@ -111,7 +127,7 @@ export default function LogInForm({ navigation }) {
 			</View>
 		</View>
 		// </ImageBackground>
-	);
+	)
 }
 const styles = StyleSheet.create({
 	container: {
@@ -140,4 +156,4 @@ const styles = StyleSheet.create({
 	iconContainer: {
 		padding: 10,
 	},
-});
+})
