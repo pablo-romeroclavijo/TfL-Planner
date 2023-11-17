@@ -10,7 +10,7 @@ tfl = Blueprint('tfl', __name__ )
 def hello_world():
     return "<p>TfL Route</p>"
 
-@tfl.route("/get", methods=['GET'])
+@tfl.route("/get", methods=['POST'])
 def get():
     return get_route()
 
