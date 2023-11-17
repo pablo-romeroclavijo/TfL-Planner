@@ -3,8 +3,8 @@ import { StyleSheet, View, Text, Pressable } from "react-native"
 
 const EventCard = ({ event, handlePress, key }) => {
 	return (
-		<Pressable key={key} onPress={handlePress}>
-			<View style={styles.card}>
+		<Pressable onPress={handlePress}>
+			<View key={key} style={styles.card}>
 				<View style={styles.header}>
 					<Text style={styles.headerText}>{event.title}</Text>
 					<Text style={styles.dateText}>{event.date}</Text>

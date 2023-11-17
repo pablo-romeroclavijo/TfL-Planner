@@ -1,16 +1,12 @@
 import React, { useState } from "react"
-import {
-	StyleSheet,
-	View,
-	Text,
-	TouchableOpacity,
-	FlatList,
-} from "react-native"
+import { StyleSheet, View, Text, Pressable, FlatList } from "react-native"
 
 const EventModal = ({ visible, onClose, event, attendees }) => {
 	return (
 		<View style={styles.modalContent}>
-			
+			<Pressable style={styles.closeButton} onPress={onClose}>
+				<Text style={styles.closeButtonText}>Close</Text>
+			</Pressable>
 			<View style={styles.header}>
 				<Text style={styles.headerText}>{event.title}</Text>
 				<Text style={styles.dateText}>{event.date}</Text>
