@@ -12,7 +12,7 @@ export default function Initial({ navigation }) {
     Animated.sequence([
       Animated.timing(logoPositionY, {
         toValue: 0,
-        duration: 3000,
+        duration: 2000,
         useNativeDriver: false,
       }),
       Animated.timing(logoPositionY, {

@@ -67,6 +67,7 @@ export default function Register({ navigation }) {
       setConfirmPasswordInput("");
     } else {
       alert("Register failed, try again later.");
+      setLoading(false)
     }
   }
 
