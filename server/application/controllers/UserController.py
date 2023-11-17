@@ -68,9 +68,12 @@ def login():
         return 'another error', 400
 
 def logout():
-    token = request.headers['Authorization']
-    Token.destroy_token(token)
-    return 'Token destroyed'
+    try:
+        token = request.headers['Authorization']
+        Token.destroy_token(token)
+        return 'Token destroyed'
+    except:
+        return "Token not deleted", 400
     
 def fetch_profile(username=None):
     try:

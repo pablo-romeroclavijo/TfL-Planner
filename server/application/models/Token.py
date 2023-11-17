@@ -24,7 +24,11 @@ class Token(db.Model):
             db.session.rollback()
             raise Exception
     def destroy_token(token):
-        token_instance = Token.query.filter_by(token=token).first()
-        db.session.delete(token_instance)
-        db.session.commit()
-        return 'Token deleted'
+        try:
+            token_instance = Token.query.filter_by(token=token).first()
+            db.session.delete(token_instance)
+            db.session.commit()
+            return 'Token deleted'
+        except:
+            db.session.rollback()
+            raise Exception
