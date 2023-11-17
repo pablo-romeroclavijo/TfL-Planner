@@ -16,8 +16,11 @@ const HomeTabs = () => {
           if (route.name === "Home") {
             // Use MaterialIcons for the "Home" tab
             iconName = focused ? "home" : "home-outline";
+          } else if (route.name === "Routes") {
+            iconName= focused ? "map" : "map-outline"
           } else if (route.name === "Profile") {
-            iconName = focused ? "person" : "person-outline";}
+            iconName = focused ? "person" : "person-outline";
+          }
 
           return <Ionicons name={iconName} size={24} color={"#F96F3A"} />;
         },
@@ -27,6 +30,7 @@ const HomeTabs = () => {
       })}
     >
       <Tab.Screen name="Home" component={Screens.Home} options={{ headerShown: false }} />
+      <Tab.Screen name="Routes" component={Screens.Routes} options={{headerShown: false}} />
       <Tab.Screen name="Profile" component={Screens.Profile} options={{ headerShown: false }}/>
     </Tab.Navigator>
   );
