@@ -1,7 +1,8 @@
 # test_user_model.py
 import pytest
 from application import create_app, db
-from application.models.User import User, UserNotFound
+from application.models.User import User, UserNotFound, ActionNotAllowed
+from application.models.Token import Token 
 
 @pytest.fixture(scope='module')
 def test_client():
@@ -47,7 +48,41 @@ def test_get_user_by_id(test_client, init_database):
 
     user = User.get_one_by_id(1)
     assert user.user_name == 'testuser1'
+    
+    with pytest.raises(UserNotFound):
+        User.get_one_by_id(50)
+        
 
 def test_user_not_found_exception(test_client, init_database):
     with pytest.raises(UserNotFound):
         User.get_one_by_username('nonexistentuser')
+
+def test_get_one_by_token(test_client, init_database):
+    token = Token.create_token(1)
+    db.session.add(token)
+    db.session.commit()
+    user = User.get_one_by_token(token.token)
+    
+    assert user.id == 1
+    
+    with pytest.raises(Exception):
+        User.get_one_by_token('not a token')
+        
+def test_create_user(test_client, init_database):
+    data = dict(username='testuser10', password='testpassword1'.encode('utf-8'), email='test1@test.com')
+    user = User.create_user(data)
+    
+    assert user.id is not None
+    assert user.user_name == data['username']
+    assert user.password == data['password']
+    assert user.email == data['email']
+    assert user.remainder == 30
+    assert user.postcode == 'null'
+    assert str(user) == 'User testuser10 created'
+    
+    with pytest.raises(ActionNotAllowed):
+        data = dict(username='testuser1', password='testpassword1'.encode('utf-8'), email='test1@test.com')
+        User.create_user(data)
+    
+    
+    
