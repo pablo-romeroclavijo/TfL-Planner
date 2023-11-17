@@ -57,8 +57,8 @@ def join_event(share_code):
         event_id = Event.get_one_by_share(share_code).id
         
         token = request.headers['Authorization']
-        user = User.get_one_by_token(token)
-        attendee = Attendee.create_attendee(event_id, user)
+        user_id = User.get_one_by_token(token).id
+        attendee = Attendee.create_attendee(event_id, user_id)
         return format_attendee(attendee), 201
         
     except EventNotFound:

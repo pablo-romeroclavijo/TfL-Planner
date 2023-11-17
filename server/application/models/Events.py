@@ -41,10 +41,12 @@ class Event(db.Model):
         try:
             share_code = Event.create_code(10)
             event = Event(user_id, data['postcode'], share_code, data['date'], data['description'], data['title'])
-            print(user_id, data)
             db.session.add(event)
             db.session.commit()
             event_new = Event.get_event_by_id(event.id)
+            
+            attendee = Attendee.create_attendee(event.id, user_id)
+        
             return event_new
         except:
             db.session.rollback()
@@ -52,7 +54,6 @@ class Event(db.Model):
     
     def create_code(length):
         code = ''.join(random.choice(string.ascii_uppercase + string.ascii_lowercase + string.digits) for _ in range(length))
-        print(code) 
         return code   
     
     def get_one_by_share(share_code):
@@ -78,6 +79,9 @@ class Event(db.Model):
     
     def fetch_attendees(event_id):
         try:
+            check_event_exist = Event.query.filter_by(id=event_id).first()
+            if not check_event_exist:
+                raise ActionNotAllowed
             response = Attendee.query\
                 .filter(Attendee.event_id == event_id)\
                 .all()
