@@ -172,7 +172,7 @@ export default function Profile() {
                 <Picker.Item label="No escalators" value="noEscalators" />
                 <Picker.Item label="No elavators" value="noElevators" />
                 <Picker.Item label="Step free access to Vehicle" value="stepFreeToVehicle" />
-                <Picker.Item label="Step free access to pavement" value="stepFreeToPlatform" />
+                <Picker.Item label="Step free access to Pavement" value="stepFreeToPlatform" />
               </Picker>
 
               <View style={{ alignSelf: "center", marginTop: 60 }}>
@@ -238,27 +238,27 @@ export default function Profile() {
               <Text style={styles.info}>Meet the team</Text>
 
               <TouchableOpacity onPress={() => openLink("https://github.com/JustaGlitch")}>
-                <Text style={styles.link}>Justin, project lead</Text>
+                <Text style={styles.link}>Justin, Project Lead</Text>
               </TouchableOpacity>
 
               <TouchableOpacity onPress={() => openLink("https://github.com/pablo-romeroclavijo")}>
-                <Text style={styles.link}>Pablo, back end developer</Text>
+                <Text style={styles.link}>Pablo, Backend Developer</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity onPress={() => openLink("https://github.com/swthes")}>
+                <Text style={styles.link}>Sidique, Frontend Developer</Text>
               </TouchableOpacity>
 
               <TouchableOpacity onPress={() => openLink("https://github.com/olgaKhristo")}>
-                <Text style={styles.link}>Sidique, front end developer</Text>
+                <Text style={styles.link}>Olga, Frontend Developer</Text>
               </TouchableOpacity>
 
-              <TouchableOpacity onPress={() => openLink("https://github.com/olgaKhristo")}>
-                <Text style={styles.link}>Olga, front end developer</Text>
+              <TouchableOpacity onPress={() => openLink("https://github.com/AndrewAmir003")}>
+                <Text style={styles.link}>Andrew, Frontend Developer</Text>
               </TouchableOpacity>
 
-              <TouchableOpacity onPress={() => openLink("https://github.com/olgaKhristo")}>
-                <Text style={styles.link}>Andrew, front end developer</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity onPress={() => openLink("https://github.com/olgaKhristo")}>
-                <Text style={styles.link}>Anoop, front end developer</Text>
+              <TouchableOpacity onPress={() => openLink("https://github.com/AnoopBhandal")}>
+                <Text style={styles.link}>Anoop, Frontend Developer</Text>
               </TouchableOpacity>
             </View>
           )}
