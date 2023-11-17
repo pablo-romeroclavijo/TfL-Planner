@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import { Text, Modal, View, TouchableOpacity, Pressable, StyleSheet } from "react-native";
+import { Text, Modal, View, Pressable, StyleSheet } from "react-native";
 import { CreateEventForm, AppButton } from "../"
 import { Entypo } from '@expo/vector-icons';
 
@@ -22,8 +22,7 @@ export default function CreateEventModal({isVisible, closeModal, createEvent}){
                         <Entypo name="cross" size={24} color="black" />
                     </Pressable>
                 </View>
-                <CreateEventForm />
-                <AppButton title="Submit" onPress={()=> {alert("Event Created."); closeModal()}} />
+                <CreateEventForm closeModal={closeModal}/>
             </Modal>
         </View>
     )

@@ -36,6 +36,10 @@ class Journey():
         self.duration = journey['duration']
         self.origin = origin
         self.legs = [Leg.create_leg(x) for x in journey['legs']]
+        try:
+            self.fare = journey['fare']['totalCost']
+        except:
+            self.fare = 0
     
     def create_journey(data, origin):
         journey = Journey(data, origin)
@@ -44,20 +48,27 @@ class Journey():
             'arrivalDateTime': journey.arrivalDateTime,
             'duration':journey.duration,
             'legs' :journey.legs,
-            'origin': journey.origin
+            'origin': journey.origin,
+            'fare': journey.fare
         }
         return journey_dict
 
 class Leg():
     def __init__(self, leg):
+        self.arrivalPoint = leg['arrivalPoint']['commonName']
+        self.departurePoint = leg['departurePoint']['commonName']
         self.duration = leg['duration']
         self.summary = leg['instruction']['detailed']
         self.departure = leg['departureTime']
-        self.arrival = leg['arrivalTime']
+        self.arrival = leg['arrivalTime'] 
         self.mode = leg['mode']['id']
         self.disruptions = [x['description'] for x in leg['disruptions']]
         self.isDisrupted = leg['isDisrupted']
         self.stops = [x['name'] for x in leg['path']['stopPoints']]
+        try:
+            self.distance = leg['distance']
+        except:
+            self.distance = 0
         
     def create_leg(data):
         leg = Leg(data)
@@ -69,7 +80,10 @@ class Leg():
             'mode': leg.mode,
             'distuptions': leg.disruptions,
             'isDisrupted': leg.isDisrupted,
-            'stops': leg.stops  
+            'stops': leg.stops,
+            'arrivalPoint':leg.arrivalPoint,
+            'departurePoint': leg.departurePoint,
+            'distance': str(int(leg.distance))+'m'
         }
         return(leg_dict)
         
