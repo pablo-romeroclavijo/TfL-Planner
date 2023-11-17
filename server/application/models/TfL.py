@@ -36,7 +36,10 @@ class Journey():
         self.duration = journey['duration']
         self.origin = origin
         self.legs = [Leg.create_leg(x) for x in journey['legs']]
-        self.fare = journey['fare']['fares'][0]
+        try:
+            self.fare = journey['fare']['totalCost']
+        except:
+            self.fare = 0
     
     def create_journey(data, origin):
         journey = Journey(data, origin)
