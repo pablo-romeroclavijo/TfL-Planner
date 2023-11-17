@@ -15,6 +15,7 @@ flask-login = "*"
 uuid = "*"
 requests = "*"
 flask-bcrypt = "*"
+pytest-cov = "*"
 
 [dev-packages]
 pytest = "*"
@@ -26,4 +27,4 @@ python_version = "3.11"
 [scripts]
 dev="flask run --debug"
 test="pytest"
-cov="pytest --cov-report term-missing --cov=./application"
+cov="pytest --cov-report term-missing --cov=./application --cov-report json:cov.json"
