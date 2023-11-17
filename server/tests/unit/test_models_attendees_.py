@@ -8,6 +8,12 @@ from application.models.Attendees import Attendee
 from application.models.Events import Event
 from application.models.Errors import EventNotFound, AttendeeIsNotUnique, ActionNotAllowed
 
+default_preferences = {
+        'journeyPreferences':'leastinterchange', ##'leastwalking' or 'leasttiime'
+        'maxWalkingMinutes': 20,
+        'walkingSpeed': 'average',  #slow, average or fast
+        'accessibilityPreferences': None, #"noSolidStairs,noEscalators,noElevators,stepFreeToVehicle,stepFreeToPlatform"
+    }
 
 @pytest.fixture(scope='module')
 def test_client():
@@ -22,15 +28,17 @@ def test_client():
 
 @pytest.fixture(scope='module')
 def init_database(test_client):
+
+    
     db.session.remove()
     db.drop_all()
     db.create_all()
 
-    user1 = User(username='testuser1', password='testpassword1'.encode('utf-8'), email='test1@test.com')
+    user1 = User(username='testuser1', password='testpassword1'.encode('utf-8'), email='test1@test.com', preferences=default_preferences)
     db.session.add(user1)
     db.session.commit()
     
-    user2 = User(username='testuser2', password='testpassword1'.encode('utf-8'), email='test2@test.com')
+    user2 = User(username='testuser2', password='testpassword1'.encode('utf-8'), email='test2@test.com', preferences=default_preferences)
     db.session.add(user2)
     db.session.commit()
       

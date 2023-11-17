@@ -3,6 +3,13 @@ import uuid
 from application import create_app, db
 from application.models.Token import Token
 from application.models.User import User
+default_preferences = {
+            'journeyPreferences':'leastinterchange', ##'leastwalking' or 'leasttiime'
+            'maxWalkingMinutes': 20,
+            'walkingSpeed': 'average',  #slow, average or fast
+            'accessibilityPreferences': None, #"noSolidStairs,noEscalators,noElevators,stepFreeToVehicle,stepFreeToPlatform"
+        }
+
 
 @pytest.fixture(scope='module')
 def test_client():
@@ -16,11 +23,22 @@ def test_client():
 
 @pytest.fixture(scope='module')
 def init_database(test_client):
+    default_preferences = {
+            'journeyPreferences':'leastinterchange', ##'leastwalking' or 'leasttiime'
+            'maxWalkingMinutes': 20,
+            'walkingSpeed': 'average',  #slow, average or fast
+            'accessibilityPreferences': None, #"noSolidStairs,noEscalators,noElevators,stepFreeToVehicle,stepFreeToPlatform"
+        }
+    
+    db.session.remove()
+    db.drop_all()
     db.create_all()
 
-    user1 = User(username='testuser1', password='testpassword1'.encode('utf-8'), email='test1@test.com')
-    user2 = User(username='testuser2', password='testpassword2'.encode('utf-8'), email='test2@test.com')
+    user1 = User(username='testuser1', password='testpassword1'.encode('utf-8'), email='test1@test.com', preferences=default_preferences)
     db.session.add(user1)
+    db.session.commit()
+    
+    user2 = User(username='testuser2', password='testpassword1'.encode('utf-8'), email='test2@test.com', preferences=default_preferences)
     db.session.add(user2)
     db.session.commit()
 
@@ -32,7 +50,7 @@ def init_database(test_client):
 
 
 def test_token_generation(test_client, init_database):
-    test_user = User(username='testuser', password='testpassword'.encode('utf-8'), email='test@test.com')
+    test_user = User(username='testuser', password='testpassword'.encode('utf-8'), email='test@test.com', preferences=default_preferences)
     db.session.add(test_user)
     db.session.commit()
 
