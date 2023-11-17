@@ -33,8 +33,8 @@ const HomeTabs = () => {
 			})}
 		>
 			<Tab.Screen
-				name="Profile"
-				component={Screens.Profile}
+				name="Events"
+				component={Screens.Events}
 				options={{ headerShown: false }}
 			/>
 			<Tab.Screen
