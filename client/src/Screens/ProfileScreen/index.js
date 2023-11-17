@@ -7,19 +7,17 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
   Alert,
+  ScrollView,
+  Linking,
 } from "react-native";
-
 import GestureRecognizer from "react-native-swipe-gestures";
 import { Picker } from "@react-native-picker/picker";
-
-
-import { AppTextInput, LogoutButton, Linear, GetAsync } from "../../Components";
+import { AppTextInput, LogoutButton, Linear, GetAsync, AppButton } from "../../Components";
 import colors from "../../config/colors";
-import { ScrollView } from "react-native-gesture-handler";
 
 const openLink = (url) => {
   Linking.openURL(url);
-
+};
 
 export default function Profile() {
   const [modalVisible, setModalVisible] = useState(false);
@@ -27,50 +25,17 @@ export default function Profile() {
   const [journeyPreferences, setJourneyPreferences] = useState("");
   const [maxWalkingMinutes, setMaxWalkingMinutes] = useState(0);
   const [walkingSpeed, setWalkingSpeed] = useState("Average");
-  const [accessibilityPreferences, setAccessibilityPreferences] =
-    useState("None");
+  const [accessibilityPreferences, setAccessibilityPreferences] = useState("None");
   const [token, setToken] = useState("");
-  const [username, setUsername] = useState("")
+  const [username, setUsername] = useState("");
 
   useEffect(() => {
     async function getToken() {
       setToken(await GetAsync("token"));
-      setUsername(await GetAsync("username"))
+      setUsername(await GetAsync("username"));
     }
     getToken();
   }, []);
-
-  // async function fetchData() {
-  //   try {
-  //     const response = await fetch(
-  //       `https://metro-mingle.onrender.com/user/profile/${username}`,
-  //       {
-  //         method: "GET",
-  //         headers: {
-  //           Accept: "application/json",
-  //           Authorization: token,
-  //         },
-  //       }
-  //     );
-
-  //     if (response.status === 200) {
-  //       const data = await response.json();
-  //       setPostcodeInput(data.postcode);
-  //       setJourneyPreferences(data.preferences.journeyPreferences);
-  //       setMaxWalkingMinutes(data.preferences.maxWalkingMinutes);
-  //       setWalkingSpeed(data.preferences.walkingSpeed);
-  //       setAccessibilityPreferences(data.preferences.accessibilityPreferences);
-  //     } else {
-  //       console.error("Failed to fetch user preferences");
-  //     }
-  //   } catch (error) {
-  //     console.error("Error fetching user preferences:", error.message);
-  //   }
-  // }
-  
-  // useEffect(() => {
-  //   fetchData();
-  // }, []);
 
   console.log(token);
 
@@ -100,11 +65,6 @@ export default function Profile() {
       );
       console.log(response.status);
       if (response.status === 200) {
-        // console.log(postcodeInput)
-        // console.log(journeyPreferences)
-        // console.log(maxWalkingMinutes)
-        // console.log(walkingSpeed)
-        // console.log(accessibilityPreferences)
         Alert.alert("Submit Successful", [
           {
             text: "OK",
@@ -113,11 +73,6 @@ export default function Profile() {
         ]);
       }
     } catch (error) {
-      // console.log(postcodeInput)
-      // console.log(journeyPreferences)
-      // console.log(maxWalkingMinutes)
-      // console.log(walkingSpeed)
-      // console.log(accessibilityPreferences)
       console.error("Error submitting preferences:", error.message);
     }
   }
@@ -126,12 +81,13 @@ export default function Profile() {
   const [selectedHelpOption, setSelectedHelpOption] = useState(null);
 
   const helpModal = (option) => {
-   setSelectedHelpOption(option);
-   setModalHelpVisible(true);
-
+    setSelectedHelpOption(option);
+    setModalHelpVisible(true);
   };
 
-
+  const closeHelpModal = () => {
+    setModalHelpVisible(false)
+  }
 
   const openModal = () => {
     setModalVisible(true);
@@ -145,25 +101,22 @@ export default function Profile() {
     <View style={styles.container}>
       <Text style={styles.header}>Profile Details</Text>
       <TouchableOpacity onPress={openModal}>
-        <Text style={styles.click}>Edit Profile</Text>        
+        <Text style={styles.click}>Edit Profile</Text>
       </TouchableOpacity>
 
-
       <Text style={styles.header}>Help</Text>
-    
+
       <TouchableOpacity onPress={() => helpModal(1)}>
-      <Text style={styles.click}>FAQ</Text>
+        <Text style={styles.click}>FAQ</Text>
       </TouchableOpacity>
 
       <TouchableOpacity onPress={() => helpModal(2)}>
-      <Text style={styles.click}>About App</Text>
+        <Text style={styles.click}>About App</Text>
       </TouchableOpacity>
 
       <TouchableOpacity onPress={() => helpModal(3)}>
-      <Text style={styles.click}>Delete my account</Text>
+        <Text style={styles.click}>Delete my account</Text>
       </TouchableOpacity>
-
-
 
       <GestureRecognizer style={{ flex: 1 }} onSwipeDown={() => closeModal()}>
         <KeyboardAvoidingView behavior="padding" style={styles.container}>
@@ -194,10 +147,7 @@ export default function Profile() {
                 selectedValue={journeyPreferences}
                 onValueChange={(itemValue) => setJourneyPreferences(itemValue)}
               >
-                <Picker.Item
-                  label="Least interchange"
-                  value="leastinterchange"
-                />
+                <Picker.Item label="Least interchange" value="leastinterchange" />
                 <Picker.Item label="Least walking" value="leastwalking" />
                 <Picker.Item label="Least time" value="leasttime" />
               </Picker>
@@ -205,7 +155,6 @@ export default function Profile() {
               <Text>What is your max walking speed</Text>
               <Picker
                 style={{ height: 30, width: "100%" }}
-                // selectedValue={walkingSpeed}
                 onValueChange={(itemValue) => setWalkingSpeed(itemValue)}
               >
                 <Picker.Item label="Slow" value="slow" />
@@ -216,23 +165,14 @@ export default function Profile() {
               <Text>Accessibility Preferences</Text>
               <Picker
                 style={{ height: 30, width: "100%" }}
-                // selectedValue={accessibilityPreferences}
-                onValueChange={(itemValue) =>
-                  setAccessibilityPreferences(itemValue)
-                }
+                onValueChange={(itemValue) => setAccessibilityPreferences(itemValue)}
               >
                 <Picker.Item label="None" value="none" />
                 <Picker.Item label="No stairs" value="noSolidStairs" />
                 <Picker.Item label="No escalators" value="noEscalators" />
                 <Picker.Item label="No elavators" value="noElevators" />
-                <Picker.Item
-                  label="Step free access to Vehicle"
-                  value="stepFreeToVehicle"
-                />
-                <Picker.Item
-                  label="Step free access to pavement"
-                  value="stepFreeToPlatform"
-                />
+                <Picker.Item label="Step free access to Vehicle" value="stepFreeToVehicle" />
+                <Picker.Item label="Step free access to pavement" value="stepFreeToPlatform" />
               </Picker>
 
               <View style={{ alignSelf: "center", marginTop: 60 }}>
@@ -258,88 +198,85 @@ export default function Profile() {
             </View>
           </Modal>
         </KeyboardAvoidingView>
-          </View>
-        </Modal>
-
-      <Modal
-      animationType="slide"
-      transparent={false}
-      visible={modalHelpVisible}
-      onRequestClose={() => setModalHelpVisible(false)}
-      >
-      <View style={styles.modalContainer}>
-        {selectedHelpOption === 1 && (
-          <View>
-          <ScrollView>
-          <Text style={styles.info}>Is my data safe?</Text>
-            <Text style={styles.placeholderText}>
-              Placeholder text for data safety goes here. You can find key information, privacy and security settings all in your Google Account. We have created easy-to-use tools like Dashboard and My Activity, which give you transparency data collected from your activity across Google services. There are also powerful privacy controls such as Activity Controls and Ad Settings, which allow you to switch the collection and use of data on or off to decide how all of Google can work better for you.
-            </Text>
-
-            <Text style={styles.info}>How to share my event on Social Media?</Text>
-            <Text style={styles.placeholderText}>
-              Placeholder text for sharing on social media goes here. You can find key information, privacy and security settings all in your Google Account. We have created easy-to-use tools like Dashboard and My Activity, which give you transparency data collected from your activity across Google services. There are also powerful privacy controls such as Activity Controls and Ad Settings, which allow you to switch the collection and use of data on or off to decide how all of Google can work better for you.
-            </Text>
-
-            <Text style={styles.info}>Can I use this app for businesses?</Text>
-            <Text style={styles.placeholderText}>
-              Placeholder text for using the app for businesses goes here. You can find key information, privacy and security settings all in your Google Account. We have created easy-to-use tools like Dashboard and My Activity, which give you transparency data collected from your activity across Google services. There are also powerful privacy controls such as Activity Controls and Ad Settings, which allow you to switch the collection and use of data on or off to decide how all of Google can work better for you.
-            </Text>
-              </ScrollView>
-          </View>
-          
-        )}
-        {selectedHelpOption === 2 && (
-          <View>
-    <Text style={styles.info}>Metro Mingle - to travel, to track</Text>
-    <Text style={styles.placeholderText}>
-      Placeholder text for Metro Mingle goes here. Describe the app's features, purpose, and any other relevant information.
-    </Text>
-
-    <Text style={styles.info}>Meet the team</Text>
-
-    <TouchableOpacity onPress={() => openLink("https://github.com/JustaGlitch")}>
-      <Text style={styles.link}>Justin, project lead</Text>
-    </TouchableOpacity>
-    
-    <TouchableOpacity onPress={() => openLink("https://github.com/pablo-romeroclavijo")}>
-      <Text style={styles.link}>Pablo, back end developer</Text>
-    </TouchableOpacity>
-
-    <TouchableOpacity onPress={() => openLink("https://github.com/olgaKhristo")}>
-      <Text style={styles.link}>Sidique, front end developer</Text>
-    </TouchableOpacity>
-
-    <TouchableOpacity onPress={() => openLink("https://github.com/olgaKhristo")}>
-      <Text style={styles.link}>Olga, front end developer</Text>
-    </TouchableOpacity>
-
-    <TouchableOpacity onPress={() => openLink("https://github.com/olgaKhristo")}>
-      <Text style={styles.link}>Andrew, front end developer</Text>
-    </TouchableOpacity>
-
-    <TouchableOpacity onPress={() => openLink("https://github.com/olgaKhristo")}>
-      <Text style={styles.link}>Anoop, front end developer</Text>
-    </TouchableOpacity>
-   
-  </View>
-
-          
-        )}
-        {selectedHelpOption === 3 && (
-          <Text style={styles.info}>Delete my account content goes here</Text>
-        )}
-        
-        <View style={{ alignSelf: "center", marginBottom: 20 }}>
-          <AppButton
-            title="Close"
-            onPress={() => setModalHelpVisible(false)}
-            style={styles.info}
-          />
-        </View>
-      </View>
-    </Modal>
       </GestureRecognizer>
+      
+      <GestureRecognizer style={{ flex: 1 }} onSwipeDown={() => closeHelpModal()}>
+      <Modal
+        animationType="slide"
+        transparent={false}
+        visible={modalHelpVisible}
+        onRequestClose={() => setModalHelpVisible(false)}
+      >
+        <View style={styles.modalContainer}>
+          {selectedHelpOption === 1 && (
+            <View style={{paddingTop: 65}}>
+              <ScrollView>
+                <Text style={styles.info}>Is my data safe?</Text>
+                <Text style={styles.placeholderText}>
+                  Placeholder text for data safety goes here. You can find key information, privacy and security settings all in your Google Account. We have created easy-to-use tools like Dashboard and My Activity, which give you transparency data collected from your activity across Google services. There are also powerful privacy controls such as Activity Controls and Ad Settings, which allow you to switch the collection and use of data on or off to decide how all of Google can work better for you.
+                </Text>
+
+                <Text style={styles.info}>How to share my event on Social Media?</Text>
+                <Text style={styles.placeholderText}>
+                  Placeholder text for sharing on social media goes here. You can find key information, privacy and security settings all in your Google Account. We have created easy-to-use tools like Dashboard and My Activity, which give you transparency data collected from your activity across Google services. There are also powerful privacy controls such as Activity Controls and Ad Settings, which allow you to switch the collection and use of data on or off to decide how all of Google can work better for you.
+                </Text>
+
+                <Text style={styles.info}>Can I use this app for businesses?</Text>
+                <Text style={styles.placeholderText}>
+                  Placeholder text for using the app for businesses goes here. You can find key information, privacy and security settings all in your Google Account. We have created easy-to-use tools like Dashboard and My Activity, which give you transparency data collected from your activity across Google services. There are also powerful privacy controls such as Activity Controls and Ad Settings, which allow you to switch the collection and use of data on or off to decide how all of Google can work better for you.
+                </Text>
+              </ScrollView>
+            </View>
+          )}
+          {selectedHelpOption === 2 && (
+            <View>
+              <Text style={styles.info}>Metro Mingle - to travel, to track</Text>
+              <Text style={styles.placeholderText}>
+                Placeholder text for Metro Mingle goes here. Describe the app's features, purpose, and any other relevant information.
+              </Text>
+
+              <Text style={styles.info}>Meet the team</Text>
+
+              <TouchableOpacity onPress={() => openLink("https://github.com/JustaGlitch")}>
+                <Text style={styles.link}>Justin, project lead</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity onPress={() => openLink("https://github.com/pablo-romeroclavijo")}>
+                <Text style={styles.link}>Pablo, back end developer</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity onPress={() => openLink("https://github.com/olgaKhristo")}>
+                <Text style={styles.link}>Sidique, front end developer</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity onPress={() => openLink("https://github.com/olgaKhristo")}>
+                <Text style={styles.link}>Olga, front end developer</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity onPress={() => openLink("https://github.com/olgaKhristo")}>
+                <Text style={styles.link}>Andrew, front end developer</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity onPress={() => openLink("https://github.com/olgaKhristo")}>
+                <Text style={styles.link}>Anoop, front end developer</Text>
+              </TouchableOpacity>
+            </View>
+          )}
+          {selectedHelpOption === 3 && (
+            <Text style={styles.info}>Delete my account content goes here</Text>
+          )}
+
+          <View style={{ alignSelf: "center", marginBottom: 20 }}>
+            <AppButton
+              title="Close"
+              onPress={() => setModalHelpVisible(false)}
+              style={styles.info}
+            />
+          </View>
+        </View>
+      </Modal>
+      </GestureRecognizer>
+
       <View style={styles.logoutButton}>
         <LogoutButton />
       </View>
@@ -382,9 +319,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   link: {
-    color: 'blue', 
-    // textDecorationLine: 'underline',
-    marginVertical: 5, 
-  },
-  
+    color: "blue",
+    marginVertical: 5,
+  }
 });
