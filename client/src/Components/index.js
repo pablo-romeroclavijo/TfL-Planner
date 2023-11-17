@@ -12,8 +12,5 @@ export { default as EventHolder } from "./EventHolder"
 export { default as EventModal } from "./EventModal"
 export { default as CreateAsync } from "./AsyncStorageCreate"
 export { default as GetAsync } from "./AsyncStorageGet"
-<<<<<<< HEAD
 export { default as RouteParamsModal } from "./RouteParamsModal"
-=======
 export { default as LogoutButton } from "./LogOutComponent"
->>>>>>> f5808c26be30481db792e41e98e83ace9924b369
