@@ -12,9 +12,8 @@ load_dotenv()
 class Weather():
     url = "http://api.weatherapi.com/v1/forecast.json?"
     key = os.environ.get('WEATHER_API') 
+    mock = 1
     
-    def __innit__():
-        pass
     @classmethod
     def current_forecast(cls, location):
         comp_url = f"{cls.url}key={cls.key}&q={location}&aqi=no&alerts=yes"
@@ -41,7 +40,7 @@ class Weather():
                 forecast_dict['alert_type'] = alert
             except:
                 pass
-            
+            print(comp_url)
             return jsonify(forecast=forecast_dict)
         
         raise WeatherForecastError
@@ -52,11 +51,9 @@ class Weather():
         request_url = f"{cls.url}key={cls.key}&q={location}&days={days}&aqi=no&alerts=yes"
 
         response = requests.get(request_url)
-        print(response.status_code)
         
         if response.status_code == 200:
             data = response.json()
-            data=response.json()
             forecast_day = data['forecast']['forecastday'][days-1]
             forecast_hour = data['forecast']['forecastday'][days-1]["hour"][hour]
             
@@ -72,6 +69,7 @@ class Weather():
                 "precip_mm": forecast_hour['precip_mm'],
                 "humidity": forecast_hour['humidity'],
             }
+      
             return jsonify(forecast=forecast_dict)
         
         raise WeatherForecastError
