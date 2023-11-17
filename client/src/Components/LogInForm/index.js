@@ -56,6 +56,7 @@ export default function LogInForm({ navigation }) {
 			const data = await response.json()
 			const token = data.token
 			CreateAsync("token", token)
+			CreateAsync("username", username)
 			console.log(token)
 			setUsernameInput("")
 			setPasswordInput("")
