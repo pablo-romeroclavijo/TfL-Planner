@@ -1,8 +1,6 @@
 from flask import request, jsonify
 import bcrypt
 from ast import literal_eval
-
-
 from application.models.User import User
 from application.models.Token import Token
 from application.models.Errors import AuthenticationError, UserNotFound
@@ -24,7 +22,6 @@ def create():
         bytes = data['password'].encode('utf-8')  
         salt = bcrypt.gensalt()
         hash = bcrypt.hashpw(bytes, salt)
-
         data['password'] = hash
 
         user = User.create_user(data)
