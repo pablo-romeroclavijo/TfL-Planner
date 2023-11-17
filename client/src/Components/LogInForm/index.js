@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
 		justifyContent: "flex-start",
 	},
 	textStyle: {
-		fontFamily: Platform.OS === "android" ? "Roboto" : "San Francisco",
+		fontFamily: Platform.OS === "android" ? "Roboto" : "Avenir",
 		fontSize: 30,
 		fontWeight: "bold",
 		alignContent: "flex-start",
