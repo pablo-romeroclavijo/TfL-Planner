@@ -68,8 +68,6 @@ def test_current(test_client, monkeypatch):
     with pytest.raises(WeatherForecastError):
         Weather.current_forecast('Test Location')
 
-
-    
 def test_future_forecast(test_client, monkeypatch):
     mock_data = MockData.weather_future
     test_date = '2023-11-18 16:05:06'
