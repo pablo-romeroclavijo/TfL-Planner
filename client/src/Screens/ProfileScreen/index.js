@@ -32,12 +32,43 @@ export default function Profile() {
   useEffect(() => {
     async function getToken() {
       setToken(await GetAsync("token"));
-      setUsername(await GetAsync("username"));
+      // setUsername(await GetAsync("username"));
     }
     getToken();
   }, []);
 
-  console.log(token);
+  async function fetchData() {
+    try {
+      const response = await fetch(
+        `https://metro-mingle.onrender.com/user/profile`,
+        {
+          method: "GET",
+          headers: {
+            Accept: "application/json",
+            Authorization: token,
+          },
+        }
+      );
+
+      if (response.status === 200) {
+        const data = await response.json();
+        setPostcodeInput(data.postcode);
+        setJourneyPreferences(data.preferences.journeyPreferences);
+        setMaxWalkingMinutes(data.preferences.maxWalkingMinutes);
+        setWalkingSpeed(data.preferences.walkingSpeed);
+        setAccessibilityPreferences(data.preferences.accessibilityPreferences);
+        console.log(data)
+      } else {
+        console.error("Failed to fetch user preferences");
+      }
+    } catch (error) {
+      console.error("Error fetching user preferences:", error.message);
+    }
+  }
+
+    useEffect(() => {
+    fetchData();
+  }, [token]);
 
   async function handleFormSubmit() {
     try {
@@ -63,14 +94,15 @@ export default function Profile() {
         "https://metro-mingle.onrender.com/user/preferences",
         options
       );
-      console.log(response.status);
+
       if (response.status === 200) {
-        Alert.alert("Submit Successful", [
-          {
-            text: "OK",
-            onPress: () => closeModal(),
-          },
-        ]);
+        Alert.alert(
+          "Submit Successful",
+          "Your Preferences have been updated",
+          [
+            { text: "OK", onPress: () => closeModal()},
+          ]
+        )
       }
     } catch (error) {
       console.error("Error submitting preferences:", error.message);
@@ -131,14 +163,16 @@ export default function Profile() {
             </View>
             <View style={styles.modalContainer}>
               <AppTextInput
-                placeholder="Enter Postcode"
+                placeholder="Postcode"
                 icon="post"
                 onChangeText={(text) => setPostcodeInput(text)}
+                value={postcodeInput}
               />
               <AppTextInput
-                placeholder="How long are you willing to Walk?"
+                placeholder="Max time you are willing to walk"
                 icon="post"
                 onChangeText={(text) => setMaxWalkingMinutes(text)}
+                value={maxWalkingMinutes}
               />
 
               <Text>What are your journey Preferences</Text>
@@ -146,6 +180,7 @@ export default function Profile() {
                 style={{ height: 30, width: "100%" }}
                 selectedValue={journeyPreferences}
                 onValueChange={(itemValue) => setJourneyPreferences(itemValue)}
+                value={journeyPreferences}
               >
                 <Picker.Item label="Least interchange" value="leastinterchange" />
                 <Picker.Item label="Least walking" value="leastwalking" />
@@ -155,7 +190,9 @@ export default function Profile() {
               <Text>What is your max walking speed</Text>
               <Picker
                 style={{ height: 30, width: "100%" }}
+                selectedValue={walkingSpeed}
                 onValueChange={(itemValue) => setWalkingSpeed(itemValue)}
+                value={walkingSpeed}
               >
                 <Picker.Item label="Slow" value="slow" />
                 <Picker.Item label="Average" value="average" />
@@ -165,7 +202,9 @@ export default function Profile() {
               <Text>Accessibility Preferences</Text>
               <Picker
                 style={{ height: 30, width: "100%" }}
+                selectedValue={accessibilityPreferences}
                 onValueChange={(itemValue) => setAccessibilityPreferences(itemValue)}
+                value={accessibilityPreferences}
               >
                 <Picker.Item label="None" value="none" />
                 <Picker.Item label="No stairs" value="noSolidStairs" />
