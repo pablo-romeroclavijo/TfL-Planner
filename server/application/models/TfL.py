@@ -65,11 +65,14 @@ class Leg():
         self.disruptions = [x['description'] for x in leg['disruptions']]
         self.isDisrupted = leg['isDisrupted']
         self.stops = [x['name'] for x in leg['path']['stopPoints']]
+        self.line = None
         try:
             self.distance = leg['distance']
         except:
             self.distance = 0
-        
+        if self.mode == 'tube' or self.mode == 'bus' :
+            self.line = self.summary.split(' ')[0]
+
     def create_leg(data):
         leg = Leg(data)
         leg_dict={
@@ -83,7 +86,8 @@ class Leg():
             'stops': leg.stops,
             'arrivalPoint':leg.arrivalPoint,
             'departurePoint': leg.departurePoint,
-            'distance': str(int(leg.distance))+'m'
+            'distance': str(int(leg.distance))+'m',
+            'line': leg.line
         }
         return(leg_dict)
         

@@ -1,21 +1,26 @@
 import {View} from "react-native"
 import Svg, { Text, Path, Circle, Line, Rect } from 'react-native-svg';
+import BlinkingCircle from "../BlinkingCircle";
 
-const SVG = () =>{
+const SVG = ({journey, user}) =>{
   const legSpacing = 60; // Vertical space between legs
   const nodeRadius = 5; // Radius of the circle representing a node
   let currentY = 40; // Initial Y position to accommodate departure point text
-  const charWidth = 8; // Approximate width of each character in pixels
+  const charWidth = 6; // Approximate width of each character in pixels
 
   const svgElements = journey.legs.map((leg, legIndex) => {
     let elements = [];
+    let departure = new Date(leg.departure);
+    const now = new Date()
+    let arrival = new Date(leg.arrival)
+
 
     // Add departure point at the start of the leg
-    let date = new Date(leg.departure);
-    let timeText = `${date.getHours()}:${date.getMinutes().toString().padStart(2, '0')}`;
+    
+    let timeText = `${departure.getHours()}:${departure.getMinutes().toString().padStart(2, '0')}`;
 
     elements.push(
-      <Text x="60" y={currentY + 5} fontFamily="Verdana" fontSize="11" key={"departurePoint-" + legIndex}>
+      <Text x="60" y={currentY + 5} fontFamily="Verdana" fontSize="11" key={"departurePoint-" + legIndex} >
         {leg.departurePoint}
       </Text>
     );
@@ -29,7 +34,10 @@ const SVG = () =>{
     );
 
     // Add a line to represent the leg
-    const styling = line_object[leg.mode]; // make sure line_object is defined and accessible
+    let styling = line_object[leg.mode]; // make sure line_object is defined and accessible
+    if (leg.mode =='tube'){
+      styling.color = tube_lines[leg.line].boxColor
+    }
     elements.push(
       <Line 
         x1="50" y1={currentY + 6} x2="50" y2={currentY + legSpacing}
@@ -37,6 +45,23 @@ const SVG = () =>{
         key={"line-" + legIndex} 
       />
     );
+
+    if (user == true){
+      
+    
+      if(now < arrival && now > departure){
+        let minutes = (now.getTime()-departure.getTime())/60000
+        let userY = currentY + (legSpacing*minutes/leg.duration)
+        // elements.push(
+        //   <BlinkingCircle userY = {userY}/>
+        // );
+
+        elements.push(
+          <Circle cx="50" cy={userY} r={10} fill="red" stroke="red" strokeWidth="3" key={"user" + legIndex} />
+          );
+
+      }
+    }
 
     let stopsText;
     if (leg.mode === 'walking') {
@@ -52,22 +77,30 @@ const SVG = () =>{
     );
 
     // Add a box with rounded edges for the mode
-    const modeText = leg.mode.charAt(0).toUpperCase() + leg.mode.slice(1);
-    const boxWidth = modeText.length * charWidth;
+    let modeText = leg.mode.charAt(0).toUpperCase() + leg.mode.slice(1);
+    let boxWidth = styling.boxSize
     const modeTextY = currentY + (legSpacing / 2) + 18;
     const boxX = 80;
     const boxY = modeTextY - 15;
+    let boxColor = styling.boxColor
+
+    if (leg.mode =='tube'){
+      modeText = leg.line
+      boxColor = tube_lines[leg.line].boxColor
+      color = tube_lines[leg.line].boxColor
+      boxWidth = tube_lines[leg.line].boxSize
+    }
 
     elements.push(
       <Rect 
         x={boxX} y={boxY} width={boxWidth} height="20" rx="5" ry="5"
-        fill={styling.boxColor} stroke="black" strokeWidth="1"
+        fill={boxColor} stroke="black" strokeWidth="1"
         key={"rect-" + legIndex}
       />
     );
     elements.push(
       <Text x={boxX + 5} y={modeTextY} fontFamily="Verdana" fontSize="12" key={"modeText-" + legIndex}>
-        {modeText}
+        {modeText == 'Bus' ? `Bus line ${leg.line}` : modeText}
       </Text>
     );
 
@@ -108,89 +141,105 @@ const SVG = () =>{
 };
 
 const line_object={
-    walking: {line_dash: 5.5, color: "grey", boxColor: 'grey'},
-    overground: {line_dash: 0, color: "orange", boxColor: 'orange'},
-    tube: {line_dash: 0, color: "blue", boxColor: 'blue'},
-    dlr: {line_dash: 0, color: "aquamarine", boxColor: 'aquamarine'},
+    walking: {line_dash: 5.5, color: "grey", boxColor: 'white', boxSize: 52},
+    overground: {line_dash: 0, color: "#ee7c0e", boxColor: '#ee7c0e',boxSize: 73},
+    tube: {line_dash: 0, color: "blue", boxColor: 'blue', boxSize: 35},
+    dlr: {line_dash: 0, color: "#00a4a7", boxColor: '#00a4a7', boxSize: 10},
+    "elizabeth-line": {line_dash: 0, color: "#802bc2", boxColor: '#802bc2', boxSize: 81},
+    "national-rail": {line_dash: 0, color: "#0e46b5", boxColor: '#0e46b5', boxSize: 75},
+    bus: {line_dash: 0, color: "red", boxColor: 'red',  boxSize: 75}
 }
 
+const tube_lines = {
+  'Bakerloo': {color: "grey", boxColor: '#b36305', boxSize: 55},
+  'Central': {color: "grey", boxColor: '#e32017', boxSize: 45},
+  'Circle': {color: "grey", boxColor: '#ffd300', boxSize: 45},
+  'District': {color: "grey", boxColor: '#00782a', boxSize: 52},
+  'Hammersmith': {color: "grey", boxColor: '#f3a9bb', boxSize: 70},
+  'Jubilee': {color: "grey", boxColor: '#a0a5a9', boxSize: 48},
+  'Metropolitan': {color: "grey", boxColor: '#9b0056', boxSize: 70},
+  'Northern': {color: "grey", boxColor: '#000000', boxSize: 55},
+  'Piccadilly': {color: "grey", boxColor: '#003688', boxSize: 65},
+  'Victoria': {color: "grey", boxColor: '	#0098d4', boxSize: 55},
+  'Waterloo': {color: "grey", boxColor: '#95cdba', boxSize: 55},
+}
 // Example usage with your journey object
-const journey ={
+// const journey ={
     
-        "arrivalDateTime": "2023-11-17T14:39:00",
-        "duration": 50,
-        "legs": [
-          {
-            "arrival": "2023-11-17T13:57:00",
-            "arrivalPoint": "Camden Road Rail Station",
-            "departure": "2023-11-17T13:49:00",
-            "departurePoint": "NW1 9HU",
-            "distance": "339m",
-            "distuptions": [],
-            "duration": 8,
-            "isDisrupted": false,
-            "mode": "walking",
-            "stops": [],
-            "summary": "Walk to Camden Road Station"
-          },
-          {
-            "arrival": "2023-11-17T14:02:00",
-            "arrivalPoint": "Highbury & Islington Rail Station",
-            "departure": "2023-11-17T13:57:00",
-            "departurePoint": "Camden Road Rail Station",
-            "distance": "0m",
-            "distuptions": [],
-            "duration": 5,
-            "isDisrupted": false,
-            "mode": "overground",
-            "stops": [
-              "Caledonian Road & Barnsbury Rail Station",
-              "Highbury & Islington Rail Station"
-            ],
-            "summary": "London Overground towards Stratford"
-          },
-          {
-            "arrival": "2023-11-17T14:30:00",
-            "arrivalPoint": "Rotherhithe Rail Station",
-            "departure": "2023-11-17T14:10:00",
-            "departurePoint": "Highbury & Islington Rail Station",
-            "distance": "0m",
-            "distuptions": [
-              "ROTHERHITHE STATION: This station has short platforms. Customers are advised to travel in the front 4 coaches and listen to on-board announcements."
-            ],
-            "duration": 20,
-            "isDisrupted": true,
-            "mode": "overground",
-            "stops": [
-              "Canonbury Rail Station",
-              "Dalston Junction Rail Station",
-              "Haggerston Rail Station",
-              "Hoxton Rail Station",
-              "Shoreditch High Street Rail Station",
-              "Whitechapel Rail Station",
-              "Shadwell Rail Station",
-              "Wapping Rail Station",
-              "Rotherhithe Rail Station"
-            ],
-            "summary": "London Overground towards Crystal Palace"
-          },
-          {
-            "arrival": "2023-11-17T14:39:00",
-            "arrivalPoint": "SE16 4JB",
-            "departure": "2023-11-17T14:30:00",
-            "departurePoint": "Rotherhithe Rail Station",
-            "distance": "300m",
-            "distuptions": [],
-            "duration": 9,
-            "isDisrupted": false,
-            "mode": "walking",
-            "stops": [],
-            "summary": "Walk to SE16 4JB"
-          }
-        ],
-        "origin": "NW19HU",
-        "startDateTime": "2023-11-17T13:49:00"
-      }
+//         "arrivalDateTime": "2023-11-17T14:39:00",
+//         "duration": 50,
+//         "legs": [
+//           {
+//             "arrival": "2023-11-17T13:57:00",
+//             "arrivalPoint": "Camden Road Rail Station",
+//             "departure": "2023-11-17T13:49:00",
+//             "departurePoint": "NW1 9HU",
+//             "distance": "339m",
+//             "distuptions": [],
+//             "duration": 8,
+//             "isDisrupted": false,
+//             "mode": "walking",
+//             "stops": [],
+//             "summary": "Walk to Camden Road Station"
+//           },
+//           {
+//             "arrival": "2023-11-17T14:02:00",
+//             "arrivalPoint": "Highbury & Islington Rail Station",
+//             "departure": "2023-11-17T13:57:00",
+//             "departurePoint": "Camden Road Rail Station",
+//             "distance": "0m",
+//             "distuptions": [],
+//             "duration": 5,
+//             "isDisrupted": false,
+//             "mode": "overground",
+//             "stops": [
+//               "Caledonian Road & Barnsbury Rail Station",
+//               "Highbury & Islington Rail Station"
+//             ],
+//             "summary": "London Overground towards Stratford"
+//           },
+//           {
+//             "arrival": "2023-11-17T14:30:00",
+//             "arrivalPoint": "Rotherhithe Rail Station",
+//             "departure": "2023-11-17T14:10:00",
+//             "departurePoint": "Highbury & Islington Rail Station",
+//             "distance": "0m",
+//             "distuptions": [
+//               "ROTHERHITHE STATION: This station has short platforms. Customers are advised to travel in the front 4 coaches and listen to on-board announcements."
+//             ],
+//             "duration": 20,
+//             "isDisrupted": true,
+//             "mode": "overground",
+//             "stops": [
+//               "Canonbury Rail Station",
+//               "Dalston Junction Rail Station",
+//               "Haggerston Rail Station",
+//               "Hoxton Rail Station",
+//               "Shoreditch High Street Rail Station",
+//               "Whitechapel Rail Station",
+//               "Shadwell Rail Station",
+//               "Wapping Rail Station",
+//               "Rotherhithe Rail Station"
+//             ],
+//             "summary": "London Overground towards Crystal Palace"
+//           },
+//           {
+//             "arrival": "2023-11-17T14:39:00",
+//             "arrivalPoint": "SE16 4JB",
+//             "departure": "2023-11-17T14:30:00",
+//             "departurePoint": "Rotherhithe Rail Station",
+//             "distance": "300m",
+//             "distuptions": [],
+//             "duration": 9,
+//             "isDisrupted": false,
+//             "mode": "walking",
+//             "stops": [],
+//             "summary": "Walk to SE16 4JB"
+//           }
+//         ],
+//         "origin": "NW19HU",
+//         "startDateTime": "2023-11-17T13:49:00"
+//       }
 
 // const journey = {
 //     "arrivalDateTime": "2023-11-17T22:02:00",
