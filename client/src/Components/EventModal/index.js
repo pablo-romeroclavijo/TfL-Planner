@@ -1,32 +1,49 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { StyleSheet, View, Text, Pressable, FlatList } from "react-native"
+import GetAsync from "../AsyncStorageGet"
+import LoadingModal from "../LoadingModal"
 
-const EventModal = ({ visible, onClose, event, attendees }) => {
+const EventModal = ({ onClose, code }) => {
+	const [event, setEvent] = useState({})
+	const [attendees, setAttendees] = useState([])
+	const [isLoading, setIsLoading] = useState(true)
+	useEffect(() => {
+		getEvent(code).then((data) => {
+			setEvent(data.event)
+			console.log("new", data)
+			setAttendees(data.attendees)
+			setIsLoading(false)
+		})
+	}, [])
 	return (
 		<View style={styles.modalContent}>
 			<Pressable style={styles.closeButton} onPress={onClose}>
 				<Text style={styles.closeButtonText}>Close</Text>
 			</Pressable>
-			<View style={styles.header}>
-				<Text style={styles.headerText}>{event.title}</Text>
-				<Text style={styles.dateText}>{event.date}</Text>
-				<Text style={styles.codeText}>{event.code}</Text>
-				<Text style={styles.locationText}>{event.location}</Text>
-			</View>
-
-			<Text style={styles.descriptionText}>{event.description}</Text>
-
-			<FlatList
-				data={attendees}
-				keyExtractor={(item) => item.name}
-				renderItem={({ item }) => (
-					<View style={styles.attendee}>
-						<Text style={styles.attendeeName}>{item.name}</Text>
-						<Text style={styles.attendeeStatus}>{item.status}</Text>
-						<Text style={styles.attendeeETA}>ETA: {item.eta}</Text>
+			{isLoading ? (
+				<Text>Loading...</Text>
+			) : (
+				<>
+					<View style={styles.header}>
+						<Text style={styles.headerText}>{event.title}</Text>
+						<Text style={styles.dateText}>{event.date}</Text>
+						<Text style={styles.codeText}>{event.code}</Text>
+						<Text style={styles.locationText}>{event.location}</Text>
 					</View>
-				)}
-			/>
+					<Text style={styles.descriptionText}>{event.description}</Text>
+					<FlatList
+						data={attendees}
+						keyExtractor={(item) => item.id}
+						renderItem={({ item }) => (
+							<View style={styles.attendee}>
+								<Text style={styles.attendeeName}>{item.name}</Text>
+								<Text style={styles.attendeeStatus}>{item.status}</Text>
+								<Text style={styles.attendeeETA}>ETA: {item.eta}</Text>
+							</View>
+						)}
+					/>
+				</>
+			)}
 		</View>
 	)
 }
@@ -93,3 +110,28 @@ const styles = StyleSheet.create({
 })
 
 export default EventModal
+async function getEvent(code) {
+	const token = await GetAsync("token")
+	try {
+		const options = {
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json",
+			},
+		}
+		const response = await fetch(
+			`https://metro-mingle.onrender.com/event/${code}/details`,
+			options
+		)
+
+		const data = await response.json()
+
+		if (response.status == 200) {
+			return data
+		} else {
+			console.log(data)
+		}
+	} catch (error) {
+		console.log(error)
+	}
+}
