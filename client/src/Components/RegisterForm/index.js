@@ -6,6 +6,8 @@ import colors from "../../config/colors";
 import { LoadingModal, AppButton, AppTextInput } from "../../Components";
 import GradientBackground from "../../Components/Gradient";
 
+import CreateAsync from "../AsyncStorageCreate"
+
 export default function Register({ navigation }) {
 	const [usernameInput, setUsernameInput] = useState("");
 	const [passwordInput, setPasswordInput] = useState("");
@@ -43,19 +45,20 @@ export default function Register({ navigation }) {
 		};
 		const response = await fetch("https://metro-mingle.onrender.com/user/register", options);
 
-		if (response.status == 201) {
-			const data = await response.json().then(setLoading(false));
-			const token = data.token;
-			navigation.navigate("Dashboard");
-			setEmailInput("");
-			setUsernameInput("");
-			setPasswordInput("");
-			setConfirmPasswordInput("");
-		} else {
-			alert("Register failed, try again later.");
-			setLoading(false);
-		}
-	}
+    if (response.status == 201) {
+      const data = await response.json().then(setLoading(false));
+      const token = data.token;
+      navigation.navigate("Dashboard");
+      CreateAsync("token", token)
+      setEmailInput("");
+      setUsernameInput("");
+      setPasswordInput("");
+      setConfirmPasswordInput("");
+    } else {
+      alert("Register failed, try again later.");
+      setLoading(false)
+    }
+  }
 
 	return (
 		<GradientBackground colors={["#1C1C1C", "#2370EE", "#FFFFFF"]}>
