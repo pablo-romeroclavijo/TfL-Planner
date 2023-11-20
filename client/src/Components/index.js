@@ -20,3 +20,5 @@ export { default as Help } from "./HelpComponent"
 export { default as SVG } from "./MapSVG"
 export { default as SlideBox } from "./SlideBox"
 export { default as BlinkingCircle } from "./BlinkingCircle"
+export {default as RouteInfo} from './RouteDetails'
+
