@@ -5,16 +5,16 @@ import validator from "validator"
 import DateTimePicker from "@react-native-community/datetimepicker"
 
 export default function CreateEventForm({ closeModal }) {
-	const [postcodeInput, setPostcodeInput] = useState("")
-	const [descriptionInput, setDescriptionInput] = useState("")
-	const [titleInput, setTitleInput] = useState("")
-	const [token, setToken] = useState("")
-	const [date, setDate] = useState(new Date())
-	const [showDatePicker, setShowDatePicker] = useState(false)
-	const [showTimePicker, setShowTimePicker] = useState(false)
-	const [text, setText] = useState("")
-	const [fDate, setFDate] = useState("")
-	const [fTime, setFTime] = useState("")
+  const [postcodeInput, setPostcodeInput] = useState("");
+  const [descriptionInput, setDescriptionInput] = useState("");
+  const [titleInput, setTitleInput] = useState("");
+  const [token, setToken] = useState("");
+  const [date, setDate] = useState(new Date());
+  const [showDatePicker, setShowDatePicker] = useState(false);
+  const [showTimePicker, setShowTimePicker] = useState(false);
+  const [text, setText] = useState("");
+  const [fDate, setFDate] = useState("");
+  const [fTime, setFTime] = useState("");
 
 	useEffect(() => {
 		if (fDate && fTime) {
@@ -37,31 +37,30 @@ export default function CreateEventForm({ closeModal }) {
 		setShowTimePicker(false)
 	}
 
-	const onDateChange = (selectedDate) => {
-		const currentDate = selectedDate || date
-		hideDateTimePicker()
-		let tempDate = new Date(currentDate)
-		setFDate(
-			tempDate.getFullYear() +
-				"-" +
-				(tempDate.getMonth() + 1) +
-				"-" +
-				tempDate.getDate()
-		)
-		fDate && fTime ? setText(fDate + " " + fTime) : null
-	}
+  const onDateChange = (event, selectedDate) => {
+    const currentDate = selectedDate || date;
+    console.log(currentDate)
+    hideDateTimePicker();
+    let tempDate = new Date(currentDate);
+    setFDate(
+      tempDate.getFullYear() +
+        "-" +
+        (tempDate.getMonth() + 1).toString().padStart(2, "0") +
+        "-" +
+        tempDate.getDate().toString().padStart(2, "0")
+    );
+  };
 
-	const onTimeChange = (selectedTime) => {
-		const currentTime = selectedTime || date
-		hideDateTimePicker()
-		let tempTime = new Date(currentTime)
-		setFTime(
-			tempTime.getHours() +
-				":" +
-				tempTime.getMinutes().toString().padStart(2, "0")
-		)
-		fDate && fTime ? setText(fDate + " " + fTime) : null
-	}
+  const onTimeChange = (event, selectedTime) => {
+    const currentTime = selectedTime || date;
+    hideDateTimePicker();
+    let tempTime = new Date(currentTime);
+    setFTime(
+      tempTime.getHours().toString().padStart(2, "0") +
+        ":" +
+        tempTime.getMinutes().toString().padStart(2, "0")
+    );
+  };
 
 	useEffect(() => {
 		async function getToken() {
@@ -108,14 +107,14 @@ export default function CreateEventForm({ closeModal }) {
 			options
 		)
 
-		if (response.status == 201) {
-			alert("Event Created.")
-			closeModal()
-		} else {
-			alert("Event creation failed, try again later.")
-			closeModal()
-		}
-	}
+    if (response.status === 201) {
+      alert("Event Created.");
+      closeModal();
+    } else {
+      alert("Event creation failed, try again later.");
+      closeModal();
+    }
+  }
 
 	return (
 		<View style={{ alignContent: "center" }}>
