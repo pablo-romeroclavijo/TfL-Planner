@@ -8,7 +8,7 @@ import {
   Alert,
   KeyboardAvoidingView,
   Platform,
-  Dimensions, // Import Dimensions
+  Dimensions, 
 } from "react-native";
 import GestureRecognizer from "react-native-swipe-gestures";
 import { Picker } from "@react-native-picker/picker";
@@ -28,6 +28,15 @@ export default function PreferencesForm() {
   const [accessibilityPreferences, setAccessibilityPreferences] =
     useState("None");
   const [token, setToken] = useState("");
+  const [originalPreferences, setOriginalPreferences] = useState({
+    postcode: "",
+    preferences: {
+      journeyPreferences: "",
+      maxWalkingMinutes: 0,
+      walkingSpeed: "",
+      accessibilityPreferences: "",
+    },
+  })
 
   useEffect(() => {
     async function getToken() {
@@ -56,6 +65,7 @@ export default function PreferencesForm() {
         setMaxWalkingMinutes(data.preferences.maxWalkingMinutes);
         setWalkingSpeed(data.preferences.walkingSpeed);
         setAccessibilityPreferences(data.preferences.accessibilityPreferences);
+        setOriginalPreferences(data)
         console.log(data);
       }
     } catch (error) {
@@ -94,13 +104,29 @@ export default function PreferencesForm() {
 
       if (response.status === 200) {
         Alert.alert("Submit Successful", "Your Preferences have been updated", [
-          { text: "OK", onPress: () => closeModal() },
+          {
+            text: "OK",
+            onPress: async () => {
+              // Update the originalPreferences state when the changes are saved
+              setOriginalPreferences({
+                postcode: postcodeInput,
+                preferences: {
+                  journeyPreferences,
+                  maxWalkingMinutes,
+                  walkingSpeed,
+                  accessibilityPreferences,
+                },
+              });
+  
+              closeModal();
+            },
+          },
         ]);
       }
     } catch (error) {
       console.error("Error submitting preferences:", error.message);
     }
-  }
+  };
 
   const openModal = () => {
     setModalVisible(true);
@@ -108,6 +134,15 @@ export default function PreferencesForm() {
 
   const closeModal = () => {
     setModalVisible(false);
+  };
+
+  const resetForm = () => {
+    // Reset the form to the original preferences fetched from the backend
+    setPostcodeInput(originalPreferences.postcode);
+    setJourneyPreferences(originalPreferences.preferences.journeyPreferences);
+    setMaxWalkingMinutes(originalPreferences.preferences.maxWalkingMinutes);
+    setWalkingSpeed(originalPreferences.preferences.walkingSpeed);
+    setAccessibilityPreferences(originalPreferences.preferences.accessibilityPreferences);
   };
 
   return (
@@ -121,7 +156,7 @@ export default function PreferencesForm() {
         <Text style={styles.click}>Edit Preferences</Text>
       </TouchableOpacity>
 
-      <GestureRecognizer style={{ flex: 1 }} onSwipeDown={() => closeModal()}>
+      <GestureRecognizer style={{ flex: 1 }} onSwipeDown={() => {resetForm(); closeModal()}}>
         <Modal
           animationType="slide"
           transparent={false}
@@ -209,7 +244,7 @@ export default function PreferencesForm() {
                 buttonText="Submit"
               />
               <View style={{ alignSelf: "center" }}>
-                <TouchableOpacity onPress={() => closeModal()}>
+                <TouchableOpacity onPress={() => {resetForm(), closeModal()}}>
                   <Text
                     style={{
                       color: colors.secondary,

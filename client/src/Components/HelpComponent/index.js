@@ -54,6 +54,10 @@ function Help() {
       <GestureRecognizer
         style={{ flex: 1 }}
         onSwipeDown={() => closeHelpModal()}
+        config={{
+          velocityThreshold: 0.9, // Adjust this value (default is 0.3) to control the velocity sensitivity
+          directionalOffsetThreshold: 80, // Adjust this value (default is 80) to control the directional offset sensitivity
+        }}
       >
         <Modal
           animationType="slide"
