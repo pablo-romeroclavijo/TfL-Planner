@@ -3,17 +3,18 @@ import { View, Text, Image, StyleSheet, SafeAreaView } from "react-native";
 
 const Header = () => {
 	return (
-		<View style={styles.header}>
-			<Image source={require("../../assets/logo2.png")} style={styles.logo} />
-		</View>
+			<View style={styles.container}>
+				<Image source={require("../../assets/logo2.png")} style={styles.logo} />
+			</View>
+
 	);
 };
 
 const styles = StyleSheet.create({
 	header: {
-		height: 110,
+		height: 100,
 		width: "100%", // Stretch across the screen width
-		backgroundColor: "#0B2364",
+		backgroundColor: "btn2",
 		alignItems: "center",
 		justifyContent: "center",
 		flexDirection: "row",

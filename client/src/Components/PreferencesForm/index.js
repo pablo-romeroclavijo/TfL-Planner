@@ -102,10 +102,6 @@ export default function PreferencesForm() {
 	};
 
 	return (
-		// <KeyboardAvoidingView
-		//   behavior={Platform.OS === "ios" ? "padding" : "height"}
-		//   style={styles.container}
-		// >
 		<View style={styles.container}>
 			<Text style={styles.header}>Account</Text>
 			<View style={styles.fullWidthUnderline} />
@@ -168,15 +164,12 @@ export default function PreferencesForm() {
 				</Modal>
 			</GestureRecognizer>
 		</View>
-		// </KeyboardAvoidingView>
 	);
 }
 
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-    // backgroundColor: "#66DDF5"
-		// padding: width * 0.05,
 	},
 	header: {
 		fontSize: height * 0.03,
