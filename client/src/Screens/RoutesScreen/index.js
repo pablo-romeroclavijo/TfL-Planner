@@ -14,6 +14,7 @@ export default function Routes(){
 
 const styles = StyleSheet.create({
     view: {
+        paddingTop: 50,
         flex: 1,
         justifyContent: "center"
     }
