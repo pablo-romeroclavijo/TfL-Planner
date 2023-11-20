@@ -39,7 +39,7 @@ export default function RouteParamsModal({closeModal, paramsModal, onParamsSelec
                 <View>
                     <Text>Select Journey Preference:</Text>
                     <Picker selectedValue={journeyPref} onValueChange={(itemValue)=>setJourneyPref(itemValue)}>
-                        <Picker.Item label="Select" value={null} />
+                        <Picker.Item label="Select" value={""} />
                         <Picker.Item label="Least Time Possible" value="leasttime" />
                         <Picker.Item label="Most Time Possible" value="mosttime" />
                     </Picker>
@@ -48,7 +48,7 @@ export default function RouteParamsModal({closeModal, paramsModal, onParamsSelec
                 <View>
                     <Text>Select Mode:</Text>
                     <Picker selectedValue={mode} onValueChange={(itemValue)=>setMode(itemValue)}>
-                        <Picker.Item label="Select" value={null} />
+                        <Picker.Item label="Select" value={""} />
                         <Picker.Item label="Overground" value="overground" />
                         <Picker.Item label="Tube" value="tube" />
                     </Picker>
@@ -57,7 +57,7 @@ export default function RouteParamsModal({closeModal, paramsModal, onParamsSelec
                 <View>
                     <Text>Select Walking Speed:</Text>
                     <Picker selectedValue={walkingSpeed} onValueChange={(itemValue)=>setWalkingSpeed(itemValue)}>
-                        <Picker.Item label="Select" value={null} />
+                        <Picker.Item label="Select" value={""} />
                         <Picker.Item label="Slow" value="slow" />
                         <Picker.Item label="Average" value="average" />
                         <Picker.Item label="Fast" value="fast" />

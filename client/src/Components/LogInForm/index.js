@@ -12,7 +12,7 @@ import {
 import AppTextInput from "../AppTextInput"
 import AppButton from "../AppButton"
 import LoadingModal from "../LoadingModal"
-import CreateAsync from "..//AsyncStorageCreate"
+import CreateAsync from "../AsyncStorageCreate"
 
 import colors from "../../config/colors"
 
@@ -56,6 +56,7 @@ export default function LogInForm({ navigation }) {
 			const data = await response.json()
 			const token = data.token
 			CreateAsync("token", token)
+			CreateAsync("username", username)
 			console.log(token)
 			setUsernameInput("")
 			setPasswordInput("")
@@ -148,7 +149,7 @@ const styles = StyleSheet.create({
 		justifyContent: "flex-start",
 	},
 	textStyle: {
-		fontFamily: Platform.OS === "android" ? "Roboto" : "San Francisco",
+		fontFamily: Platform.OS === "android" ? "Roboto" : "Avenir",
 		fontSize: 30,
 		fontWeight: "bold",
 		alignContent: "flex-start",

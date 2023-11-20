@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { View, Text } from "react-native";
-import { AppButton, AppTextInput, GetAsync, RouteParamsModal } from "../../Components";
+import { View, Text, SafeAreaView, ScrollView, StyleSheet } from "react-native";
+import { AppButton, AppTextInput, GetAsync, RouteParamsModal, SlideBox } from "../../Components";
 import validator from "validator";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { Picker } from "@react-native-picker/picker";
@@ -9,7 +9,7 @@ export default function RoutesScreenForm() {
   const [startPostcodeInput, setStartPostcodeInput] = useState("");
   const [endPostcodeInput, setEndPostcodeInput] = useState("");
   const [token, setToken] = useState("");
-  const [route, setRoute] = useState([]);
+  const [route, setRoute] = useState(false);
   const [date, setDate] = useState(new Date())
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [showTimePicker, setShowTimePicker] = useState(false);
@@ -19,9 +19,9 @@ export default function RoutesScreenForm() {
   const [selectedParams, setSelectedParams] = useState({
     taxiOnlyChecked: false,
     nationalSearch: false,
-    journeyPref: null,
-    mode: null,
-    walkingSpeed: null,
+    journeyPref: "",
+    mode: "",
+    walkingSpeed: "",
   });
   const [timeOption, setTimeOption] = useState("")
 
@@ -91,13 +91,13 @@ export default function RoutesScreenForm() {
   }
 
   async function getRoute() {
-    const startPostcode = startPostcodeInput;
-    const endPostcode = endPostcodeInput;
-    const useDate = fDate
+    const startPostcode = startPostcodeInput.trim();
+    const endPostcode = endPostcodeInput.trim();
+    const useDate = fDate || "" 
+    const useTime = fTime || ""
+    const timeIs = timeOption || ""
     console.log(useDate)
-    const useTime = fTime
     console.log(useTime)
-    const timeIs = timeOption
     console.log(timeIs)
     console.log(selectedParams.mode)
     console.log(selectedParams.walkingSpeed)
@@ -135,15 +135,15 @@ export default function RoutesScreenForm() {
     if (response.status == 200) {
       const data = await response.json();
       console.log(data)
-      setRoute(data.journeys[0].legs || data.journeys.legs || data.journeys);
-      console.log(data);
+      setRoute(data.journeys);
+      // setRoute(data.journeys[0].legs)
     } else {
       alert("Request failed.");
     }
   }
 
   return (
-    <View>
+    <ScrollView style={styles.screen}>
       <AppTextInput
         onChangeText={(text) => setStartPostcodeInput(text)}
         placeholder="Start Postcode"
@@ -200,9 +200,35 @@ export default function RoutesScreenForm() {
         ></RouteParamsModal>
       ) : null}
       <AppButton onPress={dataValidation} title="Submit" />
-      {route
+      {/* {route
         ? route.map((r, index) => <Text key={index}>{r.summary}</Text>)
-        : null}
-    </View>
+        : null} */}
+        <SafeAreaView style={styles.container}>
+          <View>
+            {route ?
+              <SlideBox slides={[
+                {journey: route[0], content: 'Route 1', onSelect: () => console.log('Red Selected')}, 
+                {journey: route[1], content: 'Route 2', onSelect: () => console.log('Blue Selected')}, 
+                {journey: route[2], content: 'Route 3', onSelect: () => console.log('Green Selected')}
+                ]} />
+              : null
+              }
+          </View>
+        </SafeAreaView>
+    </ScrollView>
   );
 }
+
+const styles = StyleSheet.create({
+  screen: {
+    height: "auto"
+  },
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 0,
+    height: "auto",
+  }
+
+});
