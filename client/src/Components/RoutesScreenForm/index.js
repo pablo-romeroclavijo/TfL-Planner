@@ -71,7 +71,7 @@ export default function RoutesScreenForm(){
     }
 
     return(
-        <View>
+        <View style={{ alignItems: "center" }}>
             <AppTextInput onChangeText={(text)=>setStartPostcodeInput(text)} placeholder="Start Postcode" />
             <AppTextInput onChangeText={(text)=>setEndPostcodeInput(text)} placeholder="End Postcode" />
             <AppButton onPress={clickPreferences} title="Preferences" />
