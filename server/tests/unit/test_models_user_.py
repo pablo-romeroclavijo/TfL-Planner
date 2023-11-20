@@ -96,6 +96,25 @@ def test_create_user(test_client, init_database):
     with pytest.raises(ActionNotAllowed):
         data = dict(username='testuser1', password='testpassword1'.encode('utf-8'), email='test1@test.com', preferences=default_preferences)
         User.create_user(data)
+        
+def test_create_user(test_client, init_database):
+    data = dict(username='testuser10', password='testpassword1'.encode('utf-8'), email='test1@test.com', preferences=default_preferences)
+    user = User.create_user(data)
+    print(user)
+    token = Token.create_token(user.id)
+    
+    
+    preferences = dict(postcode='AAAAAA', preferences={
+            'journeyPreferences':'least', 
+            'maxWalkingMinutes': 10,
+            'walkingSpeed': 'fast',             
+            'accessibilityPreferences': True })    
+    
+    response = User.set_preferences(token.token, preferences)
+    
+    assert response.postcode == 'AAAAAA'
+      
+
     
     
     

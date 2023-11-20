@@ -67,3 +67,18 @@ def test_token_generation(test_client, init_database):
     
     with pytest.raises(Exception):
         Token.create_token(20)
+        
+        
+def test_token_destruction(test_client, init_database):
+    test_user = User(username='testuser', password='testpassword'.encode('utf-8'), email='test@test.com', preferences=default_preferences)
+    db.session.add(test_user)
+    db.session.commit()
+
+    token = Token.create_token(test_user.id)
+    
+    response = Token.destroy_token(token.token)
+    assert response == 'Token deleted'
+
+    
+    with pytest.raises(Exception):
+        Token.destroy_token(20)

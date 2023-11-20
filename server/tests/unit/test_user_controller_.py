@@ -5,6 +5,15 @@ from unittest.mock import patch, MagicMock
 from application import create_app, db
 from application.models.User import User
 from application.models.Errors import UserNotFound
+from application.models.Token import Token
+
+default_preferences = {
+        'journeyPreferences':'leastinterchange', ##'leastwalking' or 'leasttiime'
+        'maxWalkingMinutes': 20,
+        'walkingSpeed': 'average',  #slow, average or fast
+        'accessibilityPreferences': None, #"noSolidStairs,noEscalators,noElevators,stepFreeToVehicle,stepFreeToPlatform"
+    }
+
 
 @pytest.fixture(scope='function')
 def test_client():
@@ -25,7 +34,11 @@ def test_client():
 def mock_user_model():
     with patch('application.models.User') as mock:
         yield mock
-
+        
+@pytest.fixture       
+def mock_db_session():
+    with patch('application.models.Token.db.session') as mock_session:
+        yield mock_session
 @pytest.fixture
 def mock_token_model():
     with patch('application.models.Token') as mock:
@@ -58,6 +71,7 @@ def test_create_user_failure(test_client):
     response = test_client.post('/user/register', json={
         'username': '', 
         'password': 'testpassword'
+
     })
 
     assert response.status_code == 400
@@ -67,7 +81,7 @@ def test_create_user_failure(test_client):
 def test_login_success(test_client, mock_user_model, mock_bcrypt):
 
     hashed_password = hashpw('testpassword'.encode('utf-8'), gensalt())
-    new_user = User(username='testuser', password=hashed_password, email='test@test.com')
+    new_user = User(username='testuser', password=hashed_password, email='test@test.com', preferences=default_preferences)
     db.session.add(new_user)
     db.session.commit()
 
@@ -89,7 +103,7 @@ def test_login_success(test_client, mock_user_model, mock_bcrypt):
 def test_login_failure_wrong_credentials(test_client, mock_user_model, mock_bcrypt):
 
     hashed_password = hashpw('correctpassword'.encode('utf-8'), gensalt())
-    existing_user = User(username='testuser', password=hashed_password, email='test@test.com')
+    existing_user = User(username='testuser', password=hashed_password, email='test@test.com', preferences=default_preferences)
     db.session.add(existing_user)
     db.session.commit()
 
@@ -106,7 +120,7 @@ def test_login_failure_wrong_credentials(test_client, mock_user_model, mock_bcry
 
 def test_fetch_profile_with_username(test_client):
     hashed_password = hashpw('testpassword'.encode('utf-8'), gensalt())
-    new_user = User(username='testuser', password=hashed_password, email='test@test.com')
+    new_user = User(username='testuser', password=hashed_password, email='test@test.com', preferences=default_preferences)
     db.session.add(new_user)
     db.session.commit()
 
@@ -122,3 +136,19 @@ def test_fetch_profile_user_not_found(test_client, mock_user_model):
 
     response = test_client.get('/user/profile/nonexistentuser')
     assert response.status_code == 404
+
+def test_logout(test_client, mock_token_model, mock_db_session):
+    mock_token_instance = MagicMock()
+    mock_db_session.query(Token).filter_by().first.return_value = mock_token_instance
+
+    response = test_client.delete('/user/login', headers={'Authorization': 'aaaaaaaaaa'})
+    print(response.status_code)
+        
+    assert response.status_code == 200
+    
+def test_logout_exception(test_client, mock_token_model, mock_db_session):
+    mock_token_instance = MagicMock()
+    mock_db_session.commit.side_effect = Exception
+
+    response = test_client.delete('/user/login', headers={'Authorization': 'aaaaaaaaaa'})
+    assert response.status_code == 400
