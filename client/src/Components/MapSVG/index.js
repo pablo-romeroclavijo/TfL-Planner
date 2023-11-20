@@ -167,7 +167,7 @@ const line_object={
     dlr: {line_dash: 0, color: "#00a4a7", boxColor: '#00a4a7', boxSize: 10},
     "elizabeth-line": {line_dash: 0, color: "#802bc2", boxColor: '#802bc2', boxSize: 81, textColor: 'white'},
     "national-rail": {line_dash: 0, color: "#0e46b5", boxColor: '#0e46b5', boxSize: 75, textColor: 'black'},
-    bus: {line_dash: 0, color: "red", boxColor: 'red',  boxSize: 75, textColor: 'black'}
+    bus: {line_dash: 0, color: "red", boxColor: 'red',  boxSize: 75, textColor: 'white'}
 }
 
 const tube_lines = {
@@ -179,7 +179,7 @@ const tube_lines = {
   'Jubilee': {color: "grey", boxColor: '#a0a5a9', boxSize: 48, textColor: 'black'},
   'Metropolitan': {color: "grey", boxColor: '#9b0056', boxSize: 70, textColor: 'black'},
   'Northern': {color: "grey", boxColor: '#000000', boxSize: 55, textColor: 'white'},
-  'Piccadilly': {color: "grey", boxColor: '#003688', boxSize: 65, textColor: 'white'},
+  'Piccadilly': {color: "grey", boxColor: '#003688', boxSize: 61, textColor: 'white'},
   'Victoria': {color: "grey", boxColor: '	#0098d4', boxSize: 55, textColor: 'black'},
   'Waterloo': {color: "grey", boxColor: '#95cdba', boxSize: 55, textColor: 'black'},
 }
