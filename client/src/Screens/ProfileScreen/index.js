@@ -1,36 +1,30 @@
 import React from "react";
-import {
-  View,
-  StyleSheet
-} from "react-native";
+import { View, StyleSheet, SafeAreaView } from "react-native";
 
-import {  LogoutButton, PreferencesForm, Help } from "../../Components";
-
+import { LogoutButton, PreferencesForm, Help, Header } from "../../Components";
 
 export default function Profile() {
+	return (
+		<View style={styles.container}>
+			<Header />
 
-  return (
-    <View style={styles.container}>
-      
-      <PreferencesForm />
+			<PreferencesForm />
 
-      <Help style={styles.help} />
-      
-      <View style={styles.logoutButton}>
-        <LogoutButton />
-      </View>
+			<Help style={styles.help} />
 
-    </View>
-  );
+			<View style={styles.logoutButton}>
+				<LogoutButton />
+			</View>
+		</View>
+	);
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 15,
-    marginTop: 55
-  },
-  logoutButton: {
-    alignSelf: "center",
-  }
+	container: {
+		flex: 1,
+		backgroundColor: "white",
+	},
+	logoutButton: {
+		alignSelf: "center",
+	},
 });

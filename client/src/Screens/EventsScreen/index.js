@@ -1,16 +1,16 @@
-import React, { useEffect, useContext } from "react"
-import { View, StyleSheet, Text, FlatList, pre } from "react-native"
-import { EventHolder } from "../../Components"
+import React, { useEffect, useContext } from "react";
+import { View, StyleSheet, Text, FlatList, pre } from "react-native";
+import { EventHolder, Header } from "../../Components";
 
 export default function EventsPage({ navigation }) {
-	
 	return (
 		<View style={styles.container}>
+			<Header />
 			<Text style={styles.heading}>Events Page</Text>
 
 			<EventHolder events={array} />
 		</View>
-	)
+	);
 }
 
 const styles = StyleSheet.create({
@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
 		fontWeight: "bold",
 		color: "black",
 	},
-})
+});
 
 const array = [
 	{
@@ -131,4 +131,4 @@ const array = [
 		share_code: "A5jEareEF",
 		title: "The Velocipede's Dream",
 	},
-]
+];

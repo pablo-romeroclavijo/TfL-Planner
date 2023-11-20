@@ -25,11 +25,11 @@ const HomeTabs = () => {
 						iconName = focused ? "calendar-sharp" : "calendar-outline"
 					}
 
-					return <Ionicons name={iconName} size={24} color={"#F96F3A"} />
+					return <Ionicons name={iconName} size={24} color={"#0B2364"} />
 				},
 				tabBarLabel: ({ focused, color }) => {
 					return focused ? (
-						<Text style={{ color: "#3BD4BB", fontSize: 12 }}>{route.name}</Text>
+						<Text style={{ color: "#0B2364", fontSize: 12 }}>{route.name}</Text>
 					) : null
 				},
 			})}
