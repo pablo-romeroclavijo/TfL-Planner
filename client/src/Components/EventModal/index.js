@@ -1,21 +1,33 @@
 import React, { useState, useEffect } from "react"
-import { StyleSheet, View, Text, Pressable, FlatList } from "react-native"
+import {
+	StyleSheet,
+	View,
+	Text,
+	Pressable,
+	FlatList,
+	Modal,
+} from "react-native"
 import GetAsync from "../AsyncStorageGet"
 import LoadingModal from "../LoadingModal"
-
+import EventsRoutesForm from "../EventRouteSelector"
+import GestureRecognizer from "react-native-swipe-gestures"
+import moment from "moment"
+import { useIsFocused } from "@react-navigation/native"
 const EventModal = ({ onClose, code }) => {
 	const [event, setEvent] = useState({})
 	const [attendees, setAttendees] = useState([])
 	const [isLoading, setIsLoading] = useState(true)
+	const [Route, setRoute] = useState(false)
+	const isFocused = useIsFocused()
+ 
 	useEffect(() => {
 		getEvent(code).then((data) => {
 			setEvent(data.event)
-
 			setAttendees(data.attendees)
 			setIsLoading(false)
-			console.log("yellow")
+			console.log("yellow", attendees)
 		})
-	}, [])
+	}, [isFocused])
 	return (
 		<View style={styles.modalContent}>
 			<Pressable style={styles.closeButton} onPress={onClose}>
@@ -27,22 +39,43 @@ const EventModal = ({ onClose, code }) => {
 				<>
 					<View style={styles.header}>
 						<Text style={styles.headerText}>{event.title}</Text>
-						<Text style={styles.dateText}>{event.date}</Text>
+						<Text style={styles.dateText}>
+							{moment(event.date).format("ddd, DD MMM YYYY")}
+						</Text>
+						<Text style={styles.dateText}>
+							{moment(event.date).format("HH:mm")}
+						</Text>
 						<Text style={styles.codeText}>{event.code}</Text>
-						<Text style={styles.locationText}>{event.location}</Text>
+						<Text style={styles.locationText}>{event.postcode}</Text>
+						<Pressable onPress={() => setRoute(true)}>
+							<Text>set jounrey </Text>
+						</Pressable>
 					</View>
 					<Text style={styles.descriptionText}>{event.description}</Text>
 					<FlatList
 						data={attendees}
-						keyExtractor={(item) => item.id}
+						keyExtractor={(item) => item.user_id}
 						renderItem={({ item }) => (
 							<View style={styles.attendee}>
 								<Text style={styles.attendeeName}>{item.user_id}</Text>
-								<Text style={styles.attendeeStatus}>{item.status}</Text>
-								<Text style={styles.attendeeETA}>ETA: {item.ETA}</Text>
+								<Text style={styles.attendeeStatus}>Status: {item.status}</Text>
+								<Text style={styles.attendeeETA}>
+									ETA: {moment(event.ETA).format("HH:mm")}
+								</Text>
 							</View>
 						)}
 					/>
+
+					<GestureRecognizer>
+						<Modal
+							visible={Route}
+							onPress={() => setRoute(false)}
+							animationType="fade"
+							onRequestClose={() => setRoute(false)}
+						>
+							<EventsRoutesForm event={event} />
+						</Modal>
+					</GestureRecognizer>
 				</>
 			)}
 		</View>
@@ -107,6 +140,21 @@ const styles = StyleSheet.create({
 	attendeeETA: {
 		fontSize: 16,
 		color: "#333", // Dark text color
+	}, // Style for the outermost view
+	container: {
+		flex: 1,
+		justifyContent: "center",
+		alignItems: "center",
+		backgroundColor: "rgba(0, 0, 0, 0.5)", // semi-transparent background
+	},
+	// Style for the modal view to make it appear smaller
+	modal: {
+		width: "80%", // for example, 80% of the screen width
+		height: "50%", // for example, 50% of the screen height
+		backgroundColor: "white", // background color for the modal content
+		borderRadius: 10, // optional, if you want rounded corners
+		padding: 20, // optional, for padding inside the modal
+		// Add other styling as needed
 	},
 })
 
@@ -117,7 +165,9 @@ async function getEvent(code) {
 		const options = {
 			method: "GET",
 			headers: {
+				"Accept": "application/json",
 				"Content-Type": "application/json",
+				"Authorization": token,
 			},
 		}
 		const response = await fetch(

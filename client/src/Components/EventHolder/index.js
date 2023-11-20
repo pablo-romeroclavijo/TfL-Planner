@@ -16,6 +16,7 @@ import FilterDropdown from "../FilterDropdown"
 import moment from "moment"
 import GetAsync from "../AsyncStorageGet"
 import { useIsFocused } from "@react-navigation/native"
+
 export default function EventHolder({ events }) {
 	const [modalshow, setModalShow] = useState(false)
 	const [event, setEvent] = useState({})
