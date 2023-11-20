@@ -98,13 +98,13 @@ export default function RoutesScreenForm() {
     const useDate = fDate || "" 
     const useTime = fTime || ""
     const timeIs = timeOption || ""
-    console.log(useDate)
-    console.log(useTime)
-    console.log(timeIs)
-    console.log(selectedParams.mode)
-    console.log(selectedParams.walkingSpeed)
-    console.log(selectedParams.taxiOnlyChecked)
-    console.log(selectedParams.nationalSearch)
+    // console.log(useDate)
+    // console.log(useTime)
+    // console.log(timeIs)
+    // console.log(selectedParams.mode)
+    // console.log(selectedParams.walkingSpeed)
+    // console.log(selectedParams.taxiOnlyChecked)
+    // console.log(selectedParams.nationalSearch)
     const options = {
       method: "POST",
       headers: {
@@ -119,7 +119,7 @@ export default function RoutesScreenForm() {
         },
         params: {
           taxiOnlyTrip: selectedParams.taxiOnlyChecked,
-          nationalSearch: selectedParams.nationalSearch,
+          nationalSearch: true,
           date: useDate || "",
           time: useTime || "",
           timeIs: timeIs || "",
@@ -129,16 +129,25 @@ export default function RoutesScreenForm() {
         },
       }),
     };
+    console.log({
+      taxiOnlyTrip: selectedParams.taxiOnlyChecked,
+      nationalSearch: true,
+      date: useDate || "",
+      time: useTime || "",
+      timeIs: timeIs || "",
+      mode: selectedParams.mode || "bus, overground, dlr, tube, taxi",
+      walkingSpeed: selectedParams.walkingSpeed || "",
+      useRealTimeArrivals: true,
+    })
     const response = await fetch(
       "https://metro-mingle.onrender.com/tfl/get",
       options
     );
-    console.log(response);
+    //console.log(response);
     if (response.status == 200) {
       const data = await response.json();
-      console.log(data)
+      //console.log(data.journeys)
       setRoute(data.journeys);
-      // setRoute(data.journeys[0].legs)
     } else {
       alert("Request failed.");
     }
