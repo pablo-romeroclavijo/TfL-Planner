@@ -172,7 +172,7 @@ export default function PreferencesForm() {
               placeholder="Postcode"
               icon="post"
               onChangeText={(text) => setPostcodeInput(text)}
-              value={postcodeInput !== null ? postcodeInput : ''}
+              value={postcodeInput === 'null' ? '' : postcodeInput}
             />
             <Text style={[styles.label, { paddingRight: width * 0.09 }]}>
               On a given journey, how long are you willing to walk (minutes)
