@@ -5,3 +5,4 @@ export { default as Initial } from "./InitialScreen"
 export { default as Profile } from "./ProfileScreen"
 export { default as Events } from "./EventsScreen"
 export { default as Routes } from "./RoutesScreen"
+export { default as Map} from './MapScreen'
