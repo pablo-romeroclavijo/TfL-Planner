@@ -202,7 +202,7 @@ export default function PreferencesForm() {
               />
             </Picker>
 
-            <View style={{ alignSelf: "center", marginTop: height * 0.03 }}>
+            <View style={{ alignSelf: "center", marginTop: height * 0.001 }}>
               <Linear
                 onPress={handleFormSubmit}
                 colors={["#FF7E5F", "#FFB270"]}
