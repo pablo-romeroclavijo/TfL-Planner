@@ -21,6 +21,8 @@ const HomeTabs = () => {
 						iconName = focused ? "map" : "map-outline"
 					} else if (route.name === "Profile") {
 						iconName = focused ? "person" : "person-outline"
+					} else if (route.name === "Events") {
+						iconName = focused ? "calendar-sharp" : "calendar-outline"
 					}
 
 					return <Ionicons name={iconName} size={24} color={"#F96F3A"} />
@@ -33,11 +35,6 @@ const HomeTabs = () => {
 			})}
 		>
 			<Tab.Screen
-				name="Events"
-				component={Screens.Events}
-				options={{ headerShown: false }}
-			/>
-			<Tab.Screen
 				name="Home"
 				component={Screens.Home}
 				options={{ headerShown: false }}
@@ -47,6 +44,12 @@ const HomeTabs = () => {
 				component={Screens.Routes}
 				options={{ headerShown: false }}
 			/>
+			<Tab.Screen
+				name="Events"
+				component={Screens.Events}
+				options={{ headerShown: false }}
+			/>
+
 			<Tab.Screen
 				name="Profile"
 				component={Screens.Profile}
