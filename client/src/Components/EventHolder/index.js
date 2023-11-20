@@ -32,21 +32,23 @@ export default function EventHolder({ events }) {
 	}, [isFocused])
 
 	useEffect(() => {
-		let filteredEvents = eventsList // Start with all events
-		const format = "ddd, DD MMM YYYY HH:mm:ss [GMT]"
+		if (eventsList != 0) {
+			let filteredEvents = eventsList // Start with all events
+			const format = "ddd, DD MMM YYYY HH:mm:ss [GMT]"
 
-		if (selectedFilter === "Past") {
-			filteredEvents = eventsList.filter((event) =>
-				moment(event.date, format).isBefore(moment())
-			)
-		} else if (selectedFilter === "future") {
-			filteredEvents = eventsList.filter((event) =>
-				moment(event.date, format).isAfter(moment())
-			)
-		}
-		filteredEvents.sort(sortFilter) // Sorts in ascending order
-		console.log(filteredEvents)
-		setFilteredEvents(filteredEvents) // Sorts in ascending order) // Update the state with the filtered events
+			if (selectedFilter === "Past") {
+				filteredEvents = eventsList.filter((event) =>
+					moment(event.date, format).isBefore(moment())
+				)
+			} else if (selectedFilter === "future") {
+				filteredEvents = eventsList.filter((event) =>
+					moment(event.date, format).isAfter(moment())
+				)
+			}
+			filteredEvents.sort(sortFilter) // Sorts in ascending order
+			console.log(filteredEvents)
+			setFilteredEvents(filteredEvents)
+		} // Sorts in ascending order) // Update the state with the filtered events
 	}, [selectedFilter, eventsList]) // Assuming eventsList is a dependency
 
 	return (
@@ -56,20 +58,26 @@ export default function EventHolder({ events }) {
 				setSelectedFilter={setSelectedFilter}
 			/>
 			<View style={styles.list}>
-				<FlatList
-					data={filteredEvents}
-					keyExtractor={(item) => item.id} // Assuming 'id' is the unique identifier
-					renderItem={({ item }) => (
-						<EventCard
-							handlePress={() => {
-								setModalShow(true)
-								setEvent(item) // You might want to update this line to actually set the event you want to show in the modal.
-							}}
-							// key={item.id.toString()} // Remove this line, the key in renderItem is not needed and can cause confusion.
-							event={item}
-						/>
-					)}
-				/>
+				{eventsList != 0 ? (
+					<FlatList
+						data={filteredEvents}
+						keyExtractor={(item) => item.id} // Assuming 'id' is the unique identifier
+						renderItem={({ item }) => (
+							<EventCard
+								handlePress={() => {
+									setModalShow(true)
+									setEvent(item) // You might want to update this line to actually set the event you want to show in the modal.
+								}}
+								// key={item.id.toString()} // Remove this line, the key in renderItem is not needed and can cause confusion.
+								event={item}
+							/>
+						)}
+					/>
+				) : (
+					<Text>
+						add events 
+					</Text>
+				)}
 			</View>
 
 			<GestureRecognizer onSwipeDown={() => setModalShow(false)}>
