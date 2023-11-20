@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from "react"
-import { View, Text, SafeAreaView, ScrollView, StyleSheet } from "react-native"
+import { View, Text, SafeAreaView, ScrollView, StyleSheet, Dimensions } from "react-native"
 import {
 	AppButton,
 	AppTextInput,
 	GetAsync,
 	RouteParamsModal,
-	SlideBox,
+	SlideBox
 } from "../../Components"
 import validator from "validator"
 import DateTimePicker from "@react-native-community/datetimepicker"
 import { Picker } from "@react-native-picker/picker"
+
+const { width, height } = Dimensions.get("window");
 
 export default function RoutesScreenForm() {
 
@@ -159,6 +161,7 @@ export default function RoutesScreenForm() {
   }
 
   return (
+    <View style={{justifyContent: "flex-start", alignItems: "center", marginTop: -height * 0.2}}>
     <ScrollView style={styles.screen}>
       <AppTextInput
         onChangeText={(text) => setStartPostcodeInput(text)}
@@ -246,14 +249,14 @@ export default function RoutesScreenForm() {
 				</View>
 			</SafeAreaView>
 		</ScrollView>
+    </View>
 	)
 }
 
 const styles = StyleSheet.create({
 	screen: {
 		height: "auto",
-		paddingTop: 40,
-		
+		paddingTop: 40
 	},
 	container: {
 		flex: 1,
@@ -261,5 +264,5 @@ const styles = StyleSheet.create({
 		justifyContent: "center",
 		marginTop: 0,
 		height: "auto",
-	},
+	}
 })
