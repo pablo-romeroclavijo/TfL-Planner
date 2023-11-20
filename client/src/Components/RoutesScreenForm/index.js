@@ -5,7 +5,7 @@ import validator from "validator";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { Picker } from "@react-native-picker/picker";
 
-export default function RoutesScreenForm({navigation}) {
+export default function RoutesScreenForm() {
   const [startPostcodeInput, setStartPostcodeInput] = useState("");
   const [endPostcodeInput, setEndPostcodeInput] = useState("");
   const [token, setToken] = useState("");
@@ -15,10 +15,7 @@ export default function RoutesScreenForm({navigation}) {
   const [showTimePicker, setShowTimePicker] = useState(false);
   const [fDate, setFDate] = useState("");
   const [fTime, setFTime] = useState("");
-  const [eventDate, setEventDate] = useState("")
-  const [eventTime, setEventTime] = useState("")
   const [paramsModal, setParamsModal] = useState(false);
-  const [finalRoute, setFinalRoute] = useState(false)
   const [selectedParams, setSelectedParams] = useState({
     taxiOnlyChecked: false,
     nationalSearch: false,
@@ -49,18 +46,14 @@ export default function RoutesScreenForm({navigation}) {
     hideDateTimePicker();
     let tempDate = new Date(currentDate);
     setFDate(
-      tempDate.getFullYear().toString() + (tempDate.getMonth() + 1).toString() + tempDate.getDate().toString().padStart(2,"0"));
-    setEventDate(
-      tempDate.getFullYear().toString() + "-" + (tempDate.getMonth() + 1).toString() + "-" + tempDate.getDate().toString());
+      tempDate.getFullYear().toString() + (tempDate.getMonth() + 1).toString() + tempDate.getDate().toString());
   };
 
   const onTimeChange = (selectedTime) => {
     const currentTime = selectedTime.nativeEvent.timestamp || date;
     hideDateTimePicker();
     let tempTime = new Date(currentTime);
-    setFTime(tempTime.getHours().toString().padStart(2, "0") + tempTime.getMinutes().toString().padStart(2, "0")
-    );
-    setEventTime(tempTime.getHours().toString().padStart(2, "0") + ":" + tempTime.getMinutes().toString().padStart(2, "0")
+    setFTime(tempTime.getHours().toString() + tempTime.getMinutes().toString().padStart(2, "0")
     );
   };
 
@@ -103,15 +96,13 @@ export default function RoutesScreenForm({navigation}) {
     const useDate = fDate || "" 
     const useTime = fTime || ""
     const timeIs = timeOption || ""
-    console.log(startPostcode)
-    console.log(endPostcode)
-    console.log(useDate)
-    console.log(useTime)
-    console.log("Time is", timeIs)
-    console.log("Mode", selectedParams.mode)
-    console.log("Walking speed", selectedParams.walkingSpeed)
-    console.log("Taxi Only", selectedParams.taxiOnlyChecked)
-    console.log("National search", selectedParams.nationalSearch)
+    // console.log(useDate)
+    // console.log(useTime)
+    // console.log(timeIs)
+    // console.log(selectedParams.mode)
+    // console.log(selectedParams.walkingSpeed)
+    // console.log(selectedParams.taxiOnlyChecked)
+    // console.log(selectedParams.nationalSearch)
     const options = {
       method: "POST",
       headers: {
@@ -126,7 +117,7 @@ export default function RoutesScreenForm({navigation}) {
         },
         params: {
           taxiOnlyTrip: selectedParams.taxiOnlyChecked,
-          nationalSearch: selectedParams.nationalSearch,
+          nationalSearch: true,
           date: useDate || "",
           time: useTime || "",
           timeIs: timeIs || "",
@@ -136,55 +127,29 @@ export default function RoutesScreenForm({navigation}) {
         },
       }),
     };
+    console.log({
+      taxiOnlyTrip: selectedParams.taxiOnlyChecked,
+      nationalSearch: true,
+      date: useDate || "",
+      time: useTime || "",
+      timeIs: timeIs || "",
+      mode: selectedParams.mode || "bus, overground, dlr, tube, taxi",
+      walkingSpeed: selectedParams.walkingSpeed || "",
+      useRealTimeArrivals: true,
+    })
     const response = await fetch(
       "https://metro-mingle.onrender.com/tfl/get",
       options
     );
-    console.log(response);
+    //console.log(response);
     if (response.status == 200) {
       const data = await response.json();
-      console.log(data)
+      //console.log(data.journeys)
       setRoute(data.journeys);
     } else {
       alert("Request failed.");
     }
   }
-
-
-  async function createEvent() {
-		const postcode = endPostcodeInput.trim()
-		const date = eventDate + " " + eventTime
-		const description = null
-		const title = startPostcodeInput.trim() + " to " + endPostcodeInput.trim()
-		const options = {
-			method: "POST",
-			headers: {
-				"Accept": "application/json",
-				"Content-Type": "application/json",
-				"Authorization": token,
-			},
-			body: JSON.stringify({
-				postcode: postcode,
-				date: date,
-				description: description,
-				title: title,
-			}),
-		}
-		const response = await fetch(
-			"https://metro-mingle.onrender.com/event/create",
-			options
-		)
-    const data = await response.json()
-    console.log(data)
-
-    if (response.status === 201) {
-      alert("Event Created.");
-      navigation.navigate("Dashboard")      
-    } else {
-      alert("Event creation failed, try again later.");
-    }
-  }
-
 
   return (
     <ScrollView style={styles.screen}>
@@ -251,9 +216,9 @@ export default function RoutesScreenForm({navigation}) {
           <View>
             {route ?
               <SlideBox slides={[
-                {journey: route[0], content: 'Route 1', onSelect: () => {setFinalRoute(route[0]);createEvent()}}, 
-                {journey: route[1], content: 'Route 2', onSelect: () => setFinalRoute(route[1])}, 
-                {journey: route[2], content: 'Route 3', onSelect: () => setFinalRoute(route[2])}
+                {journey: route[0], content: 'Route 1', onSelect: () => console.log('Red Selected')}, 
+                {journey: route[1], content: 'Route 2', onSelect: () => console.log('Blue Selected')}, 
+                {journey: route[2], content: 'Route 3', onSelect: () => console.log('Green Selected')}
                 ]} />
               : null
               }
@@ -274,4 +239,5 @@ const styles = StyleSheet.create({
     marginTop: 0,
     height: "auto",
   }
+
 });
