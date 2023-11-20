@@ -8,6 +8,7 @@ import {
   ScrollView,
   Linking,
   Dimensions,
+  Image,
 } from "react-native";
 import GestureRecognizer from "react-native-swipe-gestures";
 
@@ -65,66 +66,82 @@ function Help() {
             {selectedHelpOption === 1 && (
               <View style={{ paddingTop: 65 }}>
                 <ScrollView>
-                  <Text style={styles.info}>Is my data safe?</Text>
-                  <Text style={styles.placeholderText}>
-                    Placeholder text for data safety goes here. You can find key
-                    information, privacy and security settings all in your
-                    Google Account. We have created easy-to-use tools like
-                    Dashboard and My Activity, which give you transparency data
-                    collected from your activity across Google services. There
-                    are also powerful privacy controls such as Activity Controls
-                    and Ad Settings, which allow you to switch the collection
-                    and use of data on or off to decide how all of Google can
-                    work better for you.
+                  <Text style={styles.info}>How does Metro Mingle ensure the security of my data?</Text>
+                  <Text style={styles.placeholderText}>                  
+                  Ensuring the security of your data is our unwavering commitment. 
+                  We employ robust encryption protocols and state-of-the-art security measures to safeguard
+                  your information at every step. It's a top priority for us to provide you with a secure and 
+                  trustworthy platform. Rest assured, we have a strict policy against sharing any of your data 
+                  with third parties. Your privacy is respected, and your personal information remains confidential
+                  within our system. We understand the sensitivity of the information you entrust to us, and we go 
+                  the extra mile to ensure that it stays in safe hands. At Metro Mingle, transparency and security 
+                  are at the core of our values. We want you to use our services with complete peace of mind, 
+                  knowing that your data is handled with the utmost care and diligence. If you have any specific 
+                  concerns or questions about our security practices, feel free to reach out. Your trust is important to us, 
+                  and we are here to ensure that your experience with us is not only convenient but also secure.
                   </Text>
 
                   <Text style={styles.info}>
-                    How to share my event on Social Media?
+                  Can I use Metro Mingle for both personal and business events?
                   </Text>
                   <Text style={styles.placeholderText}>
-                    Placeholder text for sharing on social media goes here. You
-                    can find key information, privacy and security settings all
-                    in your Google Account. We have created easy-to-use tools
-                    like Dashboard and My Activity, which give you transparency
-                    data collected from your activity across Google services.
-                    There are also powerful privacy controls such as Activity
-                    Controls and Ad Settings, which allow you to switch the
-                    collection and use of data on or off to decide how all of
-                    Google can work better for you.
+                  Absolutely! Metro Mingle is versatile and designed to accommodate a wide range of events, 
+                  whether they're personal gatherings or business functions. Plan, invite, and track seamlessly, 
+                  regardless of the nature of your event.
                   </Text>
 
                   <Text style={styles.info}>
-                    Can I use this app for businesses?
+                  How does the invitation and tracking process work?
                   </Text>
                   <Text style={styles.placeholderText}>
-                    Placeholder text for using the app for businesses goes here.
-                    You can find key information, privacy and security settings
-                    all in your Google Account. We have created easy-to-use
-                    tools like Dashboard and My Activity, which give you
-                    transparency data collected from your activity across Google
-                    services. There are also powerful privacy controls such as
-                    Activity Controls and Ad Settings, which allow you to switch
-                    the collection and use of data on or off to decide how all
-                    of Google can work better for you.
+                  Planning an event is easy with Metro Mingle. Simply create an event, 
+                  invite guests through the app, and track their arrival status in real-time once they accept the invitation. 
+                  It's a hassle-free way to stay organized and ensure everyone is accounted for.
                   </Text>
+
+                  <Text style={styles.info}>
+                  Can I check if all my guests arrived home safely after the event?
+                  </Text>
+                  <Text style={styles.placeholderText}>
+                  Absolutely. Metro Mingle goes the extra mile by allowing you to check if your guests have reached 
+                  home safely after the event. It's an additional feature to ensure the well-being of your attendees.
+                  </Text>
+
+                  <Text style={styles.info}>
+                  What happens if I encounter technical issues while using Metro Mingle?
+                  </Text>
+                  <Text style={styles.placeholderText}>
+                  Our dedicated support team is ready to assist you. If you encounter any technical issues 
+                  or have questions about using Metro Mingle, please contact our support team through the app, 
+                  and we'll promptly address your concerns.
+                  </Text>
+
+
+
                 </ScrollView>
               </View>
+
+
+
+
             )}
             {selectedHelpOption === 2 && (
               <View>
+              <ScrollView>
                 <Text style={styles.info}>
-                  Metro Mingle - to travel, to track
+                  Metro Mingle. Elevate Your Events with Ease.
                 </Text>
                 <Text style={styles.placeholderText}>
-                  Placeholder text for Metro Mingle goes here. Describe the
-                  app's features, purpose, and any other relevant information.
+                Plan, Invite, Track, and Ensure Safe Journeys - 
+                Your All-in-One Event Companion, Now in Your Pocket!
                 </Text>
 
-                <Text style={styles.info}>Meet the team</Text>
+                <Text style={styles.info}>Meet the Metro Mingle Team</Text>
 
                 <TouchableOpacity
                   onPress={() => openLink("https://github.com/JustaGlitch")}
                 >
+                  <Image source={require('../../assets/ourImg/justin.png')} style={{ width: 100, height: 100}}/>
                   <Text style={styles.link}>Justin, Project Lead</Text>
                 </TouchableOpacity>
 
@@ -133,32 +150,38 @@ function Help() {
                     openLink("https://github.com/pablo-romeroclavijo")
                   }
                 >
+                 <Image source={require('../../assets/ourImg/pablo.jpg')} style={{ width: 100, height: 100}}/>
                   <Text style={styles.link}>Pablo, Backend Developer</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
                   onPress={() => openLink("https://github.com/swthes")}
                 >
+                 <Image source={require('../../assets/ourImg/sidique.png')} style={{ width: 100, height: 100}}/>
                   <Text style={styles.link}>Sidique, Frontend Developer</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
                   onPress={() => openLink("https://github.com/olgaKhristo")}
                 >
+                 <Image source={require('../../assets/ourImg/olga.jpg')} style={{ width: 100, height: 100}}/>
                   <Text style={styles.link}>Olga, Frontend Developer</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
                   onPress={() => openLink("https://github.com/AndrewAmir003")}
                 >
+                 <Image source={require('../../assets/ourImg/andrew.jpg')} style={{ width: 100, height: 100}}/>
                   <Text style={styles.link}>Andrew, Frontend Developer</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
                   onPress={() => openLink("https://github.com/AnoopBhandal")}
                 >
+                 <Image source={require('../../assets/ourImg/anoop.png')} style={{ width: 100, height: 100}}/>
                   <Text style={styles.link}>Anoop, Frontend Developer</Text>
                 </TouchableOpacity>
+                </ScrollView>
               </View>
             )}
             {selectedHelpOption === 3 && (
@@ -170,7 +193,7 @@ function Help() {
             <View style={{ alignSelf: "center", marginBottom: 20 }}>
               <AppButton
                 title="Close"
-                onPress={() => setModalHelpVisible(false)}
+                onPress={() => setModalHelpVisible(false)}                
                 style={styles.info}
               />
             </View>
@@ -185,8 +208,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: windowWidth * 0.05, // Use 5% of the screen width as padding
+    
   },
   header: {
+   
     fontSize: windowWidth * 0.08, // Use 8% of the screen width as font size
     fontWeight: "bold",
     marginBottom: windowHeight * 0.02, // Use 2% of the screen height as margin
@@ -202,7 +227,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     padding: windowWidth * 0.1, // Use 10% of the screen width as padding
-    marginTop: 0,
+    marginTop: 22,
   },
   click: {
     fontWeight: "bold",
