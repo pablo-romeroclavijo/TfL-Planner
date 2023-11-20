@@ -43,6 +43,11 @@ export default function App() {
 					component={HomeTabs}
 					options={{ headerShown: false }}
 				/>
+				<Stack.Screen
+					name="Map"
+					component={Screens.Map}
+					options={{ headerShown: false }}
+				/>
 
 				{/* <Stack.Screen
 					name="Routes"
