@@ -15,19 +15,20 @@ import GestureRecognizer from "react-native-swipe-gestures"
 import FilterDropdown from "../FilterDropdown"
 import moment from "moment"
 import GetAsync from "../AsyncStorageGet"
+import { useIsFocused } from "@react-navigation/native"
 export default function EventHolder({ events }) {
 	const [modalshow, setModalShow] = useState(false)
 	const [event, setEvent] = useState({})
 	const [eventsList, setEventsList] = useState([])
 	const [filteredEvents, setFilteredEvents] = useState([])
 	const [selectedFilter, setSelectedFilter] = useState("All")
-
+	const isFocused = useIsFocused()
 	useEffect(() => {
 		getEvents().then((data) => {
 			setEventsList(data)
 			setFilteredEvents(data)
 		})
-	}, [])
+	}, [isFocused])
 
 	useEffect(() => {
 		let filteredEvents = eventsList // Start with all events
@@ -37,21 +38,14 @@ export default function EventHolder({ events }) {
 			filteredEvents = eventsList.filter((event) =>
 				moment(event.date, format).isBefore(moment())
 			)
-			filteredEvents.sort(
-				(a, b) =>
-					moment(a.date, format).valueOf() - moment(b.date, format).valueOf() // Sorts in descending order
-			)
 		} else if (selectedFilter === "future") {
-			filteredEvents = eventsList
-				.filter((event) => moment(event.date, format).isAfter(moment()))
-				.sort(
-					(a, b) =>
-						moment(b.date, format).valueOf() - moment(a.date, format).valueOf()
-				) // Sorts in ascending order
+			filteredEvents = eventsList.filter((event) =>
+				moment(event.date, format).isAfter(moment())
+			)
 		}
 		filteredEvents.sort(sortFilter) // Sorts in ascending order
+		console.log(filteredEvents)
 		setFilteredEvents(filteredEvents) // Sorts in ascending order) // Update the state with the filtered events
-		console.log("filtered", filteredEvents)
 	}, [selectedFilter, eventsList]) // Assuming eventsList is a dependency
 
 	return (
@@ -63,7 +57,7 @@ export default function EventHolder({ events }) {
 			<View style={styles.list}>
 				<FlatList
 					data={filteredEvents}
-					keyExtractor={(item) => item.key} // Assuming 'id' is the unique identifier
+					keyExtractor={(item) => item.id} // Assuming 'id' is the unique identifier
 					renderItem={({ item }) => (
 						<EventCard
 							handlePress={() => {
@@ -124,13 +118,42 @@ async function getEvents() {
 		if (response.status == 200) {
 			return data.events
 		} else {
-			console.log(data)
+			console.log("error")
 		}
 	} catch (error) {
 		console.log(error)
 	}
 }
 
+// function sortFilter(a, b) {
+// 	// Parse the dates
+// 	const format = "ddd, DD MMM YYYY HH:mm:ss [GMT]"
+// 	const dateA = moment(a.date, format)
+// 	const dateB = moment(b.date, format)
+// 	const now = moment()
+
+// 	// Check if either date is the current date (or very close to it, depending on the precision of your dates)
+// 	const isTodayA = dateA.isSame(now, "day")
+// 	const isTodayB = dateB.isSame(now, "day")
+
+// 	// If both dates are today, sort them normally
+// 	if (isTodayA && isTodayB) {
+// 		return dateA.valueOf() - dateB.valueOf()
+// 	}
+
+// 	// If dateA is today and dateB is not, dateA should come first
+// 	if (isTodayA) {
+// 		return -1
+// 	}
+
+// 	// If dateB is today and dateA is not, dateB should come first
+// 	if (isTodayB) {
+// 		return 1
+// 	}
+
+// 	// Otherwise, sort dates in ascending order
+// 	return dateB.valueOf() - dateA.valueOf()
+// }
 function sortFilter(a, b) {
 	// Parse the dates
 	const format = "ddd, DD MMM YYYY HH:mm:ss [GMT]"
@@ -138,13 +161,13 @@ function sortFilter(a, b) {
 	const dateB = moment(b.date, format)
 	const now = moment()
 
-	// Check if either date is the current date (or very close to it, depending on the precision of your dates)
+	// Check if either date is the current date (or very close to it)
 	const isTodayA = dateA.isSame(now, "day")
 	const isTodayB = dateB.isSame(now, "day")
 
-	// If both dates are today, sort them normally
+	// If both dates are today, sort by most recent first
 	if (isTodayA && isTodayB) {
-		return dateA.valueOf() - dateB.valueOf()
+		return dateB.valueOf() - dateA.valueOf()
 	}
 
 	// If dateA is today and dateB is not, dateA should come first
@@ -157,6 +180,6 @@ function sortFilter(a, b) {
 		return 1
 	}
 
-	// Otherwise, sort dates in ascending order
+	// If neither date is today, sort by most recent first (i.e., descending order)
 	return dateB.valueOf() - dateA.valueOf()
 }

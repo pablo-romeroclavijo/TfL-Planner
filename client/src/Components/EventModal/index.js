@@ -10,9 +10,10 @@ const EventModal = ({ onClose, code }) => {
 	useEffect(() => {
 		getEvent(code).then((data) => {
 			setEvent(data.event)
-			console.log("new", data)
+
 			setAttendees(data.attendees)
 			setIsLoading(false)
+			console.log("yellow")
 		})
 	}, [])
 	return (
@@ -36,9 +37,9 @@ const EventModal = ({ onClose, code }) => {
 						keyExtractor={(item) => item.id}
 						renderItem={({ item }) => (
 							<View style={styles.attendee}>
-								<Text style={styles.attendeeName}>{item.name}</Text>
+								<Text style={styles.attendeeName}>{item.user_id}</Text>
 								<Text style={styles.attendeeStatus}>{item.status}</Text>
-								<Text style={styles.attendeeETA}>ETA: {item.eta}</Text>
+								<Text style={styles.attendeeETA}>ETA: {item.ETA}</Text>
 							</View>
 						)}
 					/>
