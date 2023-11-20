@@ -16,7 +16,7 @@ def format_user(user):
 
     
 def create():
-    # try: 
+    try: 
         data = request.json
         
         bytes = data['password'].encode('utf-8')  
@@ -33,8 +33,8 @@ def create():
             id=user.id, 
             username=user.user_name, 
             token=token.token), 201
-    # except:
-    #     return 'Unable to create user', 400
+    except:
+        return 'Unable to create user', 400
     
 def login():
     try: 
