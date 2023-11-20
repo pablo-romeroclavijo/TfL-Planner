@@ -63,7 +63,7 @@ export default function EventHolder({ events }) {
 			<View style={styles.list}>
 				<FlatList
 					data={filteredEvents}
-					keyExtractor={(item) => item.id.toString()} // Assuming 'id' is the unique identifier
+					keyExtractor={(item) => item.key} // Assuming 'id' is the unique identifier
 					renderItem={({ item }) => (
 						<EventCard
 							handlePress={() => {
@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
 		backgroundColor: "#FF6363",
 		padding: 20,
 	},
-	list: { paddingTop: 20 },
+	list: { paddingTop: 20, paddingBottom: 90 },
 })
 
 async function getEvents() {

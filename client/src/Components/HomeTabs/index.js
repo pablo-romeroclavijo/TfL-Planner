@@ -40,15 +40,16 @@ const HomeTabs = () => {
 				options={{ headerShown: false }}
 			/>
 			<Tab.Screen
-				name="Events"
-				component={Screens.Events}
-				options={{ headerShown: false }}
-			/>
-			<Tab.Screen
 				name="Routes"
 				component={Screens.Routes}
 				options={{ headerShown: false }}
 			/>
+			<Tab.Screen
+				name="Events"
+				component={Screens.Events}
+				options={{ headerShown: false }}
+			/>
+
 			<Tab.Screen
 				name="Profile"
 				component={Screens.Profile}
