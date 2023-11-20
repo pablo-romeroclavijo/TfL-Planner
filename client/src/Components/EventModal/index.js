@@ -19,15 +19,14 @@ const EventModal = ({ onClose, code }) => {
 	const [isLoading, setIsLoading] = useState(true)
 	const [Route, setRoute] = useState(false)
 	const isFocused = useIsFocused()
- 
+
 	useEffect(() => {
 		getEvent(code).then((data) => {
 			setEvent(data.event)
 			setAttendees(data.attendees)
 			setIsLoading(false)
-			console.log("yellow", attendees)
 		})
-	}, [isFocused])
+	}, [code])
 	return (
 		<View style={styles.modalContent}>
 			<Pressable style={styles.closeButton} onPress={onClose}>
