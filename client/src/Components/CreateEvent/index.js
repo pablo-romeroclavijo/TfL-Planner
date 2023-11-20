@@ -16,7 +16,6 @@ export default function CreateEventForm({ closeModal }) {
   const [fDate, setFDate] = useState("");
   const [fTime, setFTime] = useState("");
 
-
   useEffect(() => {
     if (fDate && fTime) {
       setText(fDate + " " + fTime);
@@ -38,31 +37,29 @@ export default function CreateEventForm({ closeModal }) {
     setShowTimePicker(false);
   };
 
-  const onDateChange = (selectedDate) => {
+  const onDateChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
+    console.log(currentDate)
     hideDateTimePicker();
     let tempDate = new Date(currentDate);
     setFDate(
       tempDate.getFullYear() +
         "-" +
-        (tempDate.getMonth() + 1) +
+        (tempDate.getMonth() + 1).toString().padStart(2, "0") +
         "-" +
-        tempDate.getDate()
+        tempDate.getDate().toString().padStart(2, "0")
     );
-    (fDate && fTime) ? setText(fDate + " " + fTime) : null
-
   };
 
-  const onTimeChange = (selectedTime) => {
+  const onTimeChange = (event, selectedTime) => {
     const currentTime = selectedTime || date;
     hideDateTimePicker();
     let tempTime = new Date(currentTime);
     setFTime(
-      tempTime.getHours() +
+      tempTime.getHours().toString().padStart(2, "0") +
         ":" +
         tempTime.getMinutes().toString().padStart(2, "0")
     );
-    (fDate && fTime) ? setText(fDate + " " + fTime) : null;
   };
 
   useEffect(() => {
@@ -106,7 +103,7 @@ export default function CreateEventForm({ closeModal }) {
       options
     );
 
-    if (response.status == 201) {
+    if (response.status === 201) {
       alert("Event Created.");
       closeModal();
     } else {

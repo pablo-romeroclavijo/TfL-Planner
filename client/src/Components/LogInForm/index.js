@@ -12,7 +12,7 @@ import {
 import AppTextInput from "../AppTextInput"
 import AppButton from "../AppButton"
 import LoadingModal from "../LoadingModal"
-import CreateAsync from "..//AsyncStorageCreate"
+import CreateAsync from "../AsyncStorageCreate"
 
 import colors from "../../config/colors"
 
