@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { Animated, View, StyleSheet } from 'react-native';
 
-const BlinkingCircle = ({userY}) => {
+const BlinkingCircle = () => {
   const opacity = useRef(new Animated.Value(1)).current; // Initial opacity
 
   const startBlinking = () => {
@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     backgroundColor: 'blue',
     position: 'absolute',
-    top: userY+30,
+    top: 30,
     left: 40
 
 

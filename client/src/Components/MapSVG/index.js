@@ -1,17 +1,23 @@
 import {View} from "react-native"
-import Svg, { Text, Path, Circle, Line, Rect } from 'react-native-svg';
+import Svg, { Text, Path, Circle, Line, Rect, Image } from 'react-native-svg';
 import BlinkingCircle from "../BlinkingCircle";
+
+import tube from '../../assets/map_logos/Underground.png'
+
+let logos = {
+  'tube':tube
+}
 
 const SVG = ({journey, user}) =>{
   const legSpacing = 60; // Vertical space between legs
   const nodeRadius = 5; // Radius of the circle representing a node
   let currentY = 40; // Initial Y position to accommodate departure point text
-  const charWidth = 6; // Approximate width of each character in pixels
+
 
   const svgElements = journey.legs.map((leg, legIndex) => {
     let elements = [];
     let departure = new Date(leg.departure);
-    const now = new Date()
+    let now = new Date()
     let arrival = new Date(leg.arrival)
 
 
@@ -47,8 +53,7 @@ const SVG = ({journey, user}) =>{
     );
 
     if (user == true){
-      
-    
+      //console.log(now < arrival && now > departure)
       if(now < arrival && now > departure){
         let minutes = (now.getTime()-departure.getTime())/60000
         let userY = currentY + (legSpacing*minutes/leg.duration)
@@ -57,7 +62,7 @@ const SVG = ({journey, user}) =>{
         // );
 
         elements.push(
-          <Circle cx="50" cy={userY} r={10} fill="red" stroke="red" strokeWidth="3" key={"user" + legIndex} />
+          <Circle cx="50" cy={userY} r={5} fill="red" stroke="red" strokeWidth="3" key={"user" + legIndex} />
           );
 
       }
@@ -87,7 +92,7 @@ const SVG = ({journey, user}) =>{
     if (leg.mode =='tube'){
       modeText = leg.line
       boxColor = tube_lines[leg.line].boxColor
-      color = tube_lines[leg.line].boxColor
+      //color = tube_lines[leg.line].boxColor
       boxWidth = tube_lines[leg.line].boxSize
     }
 
@@ -98,6 +103,17 @@ const SVG = ({journey, user}) =>{
         key={"rect-" + legIndex}
       />
     );
+    //console.log(tube)
+    elements.push(
+      <Image
+          x={boxX-20} y={boxY+2}
+          source = {tube}
+          width="15" // Set the width as needed
+          height="15" // Set the height as needed
+          preserveAspectRatio="xMidYMid slice"
+      />
+    );
+
     elements.push(
       <Text x={boxX + 5} y={modeTextY} fontFamily="Verdana" fontSize="12" key={"modeText-" + legIndex}>
         {modeText == 'Bus' ? `Bus line ${leg.line}` : modeText}
