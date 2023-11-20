@@ -1,11 +1,18 @@
-import React, { useState, useEffect } from "react";
-import { View, Text, SafeAreaView, ScrollView, StyleSheet } from "react-native";
-import { AppButton, AppTextInput, GetAsync, RouteParamsModal, SlideBox } from "../../Components";
-import validator from "validator";
-import DateTimePicker from "@react-native-community/datetimepicker";
-import { Picker } from "@react-native-picker/picker";
+import React, { useState, useEffect } from "react"
+import { View, Text, SafeAreaView, ScrollView, StyleSheet } from "react-native"
+import {
+	AppButton,
+	AppTextInput,
+	GetAsync,
+	RouteParamsModal,
+	SlideBox,
+} from "../../Components"
+import validator from "validator"
+import DateTimePicker from "@react-native-community/datetimepicker"
+import { Picker } from "@react-native-picker/picker"
 
 export default function RoutesScreenForm() {
+
   const [startPostcodeInput, setStartPostcodeInput] = useState("");
   const [endPostcodeInput, setEndPostcodeInput] = useState("");
   const [token, setToken] = useState("");
@@ -210,34 +217,49 @@ export default function RoutesScreenForm() {
       ) : null}
       <AppButton onPress={dataValidation} title="Submit" />
       {/* {route
+
         ? route.map((r, index) => <Text key={index}>{r.summary}</Text>)
         : null} */}
-        <SafeAreaView style={styles.container}>
-          <View>
-            {route ?
-              <SlideBox slides={[
-                {journey: route[0], content: 'Route 1', onSelect: () => console.log('Red Selected')}, 
-                {journey: route[1], content: 'Route 2', onSelect: () => console.log('Blue Selected')}, 
-                {journey: route[2], content: 'Route 3', onSelect: () => console.log('Green Selected')}
-                ]} />
-              : null
-              }
-          </View>
-        </SafeAreaView>
-    </ScrollView>
-  );
+			<SafeAreaView style={styles.container}>
+				<View>
+					{route ? (
+						<SlideBox
+							slides={[
+								{
+									journey: route[0],
+									content: "Route 1",
+									onSelect: () => console.log("Red Selected"),
+								},
+								{
+									journey: route[1],
+									content: "Route 2",
+									onSelect: () => console.log("Blue Selected"),
+								},
+								{
+									journey: route[2],
+									content: "Route 3",
+									onSelect: () => console.log("Green Selected"),
+								},
+							]}
+						/>
+					) : null}
+				</View>
+			</SafeAreaView>
+		</ScrollView>
+	)
 }
 
 const styles = StyleSheet.create({
-  screen: {
-    height: "auto"
-  },
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 0,
-    height: "auto",
-  }
-
-});
+	screen: {
+		height: "auto",
+		paddingTop: 40,
+		
+	},
+	container: {
+		flex: 1,
+		alignItems: "center",
+		justifyContent: "center",
+		marginTop: 0,
+		height: "auto",
+	},
+})
