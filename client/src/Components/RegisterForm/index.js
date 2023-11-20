@@ -12,6 +12,8 @@ import {
 import colors from "../../config/colors";
 import { LoadingModal, AppButton, AppTextInput } from "../../Components";
 
+import CreateAsync from "../AsyncStorageCreate"
+
 export default function Register({ navigation }) {
   const [usernameInput, setUsernameInput] = useState("");
   const [passwordInput, setPasswordInput] = useState("");
@@ -61,6 +63,7 @@ export default function Register({ navigation }) {
       const data = await response.json().then(setLoading(false));
       const token = data.token;
       navigation.navigate("Dashboard");
+      CreateAsync("token", token)
       setEmailInput("");
       setUsernameInput("");
       setPasswordInput("");
