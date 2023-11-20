@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { View, Text, StyleSheet, Modal, Svg } from "react-native"
-import { CreateEventForm, CreateEventModal, AppButton } from "../../Components"
+import { CreateEventForm, CreateEventModal, AppButton, Header } from "../../Components"
 
 export default function Home({ navigation }) {
 	const [createEvent, setCreateEvent] = useState(false)
@@ -16,6 +16,7 @@ export default function Home({ navigation }) {
 	return (
 		// <ImageBackground source={image} style={{ width: "100%", height: "100%" }}>
 		<View style={styles.container}>
+			<Header />
 			<Text style={styles.title}>My Home</Text>
 			<View style={styles.newEventContainer}>
 				<AppButton onPress={clickCreateEvent} title="Create Event" />
@@ -41,7 +42,6 @@ export default function Home({ navigation }) {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: "lightblue",
 	},
 	title: {
 		textAlign: "center",
