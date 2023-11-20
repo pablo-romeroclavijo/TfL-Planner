@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
     borderWidth: 1, // Thin border
     borderColor: '#ddd', // Grey border color
     overflow: 'hidden', // Ensures children do not overlap the rounded corners
-    height: 300,
+    height: "auto",
     
   },
   scrollViewStyle: {
@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
     width: width - 20, // Adjust width based on container margin
     justifyContent: 'space-between',
     alignItems: 'center',
-    height: 550, // Adjust as needed
+    height: "auto", // Adjust as needed
   },
   contentScroll: {
     flex: 1,

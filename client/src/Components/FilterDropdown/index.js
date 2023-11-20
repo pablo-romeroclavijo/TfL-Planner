@@ -11,7 +11,7 @@ import { Picker } from "@react-native-picker/picker"
 const FilterDropdown = ({ selectedFilter, setSelectedFilter }) => {
 	const [visible, setVisible] = useState(false)
 
-	const filters = ["all", "recent", "popular", "favorites"]
+	const filters = ["All", "Past", "Mine", "Attending"]
 
 	return (
 		<View style={styles.container}>
