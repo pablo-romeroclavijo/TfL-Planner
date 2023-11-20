@@ -36,6 +36,10 @@ class Journey():
         self.duration = journey['duration']
         self.origin = origin
         self.legs = [Leg.create_leg(x) for x in journey['legs']]
+        try: 
+            self.disruptions = [leg["disruptions"][0] for leg in self.legs]
+        except: 
+            self.disruptions = []
         try:
             self.fare = journey['fare']['totalCost']
         except:
@@ -49,7 +53,8 @@ class Journey():
             'duration':journey.duration,
             'legs' :journey.legs,
             'origin': journey.origin,
-            'fare': journey.fare
+            'fare': journey.fare,
+            'disruptions': journey.disruptions
         }
         return journey_dict
 
@@ -62,7 +67,6 @@ class Leg():
         self.departure = leg['departureTime']
         self.arrival = leg['arrivalTime'] 
         self.mode = leg['mode']['id']
-        self.disruptions = [x['description'] for x in leg['disruptions']]
         self.isDisrupted = leg['isDisrupted']
         self.stops = [x['name'] for x in leg['path']['stopPoints']]
         self.line = None
@@ -72,6 +76,11 @@ class Leg():
             self.distance = 0
         if self.mode == 'tube' or self.mode == 'bus' :
             self.line = self.summary.split(' ')[0]
+            
+        self.disruptions = []
+        for disruption in leg['disruptions']:
+            if not disruption['category'] == 'info':
+                self.disruptions.append(disruption['description'])
 
     def create_leg(data):
         leg = Leg(data)
@@ -81,7 +90,7 @@ class Leg():
             "departure": leg.departure,
             "arrival": leg.arrival,
             'mode': leg.mode,
-            'distuptions': leg.disruptions,
+            'disruptions': leg.disruptions,
             'isDisrupted': leg.isDisrupted,
             'stops': leg.stops,
             'arrivalPoint':leg.arrivalPoint,

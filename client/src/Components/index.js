@@ -18,3 +18,4 @@ export { default as Linear } from "./LinearGradientButton"
 export { default as SVG} from "./MapSVG"
 export { default as SlideBox} from "./SlideBox"
 export { default as BlinkingCircle} from './BlinkingCircle'
+export { default as RouteInfo} from './RouteDetails'

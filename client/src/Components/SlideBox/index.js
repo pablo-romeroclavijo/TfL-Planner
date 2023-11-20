@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ScrollView, View, Dimensions, StyleSheet, Text, TouchableOpacity } from 'react-native';
-import {SVG} from '../../Components'
+import {SVG, RouteInfo} from '../../Components'
 const { width } = Dimensions.get('window');
 
 const SlideBox = ({ slides }) => {
@@ -20,7 +20,7 @@ const SlideBox = ({ slides }) => {
       </View>
     );
   };
-
+  console.log(slides[0].journey.distuptions)
   return (
     <View style={styles.container2}>
       <ScrollView
@@ -32,10 +32,11 @@ const SlideBox = ({ slides }) => {
         style={styles.scrollViewStyle}
       >
         {slides.map((slide, index) => (
+          
           <View key={index} style={[styles.slide, { backgroundColor: "white" }]}>
             <ScrollView style={styles.contentScroll}>
+                <RouteInfo duration={slide.journey.duration} fare = {slide.journey.fare} isDisrupted = {slide.journey.isDisrupted}  warningText={slide.journey.disruptions} arrival={slide.journey.arrivalDateTime}/>
                 <SVG journey = {slide.journey} user={true}/>
-              <Text style={styles.contentText}>{slide.content}</Text>
             </ScrollView>
             <TouchableOpacity style={styles.button} onPress={() => slide.onSelect()}>
               <Text style={styles.buttonText}>Select</Text>
@@ -66,7 +67,7 @@ const styles = StyleSheet.create({
     width: width - 20, // Adjust width based on container margin
     justifyContent: 'space-between',
     alignItems: 'center',
-    height: 550, // Adjust as needed
+
   },
   contentScroll: {
     flex: 1,
