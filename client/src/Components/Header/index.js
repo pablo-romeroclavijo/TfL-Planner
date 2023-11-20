@@ -1,33 +1,32 @@
 import React from "react";
-import { View, Text, Image, StyleSheet, SafeAreaView } from "react-native";
+import { Image, StyleSheet } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
+import colors from "../../config/colors"; // Import your colors configuration
 
 const Header = () => {
 	return (
-			<View style={styles.container}>
-				<Image source={require("../../assets/logo2.png")} style={styles.logo} />
-			</View>
-
+		<LinearGradient
+			colors={colors.gradient} // Use gradient colors
+			style={styles.headerGradient}
+			start={{ x: 0, y: 0 }}
+			end={{ x: 1, y: 1 }}
+		>
+			<Image source={require("../../assets/logo2.png")} style={styles.logo} />
+		</LinearGradient>
 	);
 };
 
 const styles = StyleSheet.create({
-	header: {
-		height: 100,
-		width: "100%", // Stretch across the screen width
-		backgroundColor: "btn2",
+	headerGradient: {
+		height: 120, // Adjust as needed for your header size
+		width: "100%",
 		alignItems: "center",
 		justifyContent: "center",
-		flexDirection: "row",
+		paddingTop: 35,
 	},
 	logo: {
 		width: 80,
 		height: 60,
-		marginRight: 10,
-		marginTop: 35,
-	},
-	title: {
-		fontSize: 20,
-		fontWeight: "bold",
 	},
 });
 
