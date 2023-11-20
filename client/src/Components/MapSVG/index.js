@@ -88,12 +88,14 @@ const SVG = ({journey, user}) =>{
     const boxX = 80;
     const boxY = modeTextY - 15;
     let boxColor = styling.boxColor
+    let textColor = styling.textColor
 
     if (leg.mode =='tube'){
       modeText = leg.line
       boxColor = tube_lines[leg.line].boxColor
       //color = tube_lines[leg.line].boxColor
       boxWidth = tube_lines[leg.line].boxSize
+      textColor =  tube_lines[leg.line].textColor
     }
 
     elements.push(
@@ -115,9 +117,11 @@ const SVG = ({journey, user}) =>{
     );
 
     elements.push(
-      <Text x={boxX + 5} y={modeTextY} fontFamily="Verdana" fontSize="12" key={"modeText-" + legIndex}>
-        {modeText == 'Bus' ? `Bus line ${leg.line}` : modeText}
-      </Text>
+      
+        <Text x={boxX + 5} y={modeTextY} fontFamily="Verdana" fill ={textColor} fontSize="12" key={"modeText-" + legIndex}>
+          {modeText == 'Bus' ? `Bus line ${leg.line}` : modeText}
+        </Text>
+      
     );
 
     // Update currentY for next leg
@@ -157,183 +161,28 @@ const SVG = ({journey, user}) =>{
 };
 
 const line_object={
-    walking: {line_dash: 5.5, color: "grey", boxColor: 'white', boxSize: 52},
-    overground: {line_dash: 0, color: "#ee7c0e", boxColor: '#ee7c0e',boxSize: 73},
-    tube: {line_dash: 0, color: "blue", boxColor: 'blue', boxSize: 35},
+    walking: {line_dash: 5.5, color: "grey", boxColor: 'white', boxSize: 52, textColor: 'black'},
+    overground: {line_dash: 0, color: "#ee7c0e", boxColor: '#ee7c0e',boxSize: 73, textColor: 'white'},
+    tube: {line_dash: 0, color: "blue", boxColor: 'blue', boxSize: 35, textColor: 'black'},
     dlr: {line_dash: 0, color: "#00a4a7", boxColor: '#00a4a7', boxSize: 10},
-    "elizabeth-line": {line_dash: 0, color: "#802bc2", boxColor: '#802bc2', boxSize: 81},
-    "national-rail": {line_dash: 0, color: "#0e46b5", boxColor: '#0e46b5', boxSize: 75},
-    bus: {line_dash: 0, color: "red", boxColor: 'red',  boxSize: 75}
+    "elizabeth-line": {line_dash: 0, color: "#802bc2", boxColor: '#802bc2', boxSize: 81, textColor: 'white'},
+    "national-rail": {line_dash: 0, color: "#0e46b5", boxColor: '#0e46b5', boxSize: 75, textColor: 'black'},
+    bus: {line_dash: 0, color: "red", boxColor: 'red',  boxSize: 75, textColor: 'black'}
 }
 
 const tube_lines = {
-  'Bakerloo': {color: "grey", boxColor: '#b36305', boxSize: 55},
-  'Central': {color: "grey", boxColor: '#e32017', boxSize: 45},
-  'Circle': {color: "grey", boxColor: '#ffd300', boxSize: 45},
-  'District': {color: "grey", boxColor: '#00782a', boxSize: 52},
-  'Hammersmith': {color: "grey", boxColor: '#f3a9bb', boxSize: 70},
-  'Jubilee': {color: "grey", boxColor: '#a0a5a9', boxSize: 48},
-  'Metropolitan': {color: "grey", boxColor: '#9b0056', boxSize: 70},
-  'Northern': {color: "grey", boxColor: '#000000', boxSize: 55},
-  'Piccadilly': {color: "grey", boxColor: '#003688', boxSize: 65},
-  'Victoria': {color: "grey", boxColor: '	#0098d4', boxSize: 55},
-  'Waterloo': {color: "grey", boxColor: '#95cdba', boxSize: 55},
+  'Bakerloo': {color: "grey", boxColor: '#b36305', boxSize: 55, textColor: 'black'},
+  'Central': {color: "grey", boxColor: '#e32017', boxSize: 45, textColor: 'white'},
+  'Circle': {color: "grey", boxColor: '#ffd300', boxSize: 45, textColor: 'black'},
+  'District': {color: "grey", boxColor: '#00782a', boxSize: 52, textColor: 'black'},
+  'Hammersmith': {color: "grey", boxColor: '#f3a9bb', boxSize: 70, textColor: 'black'},
+  'Jubilee': {color: "grey", boxColor: '#a0a5a9', boxSize: 48, textColor: 'black'},
+  'Metropolitan': {color: "grey", boxColor: '#9b0056', boxSize: 70, textColor: 'black'},
+  'Northern': {color: "grey", boxColor: '#000000', boxSize: 55, textColor: 'white'},
+  'Piccadilly': {color: "grey", boxColor: '#003688', boxSize: 65, textColor: 'white'},
+  'Victoria': {color: "grey", boxColor: '	#0098d4', boxSize: 55, textColor: 'black'},
+  'Waterloo': {color: "grey", boxColor: '#95cdba', boxSize: 55, textColor: 'black'},
 }
-// Example usage with your journey object
-// const journey ={
-    
-//         "arrivalDateTime": "2023-11-17T14:39:00",
-//         "duration": 50,
-//         "legs": [
-//           {
-//             "arrival": "2023-11-17T13:57:00",
-//             "arrivalPoint": "Camden Road Rail Station",
-//             "departure": "2023-11-17T13:49:00",
-//             "departurePoint": "NW1 9HU",
-//             "distance": "339m",
-//             "distuptions": [],
-//             "duration": 8,
-//             "isDisrupted": false,
-//             "mode": "walking",
-//             "stops": [],
-//             "summary": "Walk to Camden Road Station"
-//           },
-//           {
-//             "arrival": "2023-11-17T14:02:00",
-//             "arrivalPoint": "Highbury & Islington Rail Station",
-//             "departure": "2023-11-17T13:57:00",
-//             "departurePoint": "Camden Road Rail Station",
-//             "distance": "0m",
-//             "distuptions": [],
-//             "duration": 5,
-//             "isDisrupted": false,
-//             "mode": "overground",
-//             "stops": [
-//               "Caledonian Road & Barnsbury Rail Station",
-//               "Highbury & Islington Rail Station"
-//             ],
-//             "summary": "London Overground towards Stratford"
-//           },
-//           {
-//             "arrival": "2023-11-17T14:30:00",
-//             "arrivalPoint": "Rotherhithe Rail Station",
-//             "departure": "2023-11-17T14:10:00",
-//             "departurePoint": "Highbury & Islington Rail Station",
-//             "distance": "0m",
-//             "distuptions": [
-//               "ROTHERHITHE STATION: This station has short platforms. Customers are advised to travel in the front 4 coaches and listen to on-board announcements."
-//             ],
-//             "duration": 20,
-//             "isDisrupted": true,
-//             "mode": "overground",
-//             "stops": [
-//               "Canonbury Rail Station",
-//               "Dalston Junction Rail Station",
-//               "Haggerston Rail Station",
-//               "Hoxton Rail Station",
-//               "Shoreditch High Street Rail Station",
-//               "Whitechapel Rail Station",
-//               "Shadwell Rail Station",
-//               "Wapping Rail Station",
-//               "Rotherhithe Rail Station"
-//             ],
-//             "summary": "London Overground towards Crystal Palace"
-//           },
-//           {
-//             "arrival": "2023-11-17T14:39:00",
-//             "arrivalPoint": "SE16 4JB",
-//             "departure": "2023-11-17T14:30:00",
-//             "departurePoint": "Rotherhithe Rail Station",
-//             "distance": "300m",
-//             "distuptions": [],
-//             "duration": 9,
-//             "isDisrupted": false,
-//             "mode": "walking",
-//             "stops": [],
-//             "summary": "Walk to SE16 4JB"
-//           }
-//         ],
-//         "origin": "NW19HU",
-//         "startDateTime": "2023-11-17T13:49:00"
-//       }
-
-// const journey = {
-//     "arrivalDateTime": "2023-11-17T22:02:00",
-//     "duration": 41,
-//     "fare": 280,
-//     "legs": [
-//       {
-//         "arrival": "2023-11-17T21:30:00",
-//         "arrivalPoint": "Rotherhithe Rail Station",
-//         "departure": "2023-11-17T21:21:00",
-//         "departurePoint": "SE16 4JB",
-//         "distance": "300m",
-//         "distuptions": [],
-//         "duration": 9,
-//         "isDisrupted": false,
-//         "mode": "walking",
-//         "stops": [],
-//         "summary": "Walk to Rotherhithe Station"
-//       },
-//       {
-//         "arrival": "2023-11-17T21:31:00",
-//         "arrivalPoint": "Canada Water Rail Station",
-//         "departure": "2023-11-17T21:30:00",
-//         "departurePoint": "Rotherhithe Rail Station",
-//         "distance": "0m",
-//         "distuptions": [
-//           "ROTHERHITHE STATION: This station has short platforms. Customers are advised to travel in the front 4 coaches and listen to on-board announcements.",
-//           "Canada Water: No Step Free Access - Step free access is not available between the ticket hall and the northbound London Overground platform due to a faulty lift. Call us on 0343 222 1234 if you need help planning your journey.",
-//           "CANADA WATER STATION: This station has short London Overground platforms. Customers are advised to travel in the front 4 coaches and listen to on-board announcements."
-//         ],
-//         "duration": 1,
-//         "isDisrupted": true,
-//         "mode": "overground",
-//         "stops": [
-//           "Canada Water Rail Station"
-//         ],
-//         "summary": "London Overground towards Crystal Palace"
-//       },
-//       {
-//         "arrival": "2023-11-17T21:44:00",
-//         "arrivalPoint": "Green Park Underground Station",
-//         "departure": "2023-11-17T21:34:00",
-//         "departurePoint": "Canada Water Underground Station",
-//         "distance": "0m",
-//         "distuptions": [
-//           "Canada Water: No Step Free Access - Step free access is not available between the ticket hall and the northbound London Overground platform due to a faulty lift. Call us on 0343 222 1234 if you need help planning your journey."
-//         ],
-//         "duration": 10,
-//         "isDisrupted": true,
-//         "mode": "tube",
-//         "stops": [
-//           "Bermondsey Underground Station",
-//           "London Bridge Underground Station",
-//           "Southwark Underground Station",
-//           "Waterloo Underground Station",
-//           "Westminster Underground Station",
-//           "Green Park Underground Station"
-//         ],
-//         "summary": "Jubilee line towards Wembley Park"
-//       },
-//       {
-//         "arrival": "2023-11-17T22:02:00",
-//         "arrivalPoint": "SW1A 1AA",
-//         "departure": "2023-11-17T21:44:00",
-//         "departurePoint": "Green Park Underground Station",
-//         "distance": "624m",
-//         "distuptions": [],
-//         "duration": 18,
-//         "isDisrupted": false,
-//         "mode": "walking",
-//         "stops": [],
-//         "summary": "Walk to SW1A 1AA"
-//       }
-//     ],
-//     "origin": "SE164JB",
-//     "startDateTime": "2023-11-17T21:21:00"
-//    }
-
 
 
 export default SVG
