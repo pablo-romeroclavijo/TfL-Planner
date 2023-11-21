@@ -3,11 +3,15 @@ import validator from "validator";
 import { View, StyleSheet, Text, Platform, Image, TouchableOpacity } from "react-native";
 
 import colors from "../../config/colors";
-import { LoadingModal, AppButton, AppTextInput } from "../../Components";
 import GradientBackground from "../../Components/Gradient";
 
 import CreateAsync from "../AsyncStorageCreate";
+
+import LoadingModal from "../LoadingModal";
+import AppButton from "../AppButton";
+import AppTextInput from "../AppTextInput";
 import GetAsync from "../AsyncStorageGet";
+
 
 export default function Register({ navigation }) {
 	const [usernameInput, setUsernameInput] = useState("");
