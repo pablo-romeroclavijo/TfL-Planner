@@ -1,19 +1,22 @@
 import React from "react"
 import { StyleSheet, View, Text, Pressable } from "react-native"
-
+import moment from "moment"
 const EventCard = ({ event, handlePress, key }) => {
 	return (
 		<Pressable onPress={handlePress}>
 			<View key={key} style={styles.card}>
 				<View style={styles.header}>
 					<Text style={styles.headerText}>{event.title}</Text>
-					<Text style={styles.dateText}>{event.date}</Text>
+					<Text style={styles.dateText}>
+						{moment(event.date).format("ddd, DD MMM YYYY")}
+					</Text>
+					<Text>{moment(event.date).format("HH:mm")}</Text>
 				</View>
 				<View style={styles.body}>
 					<Text style={styles.bodyText}>{event.description}</Text>
 					<View style={styles.timeLocation}>
 						<Text style={styles.timeText}>{event.time}</Text>
-						<Text style={styles.locationText}>{event.location}</Text>
+						<Text style={styles.locationText}>{event.postcode}</Text>
 					</View>
 				</View>
 
