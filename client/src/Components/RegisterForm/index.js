@@ -66,7 +66,7 @@ export default function Register({ navigation }) {
 			if (data.preferences.maxWalkingMinutes == null){
 				await CreateAsync("maxWalkingMinutes", "")
 			} else {
-				await CreateAsync("maxWalkingMinutes", data.preferences.maxWalkingMinutes)
+				await CreateAsync("maxWalkingMinutes", String(data.preferences.maxWalkingMinutes))
 			}
 			if (data.preferences.walkingSpeed == null){
 				await CreateAsync("walkingSpeed", "")
