@@ -6,7 +6,11 @@ import { LogoutButton, PreferencesForm, Help, Header } from "../../Components";
 export default function Profile() {
 	return (
 		<View style={styles.container}>
-			<Header />
+						<Header />
+			<View style={{alignSelf: "center"}}>
+
+
+			</View>
 
 			<PreferencesForm />
 

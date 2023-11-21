@@ -4,8 +4,13 @@ import Header from "../../Components/Header";
 
 export default function Routes() {
 	return (
-		<View style={styles.view}>
-			<Header />
+		<View>
+
+						<Header />
+			<View style={{alignSelf: "center"}}>
+
+
+			</View>
 			<RoutesScreenForm />
 		</View>
 	);
