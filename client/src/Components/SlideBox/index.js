@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { ScrollView, View, Dimensions, StyleSheet, Text, TouchableOpacity } from 'react-native';
-import {SVG, RouteInfo} from '../../Components'
 const { width } = Dimensions.get('window');
+
+import SVG from "../MapSVG"
+import RouteInfo from '../RouteDetails';
 
 const SlideBox = ({ slides }) => {
   const [activeSlide, setActiveSlide] = useState(0);

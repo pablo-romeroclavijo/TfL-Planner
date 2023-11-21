@@ -1,9 +1,9 @@
 import React, {useState} from "react";
 import { Text, Modal, View, Pressable, StyleSheet } from "react-native";
-import { CreateEventForm, AppButton } from "../"
 import { Entypo } from '@expo/vector-icons';
 
-
+import CreateEventForm from "../CreateEvent";
+import AppButton from "../AppButton";
 
 export default function CreateEventModal({isVisible, closeModal, createEvent}){
 
