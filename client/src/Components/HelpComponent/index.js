@@ -9,6 +9,7 @@ import {
   Linking,
   Dimensions,
   Image,
+  SafeAreaView,
 } from "react-native";
 import GestureRecognizer from "react-native-swipe-gestures";
 

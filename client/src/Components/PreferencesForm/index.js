@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
 import {
-  Text,
-  View,
-  StyleSheet,
-  Modal,
-  TouchableOpacity,
-  Alert,
-  KeyboardAvoidingView,
-  Platform,
-  Dimensions, // Import Dimensions
+	Text,
+	View,
+	StyleSheet,
+	Modal,
+	TouchableOpacity,
+	Alert,
+	KeyboardAvoidingView,
+	Platform,
+	SafeAreaView,
+	Dimensions, // Import Dimensions
 } from "react-native";
 import GestureRecognizer from "react-native-swipe-gestures";
 import { Picker } from "@react-native-picker/picker";
@@ -140,7 +141,7 @@ export default function PreferencesForm() {
 	};
 
 	return (
-		<View style={styles.container}>
+		<SafeAreaView style={styles.container}>
 			<Text style={styles.header}>Account</Text>
 			<View style={styles.fullWidthUnderline} />
 			<Text style={styles.title}>Preferences</Text>
