@@ -68,7 +68,6 @@ export default function LogInForm({ navigation }) {
 			setUsernameInput("")
 			setPasswordInput("")
 			// navigation.navigate("Dashboard")
-			setLoading(false)
 			console.log("Here")
 			setPreferenceTokens()
 		} else {
@@ -81,7 +80,6 @@ export default function LogInForm({ navigation }) {
 	}
 
 	async function setPreferenceTokens() {
-		setLoading(true)
 		const options = {
 			method: "GET",
 			headers: {
@@ -132,8 +130,8 @@ export default function LogInForm({ navigation }) {
 			console.log("Walk Speed", await GetAsync("walkingSpeed"))
 			setPassword("")
 			setUsername("")
-			navigation.navigate("Dashboard")
 			setLoading(false)
+			navigation.navigate("Dashboard")
 		} 
 	}
 
