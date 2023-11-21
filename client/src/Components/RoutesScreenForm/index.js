@@ -1,20 +1,27 @@
 import React, { useState, useEffect } from "react"
+
 import { View, Text, SafeAreaView, ScrollView, StyleSheet, Dimensions, Modal } from "react-native"
+
 import {
 	AppButton,
 	AppTextInput,
 	GetAsync,
 	RouteParamsModal,
+
 	SlideBox
+
 } from "../../Components"
 import validator from "validator"
 import DateTimePicker from "@react-native-community/datetimepicker"
 import { Picker } from "@react-native-picker/picker"
+
 import GestureRecognizer from "react-native-swipe-gestures";
 
-const { width, height } = Dimensions.get("window");
+
+const { width, height } = Dimensions.get("window")
 
 export default function RoutesScreenForm() {
+
   const[modalVisible, setModalVisible] = useState(false)
 
   const [startPostcodeInput, setStartPostcodeInput] = useState("");
@@ -40,49 +47,58 @@ export default function RoutesScreenForm() {
     setModalVisible(false);
   };
 
+
 	const showDatepicker = () => {
-		setShowDatePicker(true);
-		setShowTimePicker(false);
-	};
+		setShowDatePicker(true)
+		setShowTimePicker(false)
+	}
 
 	const showTimepicker = () => {
-		setShowTimePicker(true);
-		setShowDatePicker(false);
-	};
+		setShowTimePicker(true)
+		setShowDatePicker(false)
+	}
 
 	const hideDateTimePicker = () => {
-		setShowDatePicker(false);
-		setShowTimePicker(false);
-	};
+		setShowDatePicker(false)
+		setShowTimePicker(false)
+	}
 
 	const onDateChange = (selectedDate) => {
-		const currentDate = selectedDate.nativeEvent.timestamp || date;
-		hideDateTimePicker();
-		let tempDate = new Date(currentDate);
-		setFDate(tempDate.getFullYear().toString() + (tempDate.getMonth() + 1).toString() + tempDate.getDate().toString());
-	};
+		const currentDate = selectedDate.nativeEvent.timestamp || date
+		hideDateTimePicker()
+		let tempDate = new Date(currentDate)
+		setFDate(
+			tempDate.getFullYear().toString() +
+				(tempDate.getMonth() + 1).toString() +
+				tempDate.getDate().toString()
+		)
+	}
 
 	const onTimeChange = (selectedTime) => {
-		const currentTime = selectedTime.nativeEvent.timestamp || date;
-		hideDateTimePicker();
-		let tempTime = new Date(currentTime);
-		setFTime(tempTime.getHours().toString() + tempTime.getMinutes().toString().padStart(2, "0"));
-	};
+		const currentTime = selectedTime.nativeEvent.timestamp || date
+		hideDateTimePicker()
+		let tempTime = new Date(currentTime)
+		setFTime(
+			tempTime.getHours().toString() +
+				tempTime.getMinutes().toString().padStart(2, "0")
+		)
+	}
 
 	const handleParamsSelection = (params) => {
-		setSelectedParams(params);
-	};
+		setSelectedParams(params)
+	}
 
 	async function clickPreferences() {
-		setParamsModal(!paramsModal);
+		setParamsModal(!paramsModal)
 	}
 
 	useEffect(() => {
 		async function getToken() {
-			setToken(await GetAsync("token"));
+			setToken(await GetAsync("token"))
 		}
-		getToken();
-	}, []);
+		getToken()
+	}, [])
+
 
   function dataValidation() {
     if (!startPostcodeInput || !endPostcodeInput) {
@@ -103,12 +119,13 @@ export default function RoutesScreenForm() {
     }
   }
 
+
 	async function getRoute() {
-		const startPostcode = startPostcodeInput.trim();
-		const endPostcode = endPostcodeInput.trim();
-		const useDate = fDate || "";
-		const useTime = fTime || "";
-		const timeIs = timeOption || "";
+		const startPostcode = startPostcodeInput.trim()
+		const endPostcode = endPostcodeInput.trim()
+		const useDate = fDate || ""
+		const useTime = fTime || ""
+		const timeIs = timeOption || ""
 		// console.log(useDate)
 		// console.log(useTime)
 		// console.log(timeIs)
@@ -119,9 +136,9 @@ export default function RoutesScreenForm() {
 		const options = {
 			method: "POST",
 			headers: {
-				Accept: "application/json",
+				"Accept": "application/json",
 				"Content-Type": "application/json",
-				Authorization: token,
+				"Authorization": token,
 			},
 			body: JSON.stringify({
 				origins: {
@@ -139,7 +156,7 @@ export default function RoutesScreenForm() {
 					useRealTimeArrivals: true,
 				},
 			}),
-		};
+		}
 		console.log({
 			taxiOnlyTrip: selectedParams.taxiOnlyChecked,
 			nationalSearch: true,
@@ -149,23 +166,34 @@ export default function RoutesScreenForm() {
 			mode: selectedParams.mode || "bus, overground, dlr, tube, taxi",
 			walkingSpeed: selectedParams.walkingSpeed || "",
 			useRealTimeArrivals: true,
-		});
-		const response = await fetch("https://metro-mingle.onrender.com/tfl/get", options);
+		})
+		const response = await fetch(
+			"https://metro-mingle.onrender.com/tfl/get",
+			options
+		)
 		//console.log(response);
+		console.log("options", options)
 		if (response.status == 200) {
-			const data = await response.json();
+			const data = await response.json()
 			//console.log(data.journeys)
-			setRoute(data.journeys);
+			setRoute(data.journeys)
+			console.log(data.journeys[0])
 		} else {
-			alert("Request failed.");
+			alert("Request failed.")
 		}
 	}
 
 	return (
 		<View style={{ justifyContent: "flex-start", alignItems: "center" }}>
 			<ScrollView style={styles.screen}>
-				<AppTextInput onChangeText={(text) => setStartPostcodeInput(text)} placeholder="Start Postcode" />
-				<AppTextInput onChangeText={(text) => setEndPostcodeInput(text)} placeholder="End Postcode" />
+				<AppTextInput
+					onChangeText={(text) => setStartPostcodeInput(text)}
+					placeholder="Start Postcode"
+				/>
+				<AppTextInput
+					onChangeText={(text) => setEndPostcodeInput(text)}
+					placeholder="End Postcode"
+				/>
 
       <View style={{alignSelf: "center"}}>
       <AppButton
@@ -178,7 +206,17 @@ export default function RoutesScreenForm() {
         onPress={showTimepicker}
       />
 
-				{showDatePicker && <DateTimePicker testID="dateTimePicker" value={date} mode="date" is24Hour={true} display="default" onChange={onDateChange} />}
+
+				{showDatePicker && (
+					<DateTimePicker
+						testID="dateTimePicker"
+						value={date}
+						mode="date"
+						is24Hour={true}
+						display="default"
+						onChange={onDateChange}
+					/>
+				)}
 
       {showTimePicker && (
         <DateTimePicker
@@ -247,6 +285,7 @@ export default function RoutesScreenForm() {
     </GestureRecognizer>
 		</ScrollView>
     </View>
+
 	)
 }
 
@@ -262,4 +301,4 @@ const styles = StyleSheet.create({
 		marginTop: 20,
 		height: "auto",
 	},
-});
+})
