@@ -17,7 +17,7 @@ def format_event(event):
             title=event.title,
             share_code=event.share_code)
     
-def format_attendee(attendee):
+def format_attendee(attendee, username):
     return dict(
         user_id = attendee.user_id,
         event_id = attendee.event_id, 
@@ -26,7 +26,8 @@ def format_attendee(attendee):
         route = attendee.route,
         suggested_departure = attendee.suggested_departure,
         accepted = attendee.accepted,
-        origin = attendee.origin
+        origin = attendee.origin,
+        username = username
     )
     
 def create():
@@ -57,9 +58,9 @@ def join_event(share_code):
         event_id = Event.get_one_by_share(share_code).id
         
         token = request.headers['Authorization']
-        user_id = User.get_one_by_token(token).id
-        attendee = Attendee.create_attendee(event_id, user_id)
-        return format_attendee(attendee), 201
+        user = User.get_one_by_token(token)
+        attendee = Attendee.create_attendee(event_id, user.id)
+        return format_attendee(attendee, user.user_name), 201
         
     except EventNotFound:
         return "Event not found", 404
@@ -74,14 +75,15 @@ def set_route():
         token = request.headers['Authorization']
         
             
-        user_id = User.get_one_by_token(token).id
+        user = User.get_one_by_token(token)
         event_id = data['event_id']
         journey = data['journey']
+        status = data['status']
     
         
-        attendee = Attendee.get_one_by_user_and_event(user_id, event_id)
-        response = attendee.set_route(journey)
-        return format_attendee(response)
+        attendee = Attendee.get_one_by_user_and_event(user.id, event_id)
+        response = attendee.set_route(journey, status)
+        return format_attendee(response, user.user_name)
     except:
         return 'Unable to add route', 400
     
@@ -104,7 +106,8 @@ def event_detailed(sharecode):
     try:
         event = Event.get_one_by_share(sharecode)
         attendees = Event.fetch_attendees(event.id)
-        response = dict(event=format_event(event), attendees=[format_attendee(e) for e in attendees])
+
+        response = dict(event=format_event(event), attendees=[format_attendee(e, username) for e, username in attendees])
         return response
     
     except ActionNotAllowed:

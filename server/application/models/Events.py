@@ -3,6 +3,7 @@ import random, string
 from flask import jsonify
 
 from application.models.Attendees import Attendee
+from application.models.User import User
 from application.models.Errors import EventNotFound, ActionNotAllowed
 
 class Event(db.Model):
@@ -82,10 +83,12 @@ class Event(db.Model):
             check_event_exist = Event.query.filter_by(id=event_id).first()
             if not check_event_exist:
                 raise ActionNotAllowed
-            response = Attendee.query\
+            
+            response = db.session.query(Attendee, User.user_name)\
+                .join(User, User.id==Attendee.user_id)\
                 .filter(Attendee.event_id == event_id)\
                 .all()
-            
+            #response = Attendee.query\
             return response
         except:
             db.session.rollback()
