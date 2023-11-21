@@ -169,8 +169,8 @@ def test_fetch_attendees(test_client, init_database):
     attendees = Event.fetch_attendees(event.id)
 
     assert len(attendees) == 2
-    assert attendees[0].user_id == 1
-    assert attendees[1].user_id == 2
+    assert attendees[0][0].user_id == 1
+    assert attendees[1][0].user_id == 2
 
 def test_Error_fetch_attendees(test_client, init_database):
     with pytest.raises(ActionNotAllowed):

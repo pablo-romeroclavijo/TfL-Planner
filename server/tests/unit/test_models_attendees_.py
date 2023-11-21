@@ -112,31 +112,15 @@ def test_get_one_by_user_and_event(test_client, init_database):
         Attendee.get_one_by_user_and_event(20, 20)
 
 def test_set_route(test_client, init_database):
-    journey = {
-      "arrivalDateTime": "2023-11-15T16:48:00",
-      "duration": 45,
-      "legs": [
-        {
-          "arrival": "2023-11-15T16:10:00",
-          "departure": "2023-11-15T16:03:00",
-          "distuptions": [],
-          "duration": 7,
-          "isDisrupted": False,
-          "mode": "walking",
-          "stops": [],
-          "summary": "Walk to Camden Road Station"
-        }
-      ],
-      "origin": "NW19HU",
-      "startDateTime": "2023-11-15T16:03:00"
-    },
+    journey = dict(arrivalDateTime="2023-11-17T13:24:00",duration= 49,legs= [],origin= "NW19HU",startDateTime="2023-11-17T12:35:00")
     
     attendee = Attendee.get_one_by_user(1)
-    attendee.set_route(journey[0])
+    attendee.set_route(journey, 'Pending' )
 
     
-    assert attendee.origin == journey[0]['origin']
-    assert attendee.route == str(journey[0])
+    assert attendee.origin == journey['origin']
+    assert attendee.route == journey
+    assert attendee.status == 'Pending'
 
     
 
