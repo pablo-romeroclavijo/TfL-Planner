@@ -9,6 +9,7 @@ import {
   Linking,
   Dimensions,
   Image,
+  SafeAreaView,
 } from "react-native";
 import GestureRecognizer from "react-native-swipe-gestures";
 
@@ -36,7 +37,7 @@ function Help() {
 
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.line} />
       <Text style={styles.header}>Help</Text>
 
@@ -204,7 +205,7 @@ function Help() {
           </View>
         </Modal>
       </GestureRecognizer>
-    </View>
+    </SafeAreaView>
   );
 }
 

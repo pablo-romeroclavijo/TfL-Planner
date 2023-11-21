@@ -8,6 +8,7 @@ import {
 	Alert,
 	KeyboardAvoidingView,
 	Platform,
+	SafeAreaView,
 	Dimensions, // Import Dimensions
 } from "react-native";
 import GestureRecognizer from "react-native-swipe-gestures";
@@ -139,7 +140,7 @@ export default function PreferencesForm() {
   };
 
 	return (
-		<View style={styles.container}>
+		<SafeAreaView style={styles.container}>
 			<Text style={styles.header}>Account</Text>
 			<View style={styles.fullWidthUnderline} />
 			<TouchableOpacity onPress={openModal}>
@@ -221,7 +222,7 @@ export default function PreferencesForm() {
           </View>
         </Modal>
       </GestureRecognizer>
-      </View>
+      </SafeAreaView>
     // </KeyboardAvoidingView>
   );
 }
