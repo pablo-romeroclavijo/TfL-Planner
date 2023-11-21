@@ -78,10 +78,11 @@ def set_route():
         user = User.get_one_by_token(token)
         event_id = data['event_id']
         journey = data['journey']
+        status = data['status']
     
         
         attendee = Attendee.get_one_by_user_and_event(user.id, event_id)
-        response = attendee.set_route(journey)
+        response = attendee.set_route(journey, status)
         return format_attendee(response, user.user_name)
     except:
         return 'Unable to add route', 400
@@ -102,15 +103,15 @@ def fetch_events():
         return 'General error', 400
     
 def event_detailed(sharecode):
-    # try:
+    try:
         event = Event.get_one_by_share(sharecode)
         attendees = Event.fetch_attendees(event.id)
 
         response = dict(event=format_event(event), attendees=[format_attendee(e, username) for e, username in attendees])
         return response
     
-    # except ActionNotAllowed:
-    #     return "Unable to fetch Events", 400
-    # except:
-    #     return 'General error', 400
+    except ActionNotAllowed:
+        return "Unable to fetch Events", 400
+    except:
+        return 'General error', 400
     

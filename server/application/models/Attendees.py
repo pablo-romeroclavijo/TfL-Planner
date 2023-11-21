@@ -65,12 +65,13 @@ class Attendee(db.Model):
             db.session.rollback()
             raise ActionNotAllowed
         
-    def set_route(self, journey):
-        self.route = str(journey)
-        self.origin = journey['origin']
-        self.suggested_departure = journey['startDateTime']
-        self.ETA = journey['arrivalDateTime']
-        self.status = 'Journey Planned'
+    def set_route(self, journey, status):
+        if not journey == {}:
+            self.route = str(journey)
+            self.origin = journey['origin']
+            self.suggested_departure = journey['startDateTime']
+            self.ETA = journey['arrivalDateTime']
+        self.status = status
         db.session.commit()
         return self
         
