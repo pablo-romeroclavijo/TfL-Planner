@@ -276,7 +276,8 @@ export default function PreferencesForm() {
               ]}
               onPress={openPickerModalJourney}
             >
-              <Text>What are your journey Preferences {">"}</Text>
+              
+            <Text>What are your journey Preferences {">"}</Text>
             </TouchableOpacity>
             <Text>{getLabelFromValue(journeyPreferences)}</Text>
             <Modal
