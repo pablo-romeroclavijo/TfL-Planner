@@ -428,7 +428,7 @@ export default function PreferencesForm() {
       </GestureRecognizer>
     </View>
     // </KeyboardAvoidingView>
-  );
+  )};
 
 const styles = StyleSheet.create({
   container: {
