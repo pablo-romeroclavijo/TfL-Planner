@@ -77,9 +77,7 @@ export default function EventHolder({ events }) {
 						)}
 					/>
 				) : (
-					<Text>
-						add events 
-					</Text>
+					<Text>add events</Text>
 				)}
 			</View>
 

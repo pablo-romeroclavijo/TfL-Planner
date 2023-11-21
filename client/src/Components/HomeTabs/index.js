@@ -1,6 +1,6 @@
 import React from "react"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
-import * as Screens from "../../Screens" // Assuming your screens are exported from here
+import { Home, Routes, Events, Profile } from "../../Screens" // Assuming your screens are exported from here
 import Ionicons from "react-native-vector-icons/Ionicons"
 import { Text } from "react-native"
 
@@ -36,23 +36,23 @@ const HomeTabs = () => {
 		>
 			<Tab.Screen
 				name="Home"
-				component={Screens.Home}
+				component={Home}
 				options={{ headerShown: false }}
 			/>
 			<Tab.Screen
 				name="Routes"
-				component={Screens.Routes}
+				component={Routes}
 				options={{ headerShown: false }}
 			/>
 			<Tab.Screen
 				name="Events"
-				component={Screens.Events}
+				component={Events}
 				options={{ headerShown: false }}
 			/>
 
 			<Tab.Screen
 				name="Profile"
-				component={Screens.Profile}
+				component={Profile}
 				options={{ headerShown: false }}
 			/>
 		</Tab.Navigator>
