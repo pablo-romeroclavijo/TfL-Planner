@@ -29,7 +29,6 @@ export default function Register({ navigation }) {
 	}
 
 	async function setPreferenceTokens() {
-		setLoading(true)
 		const options = {
 			method: "GET",
 			headers: {
@@ -105,7 +104,6 @@ export default function Register({ navigation }) {
 
 		if (response.status == 201) {
 			const data = await response.json()
-			setLoading(false);
 			const token = data.token;
 			CreateAsync("token", token);
 			setEmailInput("");
