@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import {
-	Text,
-	View,
-	StyleSheet,
-	Modal,
-	TouchableOpacity,
-	Alert,
-	KeyboardAvoidingView,
-	Platform,
-	Dimensions, // Import Dimensions
+  Text,
+  View,
+  StyleSheet,
+  Modal,
+  TouchableOpacity,
+  Alert,
+  KeyboardAvoidingView,
+  Platform,
+  Dimensions, // Import Dimensions
 } from "react-native";
 import GestureRecognizer from "react-native-swipe-gestures";
 import { Picker } from "@react-native-picker/picker";
@@ -20,6 +20,7 @@ import colors from "../../config/colors";
 const { width, height } = Dimensions.get("window");
 
 export default function PreferencesForm() {
+
 	const [modalVisible, setModalVisible] = useState(false);
 	const [postcodeInput, setPostcodeInput] = useState("");
 	const [journeyPreferences, setJourneyPreferences] = useState("");
@@ -252,15 +253,22 @@ const styles = StyleSheet.create({
 	  borderBottomColor: '#e0e0e0',
 	  width: '100%', // Ensure the underline is full width
 	  marginBottom: height * 0.02, // Space after the underline
+
 	},
-	modalContainer: {
+  modalContainerPicker: {
 		flex: 1,
 		justifyContent: "center",
 		alignItems: "center",
-		padding: width * 0.06,
-		paddingTop: height * 0.02,
-		marginTop: 0,
-	  }
-	// ... other styles remain unchanged
-  });
-  
+		backgroundColor: "rgba(0,0,0,0)",
+	},
+  modalContainer: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        padding: width * 0.06,
+        paddingTop: height * 0.02,
+        marginTop: 0,
+  }
+});
+
+		

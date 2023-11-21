@@ -1,8 +1,7 @@
 import React, { useEffect } from "react";
 import { View, Animated, Image, StyleSheet } from "react-native";
 
-import { AppButton, GetAsync } from "../../Components";
-import GradientBackground from "../../Components/Gradient";
+import { AppButton, GradientBackground } from "../../Components";
 
 
 export default function Initial({ navigation }) {

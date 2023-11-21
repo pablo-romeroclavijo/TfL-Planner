@@ -7,6 +7,7 @@ import {
 	Text,
 	FlatList,
 	TouchableOpacity,
+	Dimensions
 } from "react-native"
 
 import EventCard from "../EventCard"
@@ -16,6 +17,8 @@ import FilterDropdown from "../FilterDropdown"
 import moment from "moment"
 import GetAsync from "../AsyncStorageGet"
 import { useIsFocused } from "@react-navigation/native"
+
+const { width, height } = Dimensions.get("window")
 
 export default function EventHolder({ events }) {
 	const [modalshow, setModalShow] = useState(false)
@@ -104,7 +107,7 @@ const styles = StyleSheet.create({
 		backgroundColor: "#FF6363",
 		padding: 20,
 	},
-	list: { paddingTop: 20, paddingBottom: 90 },
+	list: { paddingTop: 20, paddingBottom: 90, paddingRight: width * 0.05 },
 })
 
 async function getEvents() {

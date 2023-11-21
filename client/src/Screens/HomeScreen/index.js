@@ -16,7 +16,9 @@ export default function Home({ navigation }) {
 	return (
 		// <ImageBackground source={image} style={{ width: "100%", height: "100%" }}>
 		<View style={styles.container}>
+			<View style={{alignSelf: "center"}}>
 			<Header />
+			</View>
 			<Text style={styles.title}>My Home</Text>
 			<View style={styles.newEventContainer}>
 				<AppButton onPress={clickCreateEvent} title="Create Event" />
