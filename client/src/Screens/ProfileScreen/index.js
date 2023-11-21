@@ -7,8 +7,8 @@ export default function Profile() {
 	return (
 		<View style={styles.container}>
 			
-			<View style={{alignSelf: "center"}}>
 			<Header />
+			<View style={{alignSelf: "center"}}>
 			</View>
 
 			<PreferencesForm />
