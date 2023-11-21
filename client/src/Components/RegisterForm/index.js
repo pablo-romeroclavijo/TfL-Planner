@@ -6,7 +6,7 @@ import colors from "../../config/colors";
 import { LoadingModal, AppButton, AppTextInput } from "../../Components";
 import GradientBackground from "../../Components/Gradient";
 
-import CreateAsync from "../AsyncStorageCreate"
+import CreateAsync from "../AsyncStorageCreate";
 
 export default function Register({ navigation }) {
 	const [usernameInput, setUsernameInput] = useState("");
@@ -45,55 +45,55 @@ export default function Register({ navigation }) {
 		};
 		const response = await fetch("https://metro-mingle.onrender.com/user/register", options);
 
-    if (response.status == 201) {
-      const data = await response.json().then(setLoading(false));
-      const token = data.token;
-      navigation.navigate("Dashboard");
-      CreateAsync("token", token)
-      setEmailInput("");
-      setUsernameInput("");
-      setPasswordInput("");
-      setConfirmPasswordInput("");
-    } else {
-      alert("Register failed, try again later.");
-      setLoading(false)
-    }
-  }
+		if (response.status == 201) {
+			const data = await response.json().then(setLoading(false));
+			const token = data.token;
+			navigation.navigate("Dashboard");
+			CreateAsync("token", token);
+			setEmailInput("");
+			setUsernameInput("");
+			setPasswordInput("");
+			setConfirmPasswordInput("");
+		} else {
+			alert("Register failed, try again later.");
+			setLoading(false);
+		}
+	}
 
 	return (
-		<GradientBackground colors={["#1C1C1C", "#2370EE", "#FFFFFF"]}>
-		<View style={styles.container}>
-			<Image style={styles.logo} source={require("../../assets/logo2.png")} />
-			<AppTextInput placeholder="Enter Username" icon="account-circle-outline" onChangeText={(text) => setUsernameInput(text)} />
-			<AppTextInput placeholder="Enter Email" icon="email" onChangeText={(text) => setEmailInput(text)} />
-			<AppTextInput secureTextEntry={true} placeholder="Enter Password" icon="form-textbox-password" onChangeText={(text) => setPasswordInput(text)} />
-			<AppTextInput secureTextEntry={true} placeholder="Confirm Password" icon="form-textbox-password" onChangeText={(text) => setConfirmPasswordInput(text)} />
-			<View style={styles.buttonContainer}>
-				<AppButton title="Register" onPress={validate} color="btn2" disabled={passwordInput !== confirmPasswordInput} />
-				{loading ? <LoadingModal visible={loading} /> : null}
+		<GradientBackground colors={["#87C7FC", "#2370EE", "#FFFFFF"]}>
+			<View style={styles.container}>
+				<Image style={styles.logo} source={require("../../assets/logo2.png")} />
+				<AppTextInput placeholder="Enter Username" icon="account-circle-outline" onChangeText={(text) => setUsernameInput(text)} />
+				<AppTextInput placeholder="Enter Email" icon="email" onChangeText={(text) => setEmailInput(text)} />
+				<AppTextInput secureTextEntry={true} placeholder="Enter Password" icon="form-textbox-password" onChangeText={(text) => setPasswordInput(text)} />
+				<AppTextInput secureTextEntry={true} placeholder="Confirm Password" icon="form-textbox-password" onChangeText={(text) => setConfirmPasswordInput(text)} />
+				<View style={styles.buttonContainer}>
+					<AppButton title="Register" onPress={validate} color="btn2" disabled={passwordInput !== confirmPasswordInput} />
+					{loading ? <LoadingModal visible={loading} /> : null}
 
-				<View
-					style={{
-						flexDirection: "row",
-						justifyContent: "center",
-						marginTop: 20,
-					}}
-				>
-					<Text>Already Registered?</Text>
-					<TouchableOpacity onPress={() => navigation.navigate("LogIn")}>
-						<Text
-							style={{
-								color: colors.btn2,
-								fontWeight: "700",
-								paddingLeft: 4,
-							}}
-						>
-							Login
-						</Text>
-					</TouchableOpacity>
+					<View
+						style={{
+							flexDirection: "row",
+							justifyContent: "center",
+							marginTop: 20,
+						}}
+					>
+						<Text>Already Registered?</Text>
+						<TouchableOpacity onPress={() => navigation.navigate("LogIn")}>
+							<Text
+								style={{
+									color: colors.btn2,
+									fontWeight: "700",
+									paddingLeft: 4,
+								}}
+							>
+								Login
+							</Text>
+						</TouchableOpacity>
+					</View>
 				</View>
 			</View>
-		</View>
 		</GradientBackground>
 	);
 }
@@ -118,5 +118,9 @@ const styles = StyleSheet.create({
 		width: 200,
 		height: 200,
 		justifyContent: "flex-start",
+		shadowColor: "#fff", // White glow color
+		shadowOffset: { width: 0, height: 0 },
+		shadowOpacity: 0.9,
+		shadowRadius: 10,
 	},
 });

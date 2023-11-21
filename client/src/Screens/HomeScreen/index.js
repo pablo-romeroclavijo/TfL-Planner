@@ -27,6 +27,7 @@ export default function Home({ navigation }) {
 		// <ImageBackground source={image} style={{ width: "100%", height: "100%" }}>
 		<ScrollView style={styles.container}>
 			<Header />
+			</View>
 			<Text style={styles.title}>My Home</Text>
 
         	<ViewEventsCarousel events={events} />

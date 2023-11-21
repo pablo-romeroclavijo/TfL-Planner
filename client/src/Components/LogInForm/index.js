@@ -60,7 +60,7 @@ export default function LogInForm({ navigation }) {
 		setUsername("");
 	}
 	return (
-		<GradientBackground colors={["#1C1C1C", "#2370EE", "#FFFFFF"]}>
+		<GradientBackground colors={["#87C7FC", "#2370EE", "#FFFFFF"]}>
 			<View style={styles.container}>
 				<Image style={styles.logo} source={require("../../assets/logo2.png")} />
 				{loading ? <LoadingModal loading={loading} /> : null}
@@ -121,8 +121,8 @@ const styles = StyleSheet.create({
 		justifyContent: "flex-start",
 		shadowColor: "#fff", // White glow color
 		shadowOffset: { width: 0, height: 0 },
-		shadowOpacity: 0.9,
-		shadowRadius: 10,
+		shadowOpacity: 1,
+		shadowRadius: 12,
 	},
 	textStyle: {
 		fontFamily: Platform.OS === "android" ? "Roboto" : "Avenir",

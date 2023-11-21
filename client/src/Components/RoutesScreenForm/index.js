@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-import { View, Text, SafeAreaView, ScrollView, StyleSheet, Dimensions } from "react-native"
+import { View, Text, SafeAreaView, ScrollView, StyleSheet, Dimensions, Modal } from "react-native"
 import {
 	AppButton,
 	AppTextInput,
@@ -10,10 +10,12 @@ import {
 import validator from "validator"
 import DateTimePicker from "@react-native-community/datetimepicker"
 import { Picker } from "@react-native-picker/picker"
+import GestureRecognizer from "react-native-swipe-gestures";
 
 const { width, height } = Dimensions.get("window");
 
 export default function RoutesScreenForm() {
+  const[modalVisible, setModalVisible] = useState(false)
 
   const [startPostcodeInput, setStartPostcodeInput] = useState("");
   const [endPostcodeInput, setEndPostcodeInput] = useState("");
@@ -34,52 +36,53 @@ export default function RoutesScreenForm() {
   });
   const [timeOption, setTimeOption] = useState("")
 
-
-  const showDatepicker = () => {
-    setShowDatePicker(true);
-    setShowTimePicker(false);
+  const closeModal = () => {
+    setModalVisible(false);
   };
 
-  const showTimepicker = () => {
-    setShowTimePicker(true);
-    setShowDatePicker(false);
-  };
+	const showDatepicker = () => {
+		setShowDatePicker(true);
+		setShowTimePicker(false);
+	};
 
-  const hideDateTimePicker = () => {
-    setShowDatePicker(false);
-    setShowTimePicker(false);
-  };
+	const showTimepicker = () => {
+		setShowTimePicker(true);
+		setShowDatePicker(false);
+	};
 
-  const onDateChange = (selectedDate) => {
-    const currentDate = selectedDate.nativeEvent.timestamp || date;
-    hideDateTimePicker();
-    let tempDate = new Date(currentDate);
-    setFDate(
-      tempDate.getFullYear().toString() + (tempDate.getMonth() + 1).toString() + tempDate.getDate().toString());
-  };
+	const hideDateTimePicker = () => {
+		setShowDatePicker(false);
+		setShowTimePicker(false);
+	};
 
-  const onTimeChange = (selectedTime) => {
-    const currentTime = selectedTime.nativeEvent.timestamp || date;
-    hideDateTimePicker();
-    let tempTime = new Date(currentTime);
-    setFTime(tempTime.getHours().toString() + tempTime.getMinutes().toString().padStart(2, "0")
-    );
-  };
+	const onDateChange = (selectedDate) => {
+		const currentDate = selectedDate.nativeEvent.timestamp || date;
+		hideDateTimePicker();
+		let tempDate = new Date(currentDate);
+		setFDate(tempDate.getFullYear().toString() + (tempDate.getMonth() + 1).toString() + tempDate.getDate().toString());
+	};
 
-  const handleParamsSelection = (params) => {
-    setSelectedParams(params);
-  };
+	const onTimeChange = (selectedTime) => {
+		const currentTime = selectedTime.nativeEvent.timestamp || date;
+		hideDateTimePicker();
+		let tempTime = new Date(currentTime);
+		setFTime(tempTime.getHours().toString() + tempTime.getMinutes().toString().padStart(2, "0"));
+	};
 
-  async function clickPreferences() {
-    setParamsModal(!paramsModal);
-  }
+	const handleParamsSelection = (params) => {
+		setSelectedParams(params);
+	};
 
-  useEffect(() => {
-    async function getToken() {
-      setToken(await GetAsync("token"));
-    }
-    getToken();
-  }, []);
+	async function clickPreferences() {
+		setParamsModal(!paramsModal);
+	}
+
+	useEffect(() => {
+		async function getToken() {
+			setToken(await GetAsync("token"));
+		}
+		getToken();
+	}, []);
 
   function dataValidation() {
     if (!startPostcodeInput || !endPostcodeInput) {
@@ -96,102 +99,86 @@ export default function RoutesScreenForm() {
       alert("Enter a valid ending postcode.");
     } else {
       getRoute();
+      setModalVisible(true)
     }
   }
 
-  async function getRoute() {
-    const startPostcode = startPostcodeInput.trim();
-    const endPostcode = endPostcodeInput.trim();
-    const useDate = fDate || "" 
-    const useTime = fTime || ""
-    const timeIs = timeOption || ""
-    // console.log(useDate)
-    // console.log(useTime)
-    // console.log(timeIs)
-    // console.log(selectedParams.mode)
-    // console.log(selectedParams.walkingSpeed)
-    // console.log(selectedParams.taxiOnlyChecked)
-    // console.log(selectedParams.nationalSearch)
-    const options = {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: token,
-      },
-      body: JSON.stringify({
-        origins: {
-          from: startPostcode,
-          to: endPostcode,
-        },
-        params: {
-          taxiOnlyTrip: selectedParams.taxiOnlyChecked,
-          nationalSearch: true,
-          date: useDate || "",
-          time: useTime || "",
-          timeIs: timeIs || "",
-          mode: selectedParams.mode || "",
-          walkingSpeed: selectedParams.walkingSpeed || "",
-          useRealTimeArrivals: true,
-        },
-      }),
-    };
-    console.log({
-      taxiOnlyTrip: selectedParams.taxiOnlyChecked,
-      nationalSearch: true,
-      date: useDate || "",
-      time: useTime || "",
-      timeIs: timeIs || "",
-      mode: selectedParams.mode || "bus, overground, dlr, tube, taxi",
-      walkingSpeed: selectedParams.walkingSpeed || "",
-      useRealTimeArrivals: true,
-    })
-    const response = await fetch(
-      "https://metro-mingle.onrender.com/tfl/get",
-      options
-    );
-    //console.log(response);
-    if (response.status == 200) {
-      const data = await response.json();
-      //console.log(data.journeys)
-      setRoute(data.journeys);
-    } else {
-      alert("Request failed.");
-    }
-  }
+	async function getRoute() {
+		const startPostcode = startPostcodeInput.trim();
+		const endPostcode = endPostcodeInput.trim();
+		const useDate = fDate || "";
+		const useTime = fTime || "";
+		const timeIs = timeOption || "";
+		// console.log(useDate)
+		// console.log(useTime)
+		// console.log(timeIs)
+		// console.log(selectedParams.mode)
+		// console.log(selectedParams.walkingSpeed)
+		// console.log(selectedParams.taxiOnlyChecked)
+		// console.log(selectedParams.nationalSearch)
+		const options = {
+			method: "POST",
+			headers: {
+				Accept: "application/json",
+				"Content-Type": "application/json",
+				Authorization: token,
+			},
+			body: JSON.stringify({
+				origins: {
+					from: startPostcode,
+					to: endPostcode,
+				},
+				params: {
+					taxiOnlyTrip: selectedParams.taxiOnlyChecked,
+					nationalSearch: true,
+					date: useDate || "",
+					time: useTime || "",
+					timeIs: timeIs || "",
+					mode: selectedParams.mode || "",
+					walkingSpeed: selectedParams.walkingSpeed || "",
+					useRealTimeArrivals: true,
+				},
+			}),
+		};
+		console.log({
+			taxiOnlyTrip: selectedParams.taxiOnlyChecked,
+			nationalSearch: true,
+			date: useDate || "",
+			time: useTime || "",
+			timeIs: timeIs || "",
+			mode: selectedParams.mode || "bus, overground, dlr, tube, taxi",
+			walkingSpeed: selectedParams.walkingSpeed || "",
+			useRealTimeArrivals: true,
+		});
+		const response = await fetch("https://metro-mingle.onrender.com/tfl/get", options);
+		//console.log(response);
+		if (response.status == 200) {
+			const data = await response.json();
+			//console.log(data.journeys)
+			setRoute(data.journeys);
+		} else {
+			alert("Request failed.");
+		}
+	}
 
-  return (
-    <View style={{justifyContent: "flex-start", alignItems: "center", marginTop: -height * 0.2}}>
-    <ScrollView style={styles.screen}>
-      <AppTextInput
-        onChangeText={(text) => setStartPostcodeInput(text)}
-        placeholder="Start Postcode"
-      />
-      <AppTextInput
-        onChangeText={(text) => setEndPostcodeInput(text)}
-        placeholder="End Postcode"
-      />
+	return (
+		<View style={{ justifyContent: "flex-start", alignItems: "center" }}>
+			<ScrollView style={styles.screen}>
+				<AppTextInput onChangeText={(text) => setStartPostcodeInput(text)} placeholder="Start Postcode" />
+				<AppTextInput onChangeText={(text) => setEndPostcodeInput(text)} placeholder="End Postcode" />
 
+      <View style={{alignSelf: "center"}}>
       <AppButton
         title={fDate ? fDate : "Set Date"}
         onPress={showDatepicker}
       />
-
+      
       <AppButton
         title={fTime ? fTime : "Set Time"}
         onPress={showTimepicker}
       />
 
-      {showDatePicker && (
-        <DateTimePicker
-          testID="dateTimePicker"
-          value={date}
-          mode="date"
-          is24Hour={true}
-          display="default"
-          onChange={onDateChange}
-        />
-      )}
+				{showDatePicker && <DateTimePicker testID="dateTimePicker" value={date} mode="date" is24Hour={true} display="default" onChange={onDateChange} />}
 
       {showTimePicker && (
         <DateTimePicker
@@ -209,7 +196,7 @@ export default function RoutesScreenForm() {
             <Picker.Item label="Arrive By" value="arriving" />
             {/* <Picker.Item label="Depart" value="departing" /> */}
         </Picker>
-
+ 
       <AppButton onPress={clickPreferences} title="Preferences" />
       {paramsModal ? (
         <RouteParamsModal
@@ -219,10 +206,18 @@ export default function RoutesScreenForm() {
         ></RouteParamsModal>
       ) : null}
       <AppButton onPress={dataValidation} title="Submit" />
+      </View>
       {/* {route
 
         ? route.map((r, index) => <Text key={index}>{r.summary}</Text>)
         : null} */}
+      <GestureRecognizer style={{ flex: 1 }} onSwipeDown={() => {closeModal()}}>
+        <Modal
+          animationType="slide"
+          transparent={false}
+          visible={modalVisible}
+          onRequestClose={closeModal}
+        >
 			<SafeAreaView style={styles.container}>
 				<View>
 					{route ? (
@@ -248,6 +243,8 @@ export default function RoutesScreenForm() {
 					) : null}
 				</View>
 			</SafeAreaView>
+    </Modal>
+    </GestureRecognizer>
 		</ScrollView>
     </View>
 	)
@@ -256,13 +253,13 @@ export default function RoutesScreenForm() {
 const styles = StyleSheet.create({
 	screen: {
 		height: "auto",
-		paddingTop: 40
+		paddingTop: 40,
 	},
 	container: {
 		flex: 1,
 		alignItems: "center",
 		justifyContent: "center",
-		marginTop: 0,
+		marginTop: 20,
 		height: "auto",
-	}
-})
+	},
+});

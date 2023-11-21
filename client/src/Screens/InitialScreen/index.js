@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { View, Animated, Image, StyleSheet } from "react-native";
 
-import { AppButton, GetAsync } from "../../Components";
+import { AppButton, GradientBackground } from "../../Components";
 
 
 export default function Initial({ navigation }) {
@@ -30,6 +30,7 @@ export default function Initial({ navigation }) {
   
 
   return (
+    <GradientBackground colors={["#1C1C1C", "#2370EE", "#FFFFFF"]}>
     <View style={styles.container}>
       <Animated.View style={{ ...styles.logo, top: logoPositionY }}>
         <Image source={require("../../assets/logo2.png")} style={styles.logoImage} />
@@ -38,15 +39,16 @@ export default function Initial({ navigation }) {
         <AppButton
           title="Login"
           onPress={() => navigation.navigate("LogIn")}
-          color="primary"
+          color="btn2"
         />
         <AppButton
           title="Register"
           onPress={() => navigation.navigate("Register")}
-          color="secondary"
+          color="btn2"
         />
       </Animated.View>
     </View>
+    </GradientBackground>
   );
 }
 
@@ -66,5 +68,9 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
     resizeMode: "contain",
+    shadowColor: "#fff", // White glow color
+		shadowOffset: { width: 0, height: 0 },
+		shadowOpacity: 0.9,
+		shadowRadius: 10,
   },
 });
