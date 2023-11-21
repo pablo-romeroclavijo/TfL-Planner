@@ -21,6 +21,10 @@ const { width, height } = Dimensions.get("window");
 
 export default function PreferencesForm() {
   const [modalVisible, setModalVisible] = useState(false);
+  const [pickerModalJourney, setPickerModalJourney] = useState(false);
+  const [pickerModalWalk, setPickerModalWalk] = useState(false);
+  const [pickerModalAccessability, setPickerModalAccessability] =
+    useState(false);
   const [postcodeInput, setPostcodeInput] = useState("");
   const [journeyPreferences, setJourneyPreferences] = useState("");
   const [maxWalkingMinutes, setMaxWalkingMinutes] = useState(0);
@@ -102,39 +106,94 @@ export default function PreferencesForm() {
         options
       );
 
-			if (response.status === 200) {
-				Alert.alert("Submit Successful", "Your Preferences have been updated", [
-					{
-						text: "OK",
-						onPress: async () => {
-							// Update the originalPreferences state when the changes are saved
-							setOriginalPreferences({
-								postcode: postcodeInput,
-								preferences: {
-									journeyPreferences,
-									maxWalkingMinutes,
-									walkingSpeed,
-									accessibilityPreferences,
-								},
-							});
+      if (response.status === 200) {
+        Alert.alert("Submit Successful", "Your Preferences have been updated", [
+          {
+            text: "OK",
+            onPress: async () => {
+              // Update the originalPreferences state when the changes are saved
+              setOriginalPreferences({
+                postcode: postcodeInput,
+                preferences: {
+                  journeyPreferences,
+                  maxWalkingMinutes,
+                  walkingSpeed,
+                  accessibilityPreferences,
+                },
+              });
 
-							closeModal();
-						},
-					},
-				]);
-			}
-		} catch (error) {
-			console.error("Error submitting preferences:", error.message);
-		}
-	}
+              closeModal();
+            },
+          },
+        ]);
+      }
+    } catch (error) {
+      console.error("Error submitting preferences:", error.message);
+    }
+  }
 
   const openModal = () => {
     setModalVisible(true);
   };
 
-	const closeModal = () => {
-		setModalVisible(false);
-	};
+  const closeModal = () => {
+    setModalVisible(false);
+  };
+
+  const openPickerModalJourney = () => {
+    setPickerModalJourney(true);
+  };
+
+  const closePickerModalJourney = () => {
+    setPickerModalJourney(false);
+  };
+
+  const openPickerModalWalk = () => {
+    setPickerModalWalk(true);
+  };
+
+  const closePickerModalWalk = () => {
+    setPickerModalWalk(false);
+  };
+
+  const openPickerModalAccessability = () => {
+    setPickerModalAccessability(true);
+  };
+
+  const closePickerModalAccessability = () => {
+    setPickerModalAccessability(false);
+  };
+
+  const getLabelFromValue = (value) => {
+    switch (value) {
+      case "slow":
+        return "Slow";
+      case "average":
+        return "Average";
+      case "fast":
+        return "Fast";
+      case "leasttime":
+        return "Least Time";
+      case "leastinterchange":
+        return "Least Interchange";
+      case "leastwalking":
+        return "Least Walking";
+      case "none":
+        return "None";
+      case "noSolidStairs":
+        return "No Stairs"
+      case "noEscalators":
+        return "No Escalators"
+      case "noElevators":
+        return "No Elevators"
+      case "stepFreeToVehicle":
+        return "Step Free Access To Vehicle"
+      case "stepFreeToPlatform":
+        return "Step Free Access To Platform"    
+      default:
+        return "";
+    }
+  };
 
   const resetForm = () => {
     // Reset the form to the original preferences fetched from the backend
@@ -158,6 +217,9 @@ export default function PreferencesForm() {
       <GestureRecognizer
         style={{ flex: 1 }}
         onSwipeDown={() => {
+          if (pickerModalJourney || pickerModalWalk || pickerModalAccessability) {
+            return
+          }
           resetForm();
           closeModal();
         }}
@@ -201,73 +263,135 @@ export default function PreferencesForm() {
               value={maxWalkingMinutes}
             />
 
-            <Text
+            {/* ------------------------------------------------------------------------- */}
+
+            <TouchableOpacity
               style={[
                 styles.label,
                 { paddingRight: width * 0.25, marginBottom: height * 0.015 },
               ]}
+              onPress={openPickerModalJourney}
             >
-              What are your journey Preferences
-            </Text>
-            <Picker
-              style={{ height: height * 0.03, width: "100%" }}
-              selectedValue={journeyPreferences}
-              onValueChange={(itemValue) => setJourneyPreferences(itemValue)}
-              value={journeyPreferences}
+              <Text>What are your journey Preferences {">"}</Text>
+            </TouchableOpacity>
+              <Text>{getLabelFromValue(journeyPreferences)}</Text>
+            <Modal
+              animationType="slide"
+              transparent={true}
+              visible={pickerModalJourney}
+              onRequestClose={closePickerModalJourney}
             >
-              <Picker.Item label="Least interchange" value="leastinterchange" />
-              <Picker.Item label="Least walking" value="leastwalking" />
-              <Picker.Item label="Least time" value="leasttime" />
-            </Picker>
+              <View style={styles.modalContainerPicker}>
+					    <View style={styles.modalContent}>
+              <Text style={styles.title}>Select a Preference:</Text>
+              <Picker
+                style={{ height: height * 0.03, width: "100%" }}
+                selectedValue={journeyPreferences}
+                onValueChange={(itemValue) => setJourneyPreferences(itemValue)}
+                value={journeyPreferences}
+              >
+                <Picker.Item
+                  label="Least interchange"
+                  value="leastinterchange"
+                />
+                <Picker.Item label="Least walking" value="leastwalking" />
+                <Picker.Item label="Least time" value="leasttime" />
+              </Picker>
+              <TouchableOpacity onPress={closePickerModalJourney}>
+                <Text>Submit</Text>
+              </TouchableOpacity>
+              </View>
+              </View>
+            </Modal>
 
-            <Text
+            {/* ------------------------------------------------------------------------- */}
+
+            <TouchableOpacity
               style={[
                 styles.label,
                 { paddingRight: width * 0.27, marginBottom: height * 0.015 },
               ]}
+              onPress={openPickerModalWalk}
             >
-              On Average how fast do you walk
-            </Text>
-            <Picker
-              style={{ height: height * 0.03, width: "100%" }}
-              selectedValue={walkingSpeed}
-              onValueChange={(itemValue) => setWalkingSpeed(itemValue)}
-              value={walkingSpeed}
+            <Text>On Average how fast do you walk {">"}</Text>
+            </TouchableOpacity>
+            <Text>{getLabelFromValue(walkingSpeed)}</Text>
+            <Modal
+              animationType="slide"
+              transparent={true}
+              visible={pickerModalWalk}
+              onRequestClose={closePickerModalWalk}
             >
-              <Picker.Item label="Slow" value="slow" />
-              <Picker.Item label="Average" value="average" />
-              <Picker.Item label="Fast" value="fast" />
-            </Picker>
+              <View style={styles.modalContainerPicker}>
+					    <View style={styles.modalContent}>
+              <Text style={styles.title}>Select a Preference:</Text>
+              <Picker
+                style={{ height: height * 0.03, width: "100%" }}
+                selectedValue={walkingSpeed}
+                onValueChange={(itemValue) => setWalkingSpeed(itemValue)}
+                value={walkingSpeed}
+              >
+                <Picker.Item label="Slow" value="slow" />
+                <Picker.Item label="Average" value="average" />
+                <Picker.Item label="Fast" value="fast" />
+              </Picker>
+              <TouchableOpacity onPress={closePickerModalWalk}>
+                <Text>Submit</Text>
+              </TouchableOpacity>
+              </View>
+              </View>
+            </Modal>
 
-            <Text
+            {/* ------------------------------------------------------------------------- */}
+
+            <TouchableOpacity
               style={[
                 styles.label,
                 { paddingRight: width * 0.39, marginBottom: height * 0.015 },
               ]}
+              onPress={openPickerModalAccessability}
             >
-              Accessibility Preferences
-            </Text>
-            <Picker
-              style={{ height: height * 0.03, width: "100%" }}
-              selectedValue={accessibilityPreferences}
-              onValueChange={(itemValue) =>
-                setAccessibilityPreferences(itemValue)
-              }
-              value={accessibilityPreferences}
+              <Text>Accessibility Preferences {">"}</Text>
+            </TouchableOpacity>
+            <Text>{getLabelFromValue(accessibilityPreferences)}</Text>
+            <Modal
+              animationType="slide"
+              transparent={true}
+              visible={pickerModalAccessability}
+              onRequestClose={closePickerModalAccessability}
             >
-              <Picker.Item label="None" value="none" />
-              <Picker.Item label="No stairs" value="noSolidStairs" />
-              <Picker.Item label="No escalators" value="noEscalators" />
-              <Picker.Item label="No elavators" value="noElevators" />
-              <Picker.Item
-                label="Step free access to Vehicle"
-                value="stepFreeToVehicle"
-              />
-              <Picker.Item
-                label="Step free access to Pavement"
-                value="stepFreeToPlatform"
-              />
-            </Picker>
+              <View style={styles.modalContainerPicker}>
+					    <View style={styles.modalContent}>
+              <Text style={styles.title}>Select a Preference:</Text>
+              <Picker
+                style={{ height: height * 0.03, width: "100%" }}
+                selectedValue={accessibilityPreferences}
+                onValueChange={(itemValue) =>
+                  setAccessibilityPreferences(itemValue)
+                }
+                value={accessibilityPreferences}
+              >
+                <Picker.Item label="None" value="none" />
+                <Picker.Item label="No stairs" value="noSolidStairs" />
+                <Picker.Item label="No escalators" value="noEscalators" />
+                <Picker.Item label="No elavators" value="noElevators" />
+                <Picker.Item
+                  label="Step free access to Vehicle"
+                  value="stepFreeToVehicle"
+                />
+                <Picker.Item
+                  label="Step free access to Platform"
+                  value="stepFreeToPlatform"
+                />
+              </Picker>
+              <TouchableOpacity onPress={closePickerModalAccessability}>
+                <Text>Submit</Text>
+              </TouchableOpacity>
+              </View>
+              </View>
+            </Modal>
+
+            {/* ------------------------------------------------------------------------- */}
 
             <View style={{ alignSelf: "center", marginTop: height * 0.001 }}>
               <Linear
@@ -338,4 +462,24 @@ const styles = StyleSheet.create({
     width: "100%", // Full width
     // Space between the text and underline, adjust as needed
   },
+  modalContent: {
+		backgroundColor: "white",
+		padding: 20,
+		borderRadius: 10,
+		width: "90%",
+    height: "20%",
+    borderWidth: 1.5,
+    borderColor: colors.btn2
+	},
+  title: {
+		fontSize: 18,
+		fontWeight: "bold",
+		marginBottom: 10,
+	},
+  modalContainerPicker: {
+		flex: 1,
+		justifyContent: "center",
+		alignItems: "center",
+		backgroundColor: "rgba(0,0,0,0)",
+	},
 });
