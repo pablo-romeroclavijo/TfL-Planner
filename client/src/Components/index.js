@@ -23,3 +23,5 @@ export { default as BlinkingCircle } from "./BlinkingCircle";
 export { default as RouteInfo } from "./RouteDetails";
 export { default as Header } from "./Header";
 export { default as GradientBackground } from "./Gradient";
+export { default as ViewEventsCarousel } from "./ViewEventsCarousel";
+

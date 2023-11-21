@@ -9,10 +9,12 @@ import {
   Linking,
   Dimensions,
   Image,
+  SafeAreaView,
 } from "react-native";
 import GestureRecognizer from "react-native-swipe-gestures";
 
 import AppButton from "../AppButton";
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const openLink = (url) => {
   Linking.openURL(url);
@@ -36,21 +38,26 @@ function Help() {
 
 
   return (
+    <SafeAreaView style={styles.safeArea}>
     <View style={styles.container}>
       <View style={styles.line} />
       <Text style={styles.header}>Help</Text>
 
-      <TouchableOpacity onPress={() => helpModal(1)}>
-        <Text style={styles.click}>FAQ</Text>
-      </TouchableOpacity>
+      <View style={styles.optionContainer}>
+        <TouchableOpacity onPress={() => helpModal(1)} style={styles.option}>
+          <Text style={styles.optionText}>FAQ</Text>
+        </TouchableOpacity>
+        <View style={styles.separator} />
 
-      <TouchableOpacity onPress={() => helpModal(2)}>
-        <Text style={styles.click}>About App</Text>
-      </TouchableOpacity>
+        <TouchableOpacity onPress={() => helpModal(2)} style={styles.option}>
+          <Text style={styles.optionText}>About App</Text>
+        </TouchableOpacity>
+        <View style={styles.separator} />
 
-      <TouchableOpacity onPress={() => helpModal(3)}>
-        <Text style={styles.click}>Delete Account</Text>
-      </TouchableOpacity>
+        <TouchableOpacity onPress={() => helpModal(3)} style={styles.option}>
+          <Text style={styles.optionText}>Delete Account</Text>
+        </TouchableOpacity>
+      </View>
 
       <GestureRecognizer
         style={{ flex: 1 }}
@@ -205,43 +212,51 @@ function Help() {
         </Modal>
       </GestureRecognizer>
     </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: 'white', // Match the background color with the screenshot
+  },
   container: {
     flex: 1,
-    padding: windowWidth * 0.05, // Use 5% of the screen width as padding
-    
+    backgroundColor: 'white', // Ensure the background color is consistent
   },
   header: {
-   
-    fontSize: windowWidth * 0.08, // Use 8% of the screen width as font size
-    fontWeight: "bold",
-    marginBottom: windowHeight * 0.02, // Use 2% of the screen height as margin
-    marginTop: -windowHeight * 0.16, // Use 12% of the screen height as negative margin
+    fontSize: 22, // Adjust the font size to match the screenshot
+    fontWeight: 'bold',
+    paddingVertical: 15, // Add some vertical padding
+    paddingHorizontal: 20, // Add some horizontal padding
+    backgroundColor: '#F3F3F3', // Use a light gray background for the header
+    borderTopWidth: 1, // Add a top border
+    borderBottomWidth: 1, // Add a bottom border
+    borderColor: '#E0E0E0', // Use a light color for the border
   },
-  info: {
-    fontWeight: "bold",
-    alignItems: "flex-start",
-    marginVertical: windowHeight * 0.01, // Use 1% of the screen height as vertical margin
+  optionContainer: {
+    paddingHorizontal: 20, // Add some horizontal padding
   },
-  modalContainer: {
+  option: {
+    paddingVertical: 15, // Add some vertical padding
+  },
+  optionText: {
+    fontSize: 18, // Adjust the font size to match the screenshot
+    color: 'black', // Use black color for text to match the screenshot
+  },
+  separator: {
+    borderBottomWidth: 1, // Add a bottom border to separate items
+    borderColor: '#E0E0E0', // Use a light color for the border
+  },modalContainer: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
     padding: windowWidth * 0.1, // Use 10% of the screen width as padding
     marginTop: 22,
-  },
-  click: {
-    fontWeight: "bold",
-    textAlign: "left",
-    fontSize: windowWidth * 0.06, // Use 6% of the screen width as font size
-  },
-  link: {
-    color: "blue",
-    marginVertical: windowHeight * 0.01, // Use 1% of the screen height as vertical margin
   }
+
+  // ... (rest of your styles remain unchanged)
 });
 
 export default Help;

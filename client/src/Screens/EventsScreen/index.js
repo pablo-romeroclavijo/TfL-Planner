@@ -1,15 +1,15 @@
 import React, { useEffect, useContext } from "react";
-import { View, StyleSheet, Text, FlatList, pre } from "react-native";
+import { View, StyleSheet, Text, FlatList, pre, SafeAreaView } from "react-native";
 import { EventHolder, Header } from "../../Components";
 
 export default function EventsPage({ navigation }) {
 	return (
-		<View style={styles.container}>
+		<SafeAreaView style={styles.container}>
 			<Header />
 			<Text style={styles.heading}>Events Page</Text>
 
 			<EventHolder events={array} />
-		</View>
+		</SafeAreaView>
 	);
 }
 

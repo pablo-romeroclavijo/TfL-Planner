@@ -8,6 +8,7 @@ import {
 	Alert,
 	KeyboardAvoidingView,
 	Platform,
+	SafeAreaView,
 	Dimensions, // Import Dimensions
 } from "react-native";
 import GestureRecognizer from "react-native-swipe-gestures";
@@ -20,6 +21,7 @@ import colors from "../../config/colors";
 const { width, height } = Dimensions.get("window");
 
 export default function PreferencesForm() {
+
 	const [modalVisible, setModalVisible] = useState(false);
 	const [postcodeInput, setPostcodeInput] = useState("");
 	const [journeyPreferences, setJourneyPreferences] = useState("");
@@ -139,12 +141,14 @@ export default function PreferencesForm() {
 	};
 
 	return (
-		<View style={styles.container}>
+		<SafeAreaView style={styles.container}>
 			<Text style={styles.header}>Account</Text>
 			<View style={styles.fullWidthUnderline} />
+			<Text style={styles.title}>Preferences</Text>
 			<TouchableOpacity onPress={openModal}>
 				<Text style={styles.click}>Edit Preferences {">"}</Text>
 			</TouchableOpacity>
+			<View style={styles.fullWidthUnderline} />
 
 
 			<GestureRecognizer
@@ -218,37 +222,54 @@ export default function PreferencesForm() {
 
 const styles = StyleSheet.create({
 	container: {
-		flex: 1,
+	  flex: 1,
+	  backgroundColor: '#fff', // Assuming a white background
 	},
 	header: {
-		fontSize: height * 0.03,
-		fontWeight: "300",
-		marginBottom: height * 0.02,
-		marginTop: height * 0.02,
+	  fontSize: height * 0.03, // Adjust the size as needed
+	  fontWeight: 'bold',
+	  paddingVertical: height * 0.02, // Add padding to top and bottom
+	  paddingHorizontal: width * 0.05, // Add padding to left and right
+	  backgroundColor: '#f2f2f2', // Adjust the background color as needed
+	},
+	title: {
+	  fontSize: height * 0.025, // Adjust the size as needed
+	  fontWeight: '600', // Adjust the weight as needed
+	  paddingVertical: height * 0.015, // Add padding to top and bottom
+	  paddingHorizontal: width * 0.05, // Add padding to left and right
+	  backgroundColor: '#fff', // Assuming a white background
+	  marginTop: height * 0.02, // Space between sections
 	},
 	click: {
-		fontWeight: "bold",
-		textAlign: "left",
-		fontSize: height * 0.033,
-		textDecorationLine: "underline",
-		paddingTop: 25,
+	  fontSize: height * 0.02, // Adjust the size as needed
+	  fontWeight: '400', // Adjust the weight as needed
+	  textAlign: 'left',
+	  paddingHorizontal: width * 0.05, // Add padding to left and right
+	  paddingVertical: height * 0.015, // Add padding to top and bottom
+	  borderBottomWidth: 1, // Set the underline thickness
+	  borderBottomColor: '#e0e0e0', // Set the underline color
 	},
-	modalContainer: {
+	fullWidthUnderline: {
+	  borderBottomWidth: 1,
+	  borderBottomColor: '#e0e0e0',
+	  width: '100%', // Ensure the underline is full width
+	  marginBottom: height * 0.02, // Space after the underline
+
+	},
+  modalContainerPicker: {
 		flex: 1,
 		justifyContent: "center",
 		alignItems: "center",
-		padding: width * 0.06,
-		paddingTop: height * 0.02,
-		marginTop: 0,
+		backgroundColor: "rgba(0,0,0,0)",
 	},
-	label: {
-		fontWeight: "bold",
-		marginVertical: height * 0.003,
-	},
-	fullWidthUnderline: {
-		height: 1, // Height of the underline
-		backgroundColor: "orange", // Color of the underline
-		width: "100%", // Full width
-		// Space between the text and underline, adjust as needed
-	},
+  modalContainer: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        padding: width * 0.06,
+        paddingTop: height * 0.02,
+        marginTop: 0,
+  }
 });
+
+		

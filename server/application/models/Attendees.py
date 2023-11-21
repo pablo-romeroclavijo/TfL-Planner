@@ -4,16 +4,18 @@ from application.models.Errors import EventNotFound, AttendeeIsNotUnique, Action
 
 
 
+
 class Attendee(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
     event_id = db.Column(db.Integer, db.ForeignKey("event.id"), nullable=False)
     status = db.Column(db.String(20), nullable=True)
     ETA = db.Column(db.DateTime, nullable=True)
-    route = db.Column(db.String(3000), nullable=True)
+    route = db.Column(db.JSON, nullable=True)
     suggested_departure = db.Column(db.DateTime, nullable=True)
     accepted = db.Column(db.Boolean, nullable = False)
     origin = db.Column(db.String(9), nullable=True)
+
     
 
     def __init__(self, user_id, event_id, status, ETA, route, suggested_departure, accepted, origin):
@@ -64,12 +66,14 @@ class Attendee(db.Model):
             db.session.rollback()
             raise ActionNotAllowed
         
-    def set_route(self, journey):
-        self.route = str(journey)
-        self.origin = journey['origin']
-        self.suggested_departure = journey['startDateTime']
-        self.ETA = journey['arrivalDateTime']
-        self.status = 'Journey Planned'
+    def set_route(self, journey, status):
+        print(journey)
+        if not journey == {}:
+            self.route = journey
+            self.origin = journey['origin']
+            self.suggested_departure = journey['startDateTime']
+            self.ETA = journey['arrivalDateTime']
+        self.status = status
         db.session.commit()
         return self
         
