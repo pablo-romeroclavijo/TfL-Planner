@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
-import { View, Text, StyleSheet, Modal, Svg } from "react-native"
-import { CreateEventForm, CreateEventModal, AppButton, Header } from "../../Components"
+import { View, Text, StyleSheet, Modal, Svg, SafeAreaView, ScrollView } from "react-native"
+import { CreateEventForm, CreateEventModal, AppButton, Header,  ViewEventsCarousel} from "../../Components"
 
 export default function Home({ navigation }) {
 	const [createEvent, setCreateEvent] = useState(false)
@@ -13,14 +13,27 @@ export default function Home({ navigation }) {
 		setCreateEvent(!createEvent)
 	}
 
+	const clickViewEvent = () => {
+		setViewEvent(!viewEvent);
+	  };
+	  const events = [
+		{ title: 'Event 1', date: '2023-12-01', time: '12:00 PM', location: 'Venue 1' },
+		{ title: 'Event 2', date: '2023-12-01', time: '2:30 PM', location: 'Venue 2' },
+	  
+	  ];
+
+
 	return (
 		// <ImageBackground source={image} style={{ width: "100%", height: "100%" }}>
-		<View style={styles.container}>
+	<ScrollView style={styles.container}>
 						<Header />
 			<View style={{alignSelf: "center"}}>
 
 			</View>
 			<Text style={styles.title}>My Home</Text>
+
+        	<ViewEventsCarousel events={events} />
+
 			<View style={styles.newEventContainer}>
 				<AppButton onPress={clickCreateEvent} title="Create Event" />
 				{createEvent ? (
@@ -34,10 +47,8 @@ export default function Home({ navigation }) {
 				<AppButton title="Join Event" />
 			</View>
 
-			<View style={styles.newEventContainer}>
-				<AppButton title="View Events" />
-			</View>
-		</View>
+			
+		</ScrollView>
 		// </ImageBackground>
 	)
 }
