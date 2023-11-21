@@ -25,6 +25,7 @@ export default function Home({ navigation }) {
 
 	return (
 		// <ImageBackground source={image} style={{ width: "100%", height: "100%" }}>
+
 	<ScrollView style={styles.container}>
 						<Header />
 			<View style={{alignSelf: "center"}}>

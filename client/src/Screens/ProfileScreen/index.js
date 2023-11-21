@@ -9,6 +9,7 @@ export default function Profile() {
 						<Header />
 			<View style={{alignSelf: "center"}}>
 
+
 			</View>
 
 			<PreferencesForm />
