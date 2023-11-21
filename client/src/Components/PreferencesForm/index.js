@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
 import {
-  Text,
-  View,
-  StyleSheet,
-  Modal,
-  TouchableOpacity,
-  Alert,
-  KeyboardAvoidingView,
-  Platform,
-  Dimensions, // Import Dimensions
+	Text,
+	View,
+	StyleSheet,
+	Modal,
+	TouchableOpacity,
+	Alert,
+	KeyboardAvoidingView,
+	Platform,
+	SafeAreaView,
+	Dimensions, // Import Dimensions
 } from "react-native";
 import GestureRecognizer from "react-native-swipe-gestures";
 import { Picker } from "@react-native-picker/picker";
@@ -428,7 +429,6 @@ export default function PreferencesForm() {
     </View>
     // </KeyboardAvoidingView>
   );
-}
 
 const styles = StyleSheet.create({
   container: {

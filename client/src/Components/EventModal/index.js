@@ -13,6 +13,7 @@ import EventsRoutesForm from "../EventRouteSelector"
 import GestureRecognizer from "react-native-swipe-gestures"
 import moment from "moment"
 import { useIsFocused } from "@react-navigation/native"
+import AttendeeCard from "../AttendeCard"
 const EventModal = ({ onClose, code }) => {
 	const [event, setEvent] = useState({})
 	const [attendees, setAttendees] = useState([])
@@ -25,6 +26,7 @@ const EventModal = ({ onClose, code }) => {
 			setEvent(data.event)
 			setAttendees(data.attendees)
 			setIsLoading(false)
+		
 		})
 	}, [code])
 	return (
@@ -54,15 +56,7 @@ const EventModal = ({ onClose, code }) => {
 					<FlatList
 						data={attendees}
 						keyExtractor={(item) => item.user_id}
-						renderItem={({ item }) => (
-							<View style={styles.attendee}>
-								<Text style={styles.attendeeName}>{item.user_id}</Text>
-								<Text style={styles.attendeeStatus}>Status: {item.status}</Text>
-								<Text style={styles.attendeeETA}>
-									ETA: {moment(event.ETA).format("HH:mm")}
-								</Text>
-							</View>
-						)}
+						renderItem={({ item }) => <AttendeeCard person={item} />}
 					/>
 
 					<GestureRecognizer>
@@ -121,25 +115,7 @@ const styles = StyleSheet.create({
 		color: "#FFF", // White color
 		marginBottom: 20,
 	},
-	attendee: {
-		backgroundColor: "#FFD1D1", // Light red background for each attendee
-		padding: 10,
-		marginBottom: 10,
-		borderRadius: 8,
-	},
-	attendeeName: {
-		fontSize: 18,
-		fontWeight: "bold",
-		color: "#333", // Dark text color
-	},
-	attendeeStatus: {
-		fontSize: 16,
-		color: "#333", // Dark text color
-	},
-	attendeeETA: {
-		fontSize: 16,
-		color: "#333", // Dark text color
-	}, // Style for the outermost view
+
 	container: {
 		flex: 1,
 		justifyContent: "center",
