@@ -25,13 +25,14 @@ export default function Home({ navigation }) {
 
 	return (
 		// <ImageBackground source={image} style={{ width: "100%", height: "100%" }}>
-		<ScrollView style={styles.container}>
-			<Header />
+	<ScrollView style={styles.container}>
+						<Header />
+			<View style={{alignSelf: "center"}}>
+
 			</View>
 			<Text style={styles.title}>My Home</Text>
 
         	<ViewEventsCarousel events={events} />
-
 
 			<View style={styles.newEventContainer}>
 				<AppButton onPress={clickCreateEvent} title="Create Event" />

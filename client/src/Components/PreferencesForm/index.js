@@ -215,7 +215,7 @@ export default function PreferencesForm() {
 					</View>
 				</Modal>
 			</GestureRecognizer>
-		</View>
+		</SafeAreaView>
 		// </KeyboardAvoidingView>
 	);
 }
