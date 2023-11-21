@@ -15,8 +15,10 @@ export default function Routes({navigation}){
 =======
 export default function Routes() {
 	return (
-		<View style={styles.view}>
+		<View>
+			<View style={{alignSelf: "center"}}>
 			<Header />
+			</View>
 			<RoutesScreenForm />
 		</View>
 	);
