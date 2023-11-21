@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-import { View, Text, SafeAreaView, ScrollView, StyleSheet, Dimensions } from "react-native"
+import { View, Text, SafeAreaView, ScrollView, StyleSheet, Dimensions, Modal } from "react-native"
 import {
 	AppButton,
 	AppTextInput,
@@ -10,10 +10,12 @@ import {
 import validator from "validator"
 import DateTimePicker from "@react-native-community/datetimepicker"
 import { Picker } from "@react-native-picker/picker"
+import GestureRecognizer from "react-native-swipe-gestures";
 
 const { width, height } = Dimensions.get("window");
 
 export default function RoutesScreenForm() {
+  const[modalVisible, setModalVisible] = useState(false)
 
   const [startPostcodeInput, setStartPostcodeInput] = useState("");
   const [endPostcodeInput, setEndPostcodeInput] = useState("");
@@ -34,6 +36,9 @@ export default function RoutesScreenForm() {
   });
   const [timeOption, setTimeOption] = useState("")
 
+  const closeModal = () => {
+    setModalVisible(false);
+  };
 
   const showDatepicker = () => {
     setShowDatePicker(true);
@@ -96,6 +101,7 @@ export default function RoutesScreenForm() {
       alert("Enter a valid ending postcode.");
     } else {
       getRoute();
+      setModalVisible(true)
     }
   }
 
@@ -161,8 +167,10 @@ export default function RoutesScreenForm() {
   }
 
   return (
-    <View style={{justifyContent: "flex-start", alignItems: "center", marginTop: -height * 0.2}}>
+    <View style={{justifyContent: "center", alignItems: "center"}}>
     <ScrollView style={styles.screen}>
+      
+      <View style={{alignSelf: "center"}}>
       <AppTextInput
         onChangeText={(text) => setStartPostcodeInput(text)}
         placeholder="Start Postcode"
@@ -171,12 +179,14 @@ export default function RoutesScreenForm() {
         onChangeText={(text) => setEndPostcodeInput(text)}
         placeholder="End Postcode"
       />
+      </View>
 
+      <View style={{alignSelf: "center"}}>
       <AppButton
         title={fDate ? fDate : "Set Date"}
         onPress={showDatepicker}
       />
-
+      
       <AppButton
         title={fTime ? fTime : "Set Time"}
         onPress={showTimepicker}
@@ -209,7 +219,7 @@ export default function RoutesScreenForm() {
             <Picker.Item label="Arrive By" value="arriving" />
             {/* <Picker.Item label="Depart" value="departing" /> */}
         </Picker>
-
+ 
       <AppButton onPress={clickPreferences} title="Preferences" />
       {paramsModal ? (
         <RouteParamsModal
@@ -219,10 +229,18 @@ export default function RoutesScreenForm() {
         ></RouteParamsModal>
       ) : null}
       <AppButton onPress={dataValidation} title="Submit" />
+      </View>
       {/* {route
 
         ? route.map((r, index) => <Text key={index}>{r.summary}</Text>)
         : null} */}
+      <GestureRecognizer style={{ flex: 1 }} onSwipeDown={() => {closeModal()}}>
+        <Modal
+          animationType="slide"
+          transparent={false}
+          visible={modalVisible}
+          onRequestClose={closeModal}
+        >
 			<SafeAreaView style={styles.container}>
 				<View>
 					{route ? (
@@ -248,6 +266,8 @@ export default function RoutesScreenForm() {
 					) : null}
 				</View>
 			</SafeAreaView>
+    </Modal>
+    </GestureRecognizer>
 		</ScrollView>
     </View>
 	)
