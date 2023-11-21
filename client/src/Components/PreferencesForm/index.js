@@ -102,39 +102,39 @@ export default function PreferencesForm() {
         options
       );
 
-      if (response.status === 200) {
-        Alert.alert("Submit Successful", "Your Preferences have been updated", [
-          {
-            text: "OK",
-            onPress: async () => {
-              // Update the originalPreferences state when the changes are saved
-              setOriginalPreferences({
-                postcode: postcodeInput,
-                preferences: {
-                  journeyPreferences,
-                  maxWalkingMinutes,
-                  walkingSpeed,
-                  accessibilityPreferences,
-                },
-              });
+			if (response.status === 200) {
+				Alert.alert("Submit Successful", "Your Preferences have been updated", [
+					{
+						text: "OK",
+						onPress: async () => {
+							// Update the originalPreferences state when the changes are saved
+							setOriginalPreferences({
+								postcode: postcodeInput,
+								preferences: {
+									journeyPreferences,
+									maxWalkingMinutes,
+									walkingSpeed,
+									accessibilityPreferences,
+								},
+							});
 
-              closeModal();
-            },
-          },
-        ]);
-      }
-    } catch (error) {
-      console.error("Error submitting preferences:", error.message);
-    }
-  }
+							closeModal();
+						},
+					},
+				]);
+			}
+		} catch (error) {
+			console.error("Error submitting preferences:", error.message);
+		}
+	}
 
   const openModal = () => {
     setModalVisible(true);
   };
 
-  const closeModal = () => {
-    setModalVisible(false);
-  };
+	const closeModal = () => {
+		setModalVisible(false);
+	};
 
   const resetForm = () => {
     // Reset the form to the original preferences fetched from the backend

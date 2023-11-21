@@ -1,10 +1,15 @@
 import React from "react";
 import { LinearGradient } from "expo-linear-gradient";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet } from "react-native";
 
 const GradientBackground = ({ children, colors, style }) => {
 	return (
-		<LinearGradient colors={colors} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={[styles.gradient, style]}>
+		<LinearGradient
+			colors={colors}
+			start={{ x: 0, y: 0 }}
+			end={{ x: 1, y: 1 }}
+			style={[styles.gradient, style]} // Use only a basic default style here
+		>
 			{children}
 		</LinearGradient>
 	);

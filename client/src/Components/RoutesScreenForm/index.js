@@ -40,51 +40,49 @@ export default function RoutesScreenForm() {
     setModalVisible(false);
   };
 
-  const showDatepicker = () => {
-    setShowDatePicker(true);
-    setShowTimePicker(false);
-  };
+	const showDatepicker = () => {
+		setShowDatePicker(true);
+		setShowTimePicker(false);
+	};
 
-  const showTimepicker = () => {
-    setShowTimePicker(true);
-    setShowDatePicker(false);
-  };
+	const showTimepicker = () => {
+		setShowTimePicker(true);
+		setShowDatePicker(false);
+	};
 
-  const hideDateTimePicker = () => {
-    setShowDatePicker(false);
-    setShowTimePicker(false);
-  };
+	const hideDateTimePicker = () => {
+		setShowDatePicker(false);
+		setShowTimePicker(false);
+	};
 
-  const onDateChange = (selectedDate) => {
-    const currentDate = selectedDate.nativeEvent.timestamp || date;
-    hideDateTimePicker();
-    let tempDate = new Date(currentDate);
-    setFDate(
-      tempDate.getFullYear().toString() + (tempDate.getMonth() + 1).toString() + tempDate.getDate().toString());
-  };
+	const onDateChange = (selectedDate) => {
+		const currentDate = selectedDate.nativeEvent.timestamp || date;
+		hideDateTimePicker();
+		let tempDate = new Date(currentDate);
+		setFDate(tempDate.getFullYear().toString() + (tempDate.getMonth() + 1).toString() + tempDate.getDate().toString());
+	};
 
-  const onTimeChange = (selectedTime) => {
-    const currentTime = selectedTime.nativeEvent.timestamp || date;
-    hideDateTimePicker();
-    let tempTime = new Date(currentTime);
-    setFTime(tempTime.getHours().toString() + tempTime.getMinutes().toString().padStart(2, "0")
-    );
-  };
+	const onTimeChange = (selectedTime) => {
+		const currentTime = selectedTime.nativeEvent.timestamp || date;
+		hideDateTimePicker();
+		let tempTime = new Date(currentTime);
+		setFTime(tempTime.getHours().toString() + tempTime.getMinutes().toString().padStart(2, "0"));
+	};
 
-  const handleParamsSelection = (params) => {
-    setSelectedParams(params);
-  };
+	const handleParamsSelection = (params) => {
+		setSelectedParams(params);
+	};
 
-  async function clickPreferences() {
-    setParamsModal(!paramsModal);
-  }
+	async function clickPreferences() {
+		setParamsModal(!paramsModal);
+	}
 
-  useEffect(() => {
-    async function getToken() {
-      setToken(await GetAsync("token"));
-    }
-    getToken();
-  }, []);
+	useEffect(() => {
+		async function getToken() {
+			setToken(await GetAsync("token"));
+		}
+		getToken();
+	}, []);
 
   function dataValidation() {
     if (!startPostcodeInput || !endPostcodeInput) {
@@ -105,81 +103,69 @@ export default function RoutesScreenForm() {
     }
   }
 
-  async function getRoute() {
-    const startPostcode = startPostcodeInput.trim();
-    const endPostcode = endPostcodeInput.trim();
-    const useDate = fDate || "" 
-    const useTime = fTime || ""
-    const timeIs = timeOption || ""
-    // console.log(useDate)
-    // console.log(useTime)
-    // console.log(timeIs)
-    // console.log(selectedParams.mode)
-    // console.log(selectedParams.walkingSpeed)
-    // console.log(selectedParams.taxiOnlyChecked)
-    // console.log(selectedParams.nationalSearch)
-    const options = {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: token,
-      },
-      body: JSON.stringify({
-        origins: {
-          from: startPostcode,
-          to: endPostcode,
-        },
-        params: {
-          taxiOnlyTrip: selectedParams.taxiOnlyChecked,
-          nationalSearch: true,
-          date: useDate || "",
-          time: useTime || "",
-          timeIs: timeIs || "",
-          mode: selectedParams.mode || "",
-          walkingSpeed: selectedParams.walkingSpeed || "",
-          useRealTimeArrivals: true,
-        },
-      }),
-    };
-    console.log({
-      taxiOnlyTrip: selectedParams.taxiOnlyChecked,
-      nationalSearch: true,
-      date: useDate || "",
-      time: useTime || "",
-      timeIs: timeIs || "",
-      mode: selectedParams.mode || "bus, overground, dlr, tube, taxi",
-      walkingSpeed: selectedParams.walkingSpeed || "",
-      useRealTimeArrivals: true,
-    })
-    const response = await fetch(
-      "https://metro-mingle.onrender.com/tfl/get",
-      options
-    );
-    //console.log(response);
-    if (response.status == 200) {
-      const data = await response.json();
-      //console.log(data.journeys)
-      setRoute(data.journeys);
-    } else {
-      alert("Request failed.");
-    }
-  }
+	async function getRoute() {
+		const startPostcode = startPostcodeInput.trim();
+		const endPostcode = endPostcodeInput.trim();
+		const useDate = fDate || "";
+		const useTime = fTime || "";
+		const timeIs = timeOption || "";
+		// console.log(useDate)
+		// console.log(useTime)
+		// console.log(timeIs)
+		// console.log(selectedParams.mode)
+		// console.log(selectedParams.walkingSpeed)
+		// console.log(selectedParams.taxiOnlyChecked)
+		// console.log(selectedParams.nationalSearch)
+		const options = {
+			method: "POST",
+			headers: {
+				Accept: "application/json",
+				"Content-Type": "application/json",
+				Authorization: token,
+			},
+			body: JSON.stringify({
+				origins: {
+					from: startPostcode,
+					to: endPostcode,
+				},
+				params: {
+					taxiOnlyTrip: selectedParams.taxiOnlyChecked,
+					nationalSearch: true,
+					date: useDate || "",
+					time: useTime || "",
+					timeIs: timeIs || "",
+					mode: selectedParams.mode || "",
+					walkingSpeed: selectedParams.walkingSpeed || "",
+					useRealTimeArrivals: true,
+				},
+			}),
+		};
+		console.log({
+			taxiOnlyTrip: selectedParams.taxiOnlyChecked,
+			nationalSearch: true,
+			date: useDate || "",
+			time: useTime || "",
+			timeIs: timeIs || "",
+			mode: selectedParams.mode || "bus, overground, dlr, tube, taxi",
+			walkingSpeed: selectedParams.walkingSpeed || "",
+			useRealTimeArrivals: true,
+		});
+		const response = await fetch("https://metro-mingle.onrender.com/tfl/get", options);
+		//console.log(response);
+		if (response.status == 200) {
+			const data = await response.json();
+			//console.log(data.journeys)
+			setRoute(data.journeys);
+		} else {
+			alert("Request failed.");
+		}
+	}
 
-  return (
-    <View style={{justifyContent: "center", alignItems: "center"}}>
-    <ScrollView style={styles.screen}>
-      
-      <View style={{alignSelf: "center"}}>
-      <AppTextInput
-        onChangeText={(text) => setStartPostcodeInput(text)}
-        placeholder="Start Postcode"
-      />
-      <AppTextInput
-        onChangeText={(text) => setEndPostcodeInput(text)}
-        placeholder="End Postcode"
-      />
-      </View>
+	return (
+		<View style={{ justifyContent: "flex-start", alignItems: "center" }}>
+			<ScrollView style={styles.screen}>
+				<AppTextInput onChangeText={(text) => setStartPostcodeInput(text)} placeholder="Start Postcode" />
+				<AppTextInput onChangeText={(text) => setEndPostcodeInput(text)} placeholder="End Postcode" />
 
       <View style={{alignSelf: "center"}}>
       <AppButton
@@ -192,16 +178,7 @@ export default function RoutesScreenForm() {
         onPress={showTimepicker}
       />
 
-      {showDatePicker && (
-        <DateTimePicker
-          testID="dateTimePicker"
-          value={date}
-          mode="date"
-          is24Hour={true}
-          display="default"
-          onChange={onDateChange}
-        />
-      )}
+				{showDatePicker && <DateTimePicker testID="dateTimePicker" value={date} mode="date" is24Hour={true} display="default" onChange={onDateChange} />}
 
       {showTimePicker && (
         <DateTimePicker
@@ -276,13 +253,13 @@ export default function RoutesScreenForm() {
 const styles = StyleSheet.create({
 	screen: {
 		height: "auto",
-		paddingTop: 40
+		paddingTop: 40,
 	},
 	container: {
 		flex: 1,
 		alignItems: "center",
 		justifyContent: "center",
-		marginTop: 0,
+		marginTop: 20,
 		height: "auto",
-	}
-})
+	},
+});

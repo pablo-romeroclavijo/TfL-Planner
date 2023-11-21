@@ -39,12 +39,12 @@ export default function Initial({ navigation }) {
         <AppButton
           title="Login"
           onPress={() => navigation.navigate("LogIn")}
-          color="primary"
+          color="btn2"
         />
         <AppButton
           title="Register"
           onPress={() => navigation.navigate("Register")}
-          color="secondary"
+          color="btn2"
         />
       </Animated.View>
     </View>
@@ -68,5 +68,9 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
     resizeMode: "contain",
+    shadowColor: "#fff", // White glow color
+		shadowOffset: { width: 0, height: 0 },
+		shadowOpacity: 0.9,
+		shadowRadius: 10,
   },
 });
