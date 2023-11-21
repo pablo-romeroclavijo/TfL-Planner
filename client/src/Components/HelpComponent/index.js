@@ -8,8 +8,7 @@ import {
   ScrollView,
   Linking,
   Dimensions,
-  Image,
-  SafeAreaView,
+  Image
 } from "react-native";
 import GestureRecognizer from "react-native-swipe-gestures";
 
