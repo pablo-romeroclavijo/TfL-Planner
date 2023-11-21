@@ -33,6 +33,13 @@ export default function EventsRoutesForm({ event }) {
 	const handleParamsSelection = (params) => {
 		setSelectedParams(params)
 	}
+	console.log("event", event)
+	console.log("event date", event.date)
+	console.log("original date", originalDate)
+	console.log("fDate", fDate)
+	console.log("fTime", fTime)
+	console.log("startPostcodeInput", startPostcodeInput)
+	console.log("endPostcodeInput", endPostcodeInput)
 
 	// Parse the original date string
 
@@ -61,15 +68,6 @@ export default function EventsRoutesForm({ event }) {
 		const useTime = fTime || ""
 		const timeIs = "arriving"
 
-		console.log(startPostcode)
-		console.log(endPostcode)
-		console.log(useDate)
-		console.log(useTime)
-		console.log(timeIs)
-		console.log(selectedParams.mode)
-		console.log(selectedParams.walkingSpeed)
-		console.log(selectedParams.taxiOnlyChecked)
-		console.log(selectedParams.nationalSearch)
 		const options = {
 			method: "POST",
 			headers: {
@@ -98,7 +96,7 @@ export default function EventsRoutesForm({ event }) {
 			"https://metro-mingle.onrender.com/tfl/get",
 			options
 		)
-		console.log(response)
+		console.log(options)
 		if (response.status == 200) {
 			const data = await response.json()
 			console.log(data)
@@ -119,6 +117,7 @@ export default function EventsRoutesForm({ event }) {
 					"Authorization": token,
 				},
 				body: JSON.stringify({
+					status: "journey set",
 					event_id: id,
 					journey: route,
 				}),
@@ -127,7 +126,7 @@ export default function EventsRoutesForm({ event }) {
 				"https://metro-mingle.onrender.com/event/setroute",
 				options
 			)
-			console.log(response)
+			console.log("response", response.status)
 			if (response.status == 200) {
 				alert("Route set.")
 			} else {
