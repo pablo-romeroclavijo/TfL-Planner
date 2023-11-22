@@ -1,27 +1,31 @@
 import React from "react"
 import { StyleSheet, View, Text, Pressable } from "react-native"
 import moment from "moment"
-const EventCard = ({ event, handlePress, key }) => {
+import GetAsync from "../AsyncStorageGet"
+const EventCard = ({ event, handlePress, key, id }) => {
+	// Removed `key` prop, it's not used here
+	console.log("event", event.creator_id == id)
 	return (
 		<Pressable onPress={handlePress}>
-			<View key={key} style={styles.card}>
+			<View style={styles.card}>
 				<View style={styles.header}>
 					<Text style={styles.headerText}>{event.title}</Text>
-					<Text style={styles.dateText}>
-						{moment(event.date).format("ddd, DD MMM YYYY")}
-					</Text>
-					<Text>{moment(event.date).format("HH:mm")}</Text>
+					<View style={styles.dateTimeContainer}>
+						<Text style={styles.dateText}>
+							{moment(event.date).format("ddd DD MMM YYYY")}
+						</Text>
+						<Text style={styles.timeText}>
+							{moment(event.date).format("HH:mm")}
+						</Text>
+					</View>
 				</View>
 				<View style={styles.body}>
 					<Text style={styles.bodyText}>{event.description}</Text>
-					<View style={styles.timeLocation}>
-						<Text style={styles.timeText}>{event.time}</Text>
-						<Text style={styles.locationText}>{event.postcode}</Text>
-					</View>
 				</View>
-
 				<View style={styles.footer}>
-					<Text style={styles.codeText}>Code: {event.share_code}</Text>
+					{event.creator_id == id ? (
+						<Text style={styles.codeText}>Code: {event.share_code}</Text>
+					) : null}
 				</View>
 			</View>
 		</Pressable>
@@ -39,14 +43,31 @@ const styles = StyleSheet.create({
 		shadowOpacity: 0.25,
 		shadowRadius: 3.84,
 		elevation: 10,
-		width: 400,
+		width: 350,
 		justifyContent: "center",
-		alignContent: "center"
+		alignContent: "center",
 	},
 	header: {
 		flexDirection: "row",
-		justifyContent: "flex-start",
+		justifyContent: "space-between", // Align header content to the left and date/time to the right
+		alignItems: "center", // Align items vertically
 		marginBottom: 8,
+	},
+	dateTimeContainer: {
+		flexDirection: "column", // Align date and time horizontally
+		alignItems: "center", // Align items vertically
+		marginRigh: 4,
+	},
+	dateText: {
+		fontSize: 16,
+		color: "#555",
+		fontWeight: "bold",
+		marginRight: 4, // Add some space between the date and time
+	},
+	timeText: {
+		fontSize: 16,
+		fontWeight: "bold",
+		color: "#333",
 	},
 	headerText: {
 		fontSize: 18,

@@ -131,15 +131,13 @@ function Help() {
                 </ScrollView>
               </View>
 
-
-
-
             )}
             {selectedHelpOption === 2 && (
               <View>
               <ScrollView>
                 <Text style={styles.info}>
-                  Metro Mingle. Elevate Your Events with Ease.
+                  Metro Mingle. {'\n'}
+                  Elevate Your Events with Ease.
                 </Text>
                 <Text style={styles.placeholderText}>
                 Plan, Invite, Track, and Ensure Safe Journeys - 
@@ -253,9 +251,25 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: windowWidth * 0.1, // Use 10% of the screen width as padding
     marginTop: 22,
-  }
+  }, info: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "black",
+    textAlign: "left",
+    marginBottom: 20,
+  }, placeholderText: {
+    fontSize: 16,
+    color: "black",
+    textAlign: "left",
+    marginBottom: 20,
+  }, link: {
+    fontSize: 16,
+    color: "blue",
+    textAlign: "left",
+    marginBottom: 20,
+  }, 
 
-  // ... (rest of your styles remain unchanged)
+
 });
 
 export default Help;

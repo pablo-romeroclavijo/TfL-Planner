@@ -7,7 +7,7 @@ import {
 	Text,
 	FlatList,
 	TouchableOpacity,
-	Dimensions
+	Dimensions,
 } from "react-native"
 
 import EventCard from "../EventCard"
@@ -17,6 +17,7 @@ import FilterDropdown from "../FilterDropdown"
 import moment from "moment"
 import GetAsync from "../AsyncStorageGet"
 import { useIsFocused } from "@react-navigation/native"
+import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry"
 
 const { width, height } = Dimensions.get("window")
 
@@ -26,14 +27,19 @@ export default function EventHolder({ events }) {
 	const [eventsList, setEventsList] = useState([])
 	const [filteredEvents, setFilteredEvents] = useState([])
 	const [selectedFilter, setSelectedFilter] = useState("All")
+	const [id, setId] = useState("")
 	const isFocused = useIsFocused()
 	useEffect(() => {
 		getEvents().then((data) => {
 			setEventsList(data)
 			setFilteredEvents(data)
 		})
+		getId()
 	}, [isFocused])
 
+	async function getId() {
+		setId(await GetAsync("id"))
+	}
 	useEffect(() => {
 		if (eventsList != 0) {
 			let filteredEvents = eventsList // Start with all events
@@ -73,6 +79,7 @@ export default function EventHolder({ events }) {
 								}}
 								// key={item.id.toString()} // Remove this line, the key in renderItem is not needed and can cause confusion.
 								event={item}
+								id={id}
 							/>
 						)}
 					/>
@@ -86,6 +93,7 @@ export default function EventHolder({ events }) {
 					<EventModal
 						code={event.share_code}
 						onClose={() => setModalShow(false)}
+						id={id}
 					/>
 				</Modal>
 			</GestureRecognizer>
@@ -105,7 +113,7 @@ const styles = StyleSheet.create({
 		backgroundColor: "#FF6363",
 		padding: 20,
 	},
-	list: { paddingTop: 20, paddingBottom: 90, paddingRight: width * 0.05 },
+	list: { paddingTop: 20, paddingBottom: 60 },
 })
 
 async function getEvents() {

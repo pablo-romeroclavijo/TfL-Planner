@@ -118,7 +118,7 @@ def test_get_all_events(test_client, login_and_create_event):
 def test_set_route(test_client, login_and_create_event):
     token, share_code, token_2, event_id = login_and_create_event
     journey = dict(arrivalDateTime="2023-11-17T13:24:00",duration= 49,legs= [],origin= "NW19HU",startDateTime="2023-11-17T12:35:00")
-    data = dict(event_id=event_id, journey=journey)
+    data = dict(event_id=event_id, journey=journey, status="pending")
     print(data)
     get_event_response = test_client.patch('/event/setroute', json=data, headers={'Authorization': token})
     assert get_event_response.status_code == 200
