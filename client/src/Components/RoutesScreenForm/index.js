@@ -79,7 +79,6 @@ export default function RoutesScreenForm() {
 		tempDate.getDate().toString().padStart(2, "0")
   		);
   		setDisplayDate(formattedDate);
-		console.log("Date change")
 	}
 
 	const onTimeChange = (selectedTime) => {
@@ -169,27 +168,23 @@ export default function RoutesScreenForm() {
 				},
 			}),
 		}
-		console.log({
-			taxiOnlyTrip: selectedParams.taxiOnlyChecked,
-			nationalSearch: true,
-			date: useDate || "",
-			time: useTime || "",
-			timeIs: timeIs || "",
-			mode: selectedParams.mode || "bus, overground, dlr, tube, taxi",
-			walkingSpeed: selectedParams.walkingSpeed || "",
-			useRealTimeArrivals: true,
-		})
+		// console.log({
+		// 	taxiOnlyTrip: selectedParams.taxiOnlyChecked,
+		// 	nationalSearch: true,
+		// 	date: useDate || "",
+		// 	time: useTime || "",
+		// 	timeIs: timeIs || "",
+		// 	mode: selectedParams.mode || "bus, overground, dlr, tube, taxi",
+		// 	walkingSpeed: selectedParams.walkingSpeed || "",
+		// 	useRealTimeArrivals: true,
+		// })
 		const response = await fetch(
 			"https://metro-mingle.onrender.com/tfl/get",
 			options
 		)
-		//console.log(response);
-		console.log("options", options)
 		if (response.status == 200) {
 			const data = await response.json()
-			//console.log(data.journeys)
 			setRoute(data.journeys)
-			console.log(data.journeys[0])
 		} else {
 			alert("Request failed.")
 		}

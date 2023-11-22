@@ -42,60 +42,71 @@ export default function RouteParamsModal({ closeModal, paramsModal, onParamsSele
   };
 
   return (
-    <View style={styles.container}>
+    <View>
       <Modal
         animationType="slide"
         visible={paramsModal}
         onRequestClose={() => closeModal()}
       >
-        <View style={styles.container2}>
-        <View>
-          <Text style={styles.header1}>Preferences</Text>
-        </View>
+        <View style={styles.container}>
+            <View>
+            <Text style={styles.header1}>Preferences</Text>
+            </View>
 
-        <View>
-          <Text style={styles.header2}>Select Journey Preference:</Text>
-          <Picker style={styles.picker} selectedValue={journeyPref} onValueChange={(itemValue) => setJourneyPref(itemValue)}>
-            <Picker.Item style={styles.pickerLabel} label="Any" value="" />
-            <Picker.Item style={styles.pickerLabel} label="Least Time Possible" value="leasttime" />
-            <Picker.Item style={styles.pickerLabel} label="Least Interchange" value="leastinterchange" />
-          </Picker>
-        </View>
+            <View>
+            <Text style={styles.header2}>Select Journey Preference:</Text>
+            <Picker style={styles.picker} selectedValue={journeyPref} onValueChange={(itemValue) => setJourneyPref(itemValue)}>
+                <Picker.Item style={styles.pickerLabel} label="Any" value="" />
+                <Picker.Item style={styles.pickerLabel} label="Least Time Possible" value="leasttime" />
+                <Picker.Item style={styles.pickerLabel} label="Least Interchange" value="leastinterchange" />
+            </Picker>
+            </View>
 
-        <View>
-          <Text style={styles.header2}>Select Mode:</Text>
-          <Picker style={styles.picker} selectedValue={mode} onValueChange={(itemValue) => setMode(itemValue)}>
-            <Picker.Item style={styles.pickerLabel} label="Any" value="" />
-            <Picker.Item style={styles.pickerLabel} label="Overground" value="overground" />
-            <Picker.Item style={styles.pickerLabel} label="Tube" value="tube" />
-          </Picker>
-        </View>
+            <View>
+            <Text style={styles.header2}>Select Mode:</Text>
+            <Picker style={styles.picker} selectedValue={mode} onValueChange={(itemValue) => setMode(itemValue)}>
+                <Picker.Item style={styles.pickerLabel} label="Any" value="" />
+                <Picker.Item style={styles.pickerLabel} label="Overground" value="overground" />
+                <Picker.Item style={styles.pickerLabel} label="Tube" value="tube" />
+            </Picker>
+            </View>
 
-        <View>
-          <Text style={styles.header2}>Select Walking Speed:</Text>
-          <Picker style={styles.picker} selectedValue={walkingSpeed} onValueChange={(itemValue) => setWalkingSpeed(itemValue)}>
-            <Picker.Item style={styles.pickerLabel} label="Any" value={""} />
-            <Picker.Item style={styles.pickerLabel} label="Slow" value="slow" />
-            <Picker.Item style={styles.pickerLabel} label="Average" value="average" />
-            <Picker.Item style={styles.pickerLabel} label="Fast" value="fast" />
-          </Picker>
-        </View>
+            <View>
+            <Text style={styles.header2}>Select Walking Speed:</Text>
+            <Picker style={styles.picker} selectedValue={walkingSpeed} onValueChange={(itemValue) => setWalkingSpeed(itemValue)}>
+                <Picker.Item style={styles.pickerLabel} label="Any" value={""} />
+                <Picker.Item style={styles.pickerLabel} label="Slow" value="slow" />
+                <Picker.Item style={styles.pickerLabel} label="Average" value="average" />
+                <Picker.Item style={styles.pickerLabel} label="Fast" value="fast" />
+            </Picker>
+            </View>
 
-        <View>
-          <CheckBox style={styles.box} title="Taxi Only" checked={taxiOnlyChecked} onPress={() => setTaxiOnlyChecked(!taxiOnlyChecked)}
+            <View>
+            <CheckBox title="Taxi Only" checked={taxiOnlyChecked} onPress={() => setTaxiOnlyChecked(!taxiOnlyChecked)}
             checkedIcon="check-square-o"
             uncheckedIcon="square-o"
             checkedColor="#00FF00"
-            uncheckedColor="#FF0000" />
-          <CheckBox style={styles.box} title="National Search" checked={nationalSearch} onPress={() => setNationalSearch(!nationalSearch)}
-            checkedIcon="check-square-o"
+            uncheckedColor="#FF0000"
+            containerStyle={styles.box} 
+            center
+            iconRight
+            size={30}
+            textStyle={{ fontSize: 20 }}
+            />
+            <CheckBox title="National Search" checked={nationalSearch} onPress={() => setNationalSearch(!nationalSearch)}checkedIcon="check-square-o"
             uncheckedIcon="square-o"
             checkedColor="#00FF00"
-            uncheckedColor="#FF0000" />
-        </View>
-        <View style={styles.button}>
-            <AppButton title="Close" onPress={handleModalClose} />
-        </View>
+            uncheckedColor="#FF0000" 
+            containerStyle={styles.box}
+            center
+            iconRight
+            size={30}
+            textStyle={{ fontSize: 20 }}
+            />
+            </View>
+            <View style={styles.button}>
+                <AppButton title="Close" onPress={handleModalClose} />
+            </View>
         </View>
       </Modal>
     </View>
@@ -104,11 +115,8 @@ export default function RouteParamsModal({ closeModal, paramsModal, onParamsSele
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: "lightblue"
-    },
-    container2: {
         height: height,
-        backgroundColor: "lightblue"
+        backgroundColor: "white"
     },
     header1: {
     fontSize: 30,
@@ -123,7 +131,8 @@ const styles = StyleSheet.create({
     textAlign: "center"
   },
   box: {
-
+    backgroundColor: "white",
+    borderColor: "white",
   },
   picker: {
     display: "flex",
