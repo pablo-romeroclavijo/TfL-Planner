@@ -42,13 +42,14 @@ export default function JoinEventForm() {
 	return (
 		<View style={styles.container}>
 			<Text style={styles.title}>Join Event</Text>
-			<AppTextInput
-				placeholder="Enter Event Code"
-				onChangeText={(text) => setEventCode(text)}
-				value={eventCode}
-			/>
-
-			<AppButton onPress={() => joinEvent()} />
+			<View style = {styles.inputContainer} >
+				<AppTextInput 
+					placeholder="Enter Event Code"
+					onChangeText={(text) => setEventCode(text)}
+					value={eventCode}
+				/>
+			</View>
+			<AppButton title="Join Event" onPress={() => joinEvent()} />
 		</View>
 	)
 }
@@ -62,7 +63,12 @@ const styles = StyleSheet.create({
 	title: {
 		fontSize: 24,
 		fontWeight: "bold",
-		marginBottom: 20,
+		maginTop: 10,
+	},
+	inputContainer:{
+		width: 250,
+		overflow: "hidden",
+
 	},
 	button: {
 		alignItems: "center",

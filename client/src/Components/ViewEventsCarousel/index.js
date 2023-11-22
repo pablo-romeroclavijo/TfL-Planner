@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
-import { View, Text, FlatList, Dimensions, StyleSheet } from 'react-native';
-import { ScrollView} from 'react-native';
-
+import { View, Text, FlatList, Dimensions, StyleSheet, Alert} from 'react-native';
+import { ScrollView, TouchableOpacity} from 'react-native';
+import colors from "../../config/colors";
 import moment from 'moment';
 
 const { width } = Dimensions.get('window');
@@ -39,7 +39,30 @@ async function getEvents() {
     return events.filter(event => moment(event.date).isSame(today, 'day'));
   };
   
-  const ViewEventsCarousel = ({ events, title }) => {
+  const acceptInvite = async (sharecode) => {
+    const token = await GetAsync("token")
+    console.log(sharecode, token)
+    try {
+      const options = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": token,
+        },
+      }
+      const response = await fetch(
+        `https://metro-mingle.onrender.com/event/${sharecode}`,
+        options
+      )
+
+      const data = await response.json()
+      Alert.alert("Accept accepted")
+    } catch (error) {
+      console.log(error)
+    }   
+
+  }
+  const ViewEventsCarousel = ({ events, title , button}) => {
   const [activeSlide, setActiveSlide] = useState(0);
 
   const handleScroll = (event) => {
@@ -55,6 +78,9 @@ async function getEvents() {
       </View>
     );
   };
+  const print = (statement) => {
+    console.log(statement)
+  }
 
 
   
@@ -71,14 +97,28 @@ async function getEvents() {
         >
           {events.map((event, index) => (
           
-          <View key={index} style={[styles.slide, { backgroundColor: "lightblue" }]}>
-            <ScrollView style={styles.contentScroll}>
+          <View key={index}>
+            <ScrollView>
               <View style={styles.newEventContainer}>
-              <Text style={styles.eventheader}>{event.title}</Text>
-              <Text>Date: {event.date}</Text>
-              <Text>Time: {event.time}</Text>
-              <Text>Location: {event.location}</Text>
-          </View>
+                <View  style={styles.header}>
+                  <Text style={styles.eventheader}>{event.title}</Text>
+                  <Text style={styles.location}>{event.location}</Text>
+                </View>
+                <View  style={styles.body}>
+                  <Text><Text style={{fontWeight: 'bold'}}>Date: </Text>{event.date}</Text>
+                  <Text><Text style={{fontWeight: 'bold'}}>Time: </Text>{event.time}</Text>
+                </View>
+                <View>
+                 { button && <View style = {styles.buttonContainer}>
+                  <TouchableOpacity style={styles.button1} onPress={() => {acceptInvite(event.sharecode)}}>
+                    <Text style={styles.buttonText}>Accept</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity style={styles.button2} onPress={() => console.log('declined')}>
+                    <Text style={styles.buttonText}>Decline</Text>
+                  </TouchableOpacity>
+                  </View>}
+                </View>
+            </View>
             </ScrollView>
         
           </View>
@@ -114,7 +154,14 @@ async function getEvents() {
       padding: 10,
     },
     eventheader: {
+      padding: 5,
       fontSize: 20,
+      fontWeight: 'bold',
+      color: 'black',
+    },
+    location: {
+      padding: 9,
+      fontSize: 15,
       fontWeight: 'bold',
       color: 'black',
     },
@@ -137,6 +184,43 @@ async function getEvents() {
     activeDot: {
       backgroundColor: 'grey',
     },
+    body: {
+      marginBottom: 8,
+      flexDirection: "row",
+      justifyContent: 'space-around',
+      width: "100%",
+      //backgroundColor: 'white',
+      
+    },
+    header: {
+      marginBottom: 8,
+      flexDirection: "row",
+      paddingLeft: 10,
+      justifyContent: 'space-between',
+      columnGap:20,
+      width: "100%",
+      //backgroundColor: 'white',
+    },
+      
+    buttonContainer:{
+      flexDirection: 'row',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    
+    button1: {
+      padding: 10,
+      backgroundColor: 'rgb(71,141,185)' ,
+      borderRadius: 5,
+      margin: 10,
+    },
+    button2: {
+      padding: 10,
+      backgroundColor: 'rgb(250,60,70)' ,
+      borderRadius: 5,
+      margin: 10,
+    },
+
   });
   
   export default ViewEventsCarousel;

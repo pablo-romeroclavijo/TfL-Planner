@@ -40,10 +40,11 @@ export default function Home({ navigation }) {
 
 	const events = [
 		{
-			title: "Event 1",
+			title: "La Fosse Reunion",
 			date: "2023-12-01",
 			time: "12:00 PM",
-			location: "Venue 1",
+			location: "Bunga Bunga",
+			sharecode: 'm1q9384gWF'
 		},
 		{
 			title: "Event 2",
@@ -69,9 +70,9 @@ export default function Home({ navigation }) {
 					/>
 				) : null}
 			</View>
-			<ViewEventsCarousel  title = {'My events'}events={events} />
+			<ViewEventsCarousel  title = {'My events'}events={events} button = {false}/>
 
-			<ViewEventsCarousel  title = {'My invites'}events={events} />
+			<ViewEventsCarousel  title = {'My invites'}events={events} button ={true}/>
 			{/* <View>
 				<AppButton title="Join Event" onPress={clickJoinEvent} />
 				<Modal
@@ -79,7 +80,9 @@ export default function Home({ navigation }) {
 					onRequestClose={() => clickJoinEvent()}
 				></Modal>
 			</View> */}
-			<JoinEventForm closeModal={clickJoinEvent} />
+			<View style={styles.formContainer}>
+				<JoinEventForm closeModal={clickJoinEvent} />
+			</View>
 		</ScrollView>
 		// </ImageBackground>
 	)
@@ -90,16 +93,30 @@ const styles = StyleSheet.create({
 		flex: 1,
 	},
 	title: {
+		marginTop:10,
 		textAlign: "center",
 		fontSize: 26,
 	},
 	newEventContainer: {
 		width: 350,
 		margin: 40,
+		marginTop: 10,
+		marginBottom:10
 	},
 	subHeading: {
 		textAlign: "center",
 	},
+	formContainer:{
+			flex: 1,
+			backgroundColor: '#fff',
+			alignItems: 'center',
+			textAlign: 'center',
+			color: 'black',
+			margin: 10,
+			padding: 10,
+			borderRadius:10
+
+	}
 
 })
 
