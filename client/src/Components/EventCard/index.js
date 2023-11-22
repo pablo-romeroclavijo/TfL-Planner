@@ -4,7 +4,7 @@ import moment from "moment"
 import GetAsync from "../AsyncStorageGet"
 const EventCard = ({ event, handlePress, key, id }) => {
 	// Removed `key` prop, it's not used here
-	console.log("event", event.creator_id == id)
+
 	return (
 		<Pressable onPress={handlePress}>
 			<View style={styles.card}>

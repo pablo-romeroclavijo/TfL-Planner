@@ -39,6 +39,11 @@ const EventModal = ({ onClose, code, id }) => {
 			console.error("Failed to fetch attendees data:", error)
 		}
 	}
+
+	async function closeModal() {
+		setRoute(!Route)
+		await fetchAttendeesData()
+	}
 	useEffect(() => {
 		// Function to fetch event data only once
 		const fetchInitialEvent = async () => {
@@ -145,9 +150,9 @@ const EventModal = ({ onClose, code, id }) => {
 							visible={Route}
 							onPress={() => setRoute(false)}
 							animationType="fade"
-							onRequestClose={() => setRoute(false)}
+							onRequestClose={() => closeModal()}
 						>
-							<EventsRoutesForm event={event} />
+							<EventsRoutesForm event={event} onClose={() => setRoute(false)} />
 						</Modal>
 					</GestureRecognizer>
 				</>

@@ -11,12 +11,13 @@ import validator from "validator"
 
 // i need a form that takes start pastcode, jounrey pref, mode, walking speed, taxi only, national search
 
-export default function EventsRoutesForm({ event }) {
+export default function EventsRoutesForm({ event, onClose }) {
 	const formatDate = "YYYYMMDD"
 	const formatTime = "HHmm"
 	const [endPostcodeInput, setEndPostcodeInput] = useState(event.postcode, "GB")
 	const [startPostcodeInput, setStartPostcodeInput] = useState("")
 	const [token, setToken] = useState("")
+	const [showModal, setShowModal] = useState(false)
 	const [route, setRoute] = useState(false)
 	const [paramsModal, setParamsModal] = useState(false)
 	const originalDate = moment(event.date)
@@ -101,6 +102,7 @@ export default function EventsRoutesForm({ event }) {
 			const data = await response.json()
 			console.log(data)
 			setRoute(data.journeys)
+			closeModal()
 		} else {
 			alert("Request failed.")
 		}
@@ -129,6 +131,7 @@ export default function EventsRoutesForm({ event }) {
 			console.log("response", response.status)
 			if (response.status == 200) {
 				alert("Route set.")
+				await onClose()
 			} else {
 				alert("Request failed.")
 			}
@@ -155,7 +158,7 @@ export default function EventsRoutesForm({ event }) {
 				) : null}
 				<AppButton onPress={dataValidation} title="Submit" />
 			</View>
-
+			<></>
 			<SafeAreaView style={styles.container}>
 				<View>
 					{route ? (
