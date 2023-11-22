@@ -27,11 +27,11 @@ const HomeTabs = () => {
 
 					return <Ionicons name={iconName} size={24} color={"#0B2364"} />
 				},
-				tabBarLabel: ({ focused, color }) => {
-					return focused ? (
-						<Text style={{ color: "#0B2364", fontSize: 12 }}>{route.name}</Text>
-					) : null
-				},
+				// tabBarLabel: ({ focused, color }) => {
+				// 	return focused ? (
+				// 		<Text style={{ color: "#0B2364", fontSize: 12 }}>{route.name}</Text>
+				// 	) : null
+				// },
 			})}
 		>
 			<Tab.Screen
