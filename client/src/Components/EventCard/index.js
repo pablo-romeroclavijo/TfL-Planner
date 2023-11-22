@@ -1,7 +1,8 @@
 import React from "react"
 import { StyleSheet, View, Text, Pressable } from "react-native"
 import moment from "moment"
-const EventCard = ({ event, handlePress, key }) => {
+import GetAsync from "../AsyncStorageGet"
+const EventCard = ({ event, handlePress, key, id }) => {
 	return (
 		<Pressable onPress={handlePress}>
 			<View key={key} style={styles.card}>
@@ -21,7 +22,11 @@ const EventCard = ({ event, handlePress, key }) => {
 				</View>
 
 				<View style={styles.footer}>
-					<Text style={styles.codeText}>Code: {event.share_code}</Text>
+					{event.creator_id == id ? (
+						<Text style={styles.codeText}>Code: {event.share_code}</Text>
+					) : (
+						""
+					)}
 				</View>
 			</View>
 		</Pressable>
@@ -41,7 +46,7 @@ const styles = StyleSheet.create({
 		elevation: 10,
 		width: 400,
 		justifyContent: "center",
-		alignContent: "center"
+		alignContent: "center",
 	},
 	header: {
 		flexDirection: "row",

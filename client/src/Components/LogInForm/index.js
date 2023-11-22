@@ -23,7 +23,7 @@ export default function LogInForm({ navigation }) {
 	const [username, setUsername] = useState("")
 	const [password, setPassword] = useState("")
 	const [loading, setLoading] = useState(false)
-	const [tempToken, setTempToken] = useState('')
+	const [tempToken, setTempToken] = useState("")
 	async function handleFormSubmit() {
 		if (!usernameInput || !passwordInput) {
 			alert("Fill in all fields.")
@@ -33,13 +33,11 @@ export default function LogInForm({ navigation }) {
 		}
 	}
 
-
 	useEffect(() => {
 		if (username && password) {
 			verifyLogin()
 		}
 	}, [username, password])
-
 
 	async function verifyLogin() {
 		setLoading(true)
@@ -62,14 +60,17 @@ export default function LogInForm({ navigation }) {
 			const data = await response.json()
 			const token = data.token
 			setTempToken(token)
-			CreateAsync("token", token)
-			CreateAsync("username", username)
+			await CreateAsync("token", token)
+			await CreateAsync("username", username)
+			await CreateAsync("id", data.id.toString())
 			console.log(token)
 			setUsernameInput("")
 			setPasswordInput("")
-			// navigation.navigate("Dashboard")
+			navigation.navigate("Dashboard")
 			console.log("Here")
-			setPreferenceTokens()
+			setLoading(false)
+			setPassword("")
+			setUsername("")
 		} else {
 			Alert.alert("Login Failed", "Invalid username or password", [
 				{ text: "Try Again", onPress: () => setLoading(false) },
@@ -78,66 +79,6 @@ export default function LogInForm({ navigation }) {
 		setUsernameInput("")
 		setPasswordInput("")
 	}
-
-	async function setPreferenceTokens() {
-		const options = {
-			method: "GET",
-			headers: {
-				"Accept": "application/json",
-				"Content-Type": "application/json",
-				"Authorization" : await GetAsync("token")
-			},
-		}
-		const response = await fetch(
-			"https://metro-mingle.onrender.com/user/profile",
-			options
-		)
-		if (response.status == 200) {
-			const data = await response.json()
-			console.log(await GetAsync("token"))
-			console.log(data)
-			console.log(data.preferences.accessibilityPreferences)
-			if (data.postcode == null){
-				console.log(postcode, "passed")
-				await CreateAsync("postcode", "")
-			} else {
-				await CreateAsync("postcode", data.postcode)
-			}
-			if (data.preferences.accessibilityPreferences == null){
-				await CreateAsync("accessibilityPreferences", "")
-			} else {
-				await CreateAsync("accessibilityPreferences", data.preferences.accessibilityPreferences)
-			}
-			if (data.preferences.journeyPreferences == null){
-				await CreateAsync("journeyPreferences", "")
-			} else {
-				await CreateAsync("journeyPreferences", data.preferences.journeyPreferences)
-			}
-			if (data.preferences.maxWalkingMinutes == null){
-				await CreateAsync("maxWalkingMinutes", "")
-			} else {
-				await CreateAsync("maxWalkingMinutes", String(data.preferences.maxWalkingMinutes))
-			}
-			if (data.preferences.walkingSpeed == null){
-				await CreateAsync("walkingSpeed", "")
-			} else {
-				await CreateAsync("walkingSpeed", data.preferences.walkingSpeed)
-			}
-			console.log("Postcode", await GetAsync("postcode"))
-			console.log("Access", await GetAsync("accessibilityPreferences"))
-			console.log("Journey", await GetAsync("journeyPreferences"))
-			console.log("Walk Mins", await GetAsync("maxWalkingMinutes"))
-			console.log("Walk Speed", await GetAsync("walkingSpeed"))
-			setPassword("")
-			setUsername("")
-			setLoading(false)
-			navigation.navigate("Dashboard")
-		} 
-	}
-
-
-
-
 
 	return (
 		<GradientBackground colors={["#87C7FC", "#2370EE", "#FFFFFF"]}>
