@@ -13,7 +13,7 @@ export default function AttendeeCard({ person }) {
 	return (
 		<View>
 			<Pressable onLongPress={() => setModalVisible(true)}>
-				<View style={styles.attendee}>
+				<View style={styles.attendee} key={person.user_id}>
 					<Text style={styles.attendeeName}>{person.username}</Text>
 					<Text style={styles.attendeeStatus}>Status: {person.status}</Text>
 					<Text style={styles.attendeeETA}>
@@ -61,7 +61,6 @@ const styles = StyleSheet.create({
 		color: "#333", // Dark text color
 	}, // Style for the outermost view
 	view: {
-		flex: 1,
 		justifyContent: "center",
 		alignItems: "center",
 		alignSelf: "center",
@@ -71,7 +70,7 @@ const styles = StyleSheet.create({
 		height: "fit-content",
 
 		borderRadius: 8,
-		flex: "start",
+
 		paddingTop: 50,
 	},
 })
