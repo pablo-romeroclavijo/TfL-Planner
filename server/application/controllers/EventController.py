@@ -45,8 +45,10 @@ def create():
         return 'Unable to create event', 400
     
 def get_event(share_code):
+    print(share_code)
     try: 
         event = Event.get_one_by_share(share_code)
+        print(event)
         return format_event(event), 200
     except EventNotFound:
         return "Event not found", 404
@@ -74,14 +76,16 @@ def set_route():
         data = request.json
         token = request.headers['Authorization']
         
-            
+        
         user = User.get_one_by_token(token)
+        print(user.id)
         event_id = data['event_id']
         journey = data['journey']
         status = data['status']
-    
+
         
         attendee = Attendee.get_one_by_user_and_event(user.id, event_id)
+        print(attendee, 'attendee')
         response = attendee.set_route(journey, status)
         return format_attendee(response, user.user_name)
     except:

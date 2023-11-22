@@ -60,9 +60,6 @@ export default function Home({ navigation }) {
 			<Header />
 			<View style={{ alignSelf: "center" }}></View>
 			<Text style={styles.title}>My Home</Text>
-
-			<ViewEventsCarousel events={events} />
-
 			<View style={styles.newEventContainer}>
 				<AppButton onPress={clickCreateEvent} title="Create Event" />
 				{createEvent ? (
@@ -72,13 +69,16 @@ export default function Home({ navigation }) {
 					/>
 				) : null}
 			</View>
-			<View>
+			<ViewEventsCarousel  title = {'My events'}events={events} />
+
+			<ViewEventsCarousel  title = {'My invites'}events={events} />
+			{/* <View>
 				<AppButton title="Join Event" onPress={clickJoinEvent} />
 				<Modal
 					visible={joinEvent}
 					onRequestClose={() => clickJoinEvent()}
 				></Modal>
-			</View>
+			</View> */}
 			<JoinEventForm closeModal={clickJoinEvent} />
 		</ScrollView>
 		// </ImageBackground>
@@ -100,6 +100,7 @@ const styles = StyleSheet.create({
 	subHeading: {
 		textAlign: "center",
 	},
+
 })
 
 async function setPreferenceTokens() {
