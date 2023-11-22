@@ -76,7 +76,7 @@ export default function Home({ navigation }) {
 				) : null}
 			</View>
 
-			<ViewEventsCarousel  title = {'My events'}events={events} button = {false}/>
+			<ViewEventsCarousel  title = {`Today's events`}events={events} button = {false}/>
 
 			<ViewEventsCarousel  title = {'My invites'}events={invites} button ={true}/>
 
