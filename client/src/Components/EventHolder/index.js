@@ -93,6 +93,7 @@ export default function EventHolder({ events }) {
 					<EventModal
 						code={event.share_code}
 						onClose={() => setModalShow(false)}
+						id={id}
 					/>
 				</Modal>
 			</GestureRecognizer>
@@ -112,7 +113,7 @@ const styles = StyleSheet.create({
 		backgroundColor: "#FF6363",
 		padding: 20,
 	},
-	list: { paddingTop: 20, paddingBottom: 90, paddingRight: width * 0.05 },
+	list: { paddingTop: 20, paddingBottom: 60 },
 })
 
 async function getEvents() {
