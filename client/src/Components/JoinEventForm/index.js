@@ -23,7 +23,7 @@ export default function JoinEventForm() {
 				`https://metro-mingle.onrender.com/event/${eventCode}`,
 				options
 			)
-
+             
 			if (response.status === 200) {
 				Alert.alert("Success", "Event joined successfully", [
 					{
