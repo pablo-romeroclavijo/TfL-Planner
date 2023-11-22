@@ -32,6 +32,8 @@ export default function RoutesScreenForm() {
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [showTimePicker, setShowTimePicker] = useState(false);
   const [fDate, setFDate] = useState("");
+  const [displayDate, setDisplayDate] = useState("")
+  const [displayTime, setDisplayTime] = useState("")
   const [fTime, setFTime] = useState("");
   const [paramsModal, setParamsModal] = useState(false);
   const [selectedParams, setSelectedParams] = useState({
@@ -67,11 +69,17 @@ export default function RoutesScreenForm() {
 		const currentDate = selectedDate.nativeEvent.timestamp || date
 		hideDateTimePicker()
 		let tempDate = new Date(currentDate)
-		setFDate(
-			tempDate.getFullYear().toString() +
-				(tempDate.getMonth() + 1).toString() +
-				tempDate.getDate().toString()
-		)
+		const formattedDate =
+    	tempDate.getDate().toString().padStart(2, "0") + "-" +
+    	(tempDate.getMonth() + 1).toString().padStart(2, "0") + "-" +
+    	tempDate.getFullYear().toString();
+  		setFDate(
+    	tempDate.getFullYear().toString() +
+		(tempDate.getMonth() + 1).toString().padStart(2, "0") +
+		tempDate.getDate().toString().padStart(2, "0")
+  		);
+  		setDisplayDate(formattedDate);
+		console.log("Date change")
 	}
 
 	const onTimeChange = (selectedTime) => {
@@ -79,8 +87,12 @@ export default function RoutesScreenForm() {
 		hideDateTimePicker()
 		let tempTime = new Date(currentTime)
 		setFTime(
-			tempTime.getHours().toString() +
-				tempTime.getMinutes().toString().padStart(2, "0")
+			tempTime.getHours().toString().padStart(2, "0") +
+			tempTime.getMinutes().toString().padStart(2, "0")
+		)
+		setDisplayTime(
+			tempTime.getHours().toString().padStart(2, "0") + ":" +
+			tempTime.getMinutes().toString().padStart(2, "0")
 		)
 	}
 
@@ -197,12 +209,12 @@ export default function RoutesScreenForm() {
 
       <View style={{alignSelf: "center"}}>
       <AppButton
-        title={fDate ? fDate : "Set Date"}
+        title={displayDate ? displayDate : "Set Date"}
         onPress={showDatepicker}
       />
       
       <AppButton
-        title={fTime ? fTime : "Set Time"}
+        title={displayTime ? displayTime : "Set Time"}
         onPress={showTimepicker}
       />
 
@@ -230,8 +242,8 @@ export default function RoutesScreenForm() {
       )}
       
         <Picker selectedValue={timeOption} onValueChange={(itemValue)=>setTimeOption(itemValue)}>
-            <Picker.Item label="Select" value={null} />
-            <Picker.Item label="Arrive By" value="arriving" />
+            <Picker.Item style={styles.pickerLabel} label="Select" value={null} />
+            <Picker.Item style={styles.pickerLabel} label="Arrive By" value="arriving" />
             {/* <Picker.Item label="Depart" value="departing" /> */}
         </Picker>
  
@@ -301,4 +313,7 @@ const styles = StyleSheet.create({
 		marginTop: 20,
 		height: "auto",
 	},
+	pickerLabel: {
+		fontSize: 25,
+	}
 })
