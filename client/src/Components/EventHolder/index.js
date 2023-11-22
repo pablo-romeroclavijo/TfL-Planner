@@ -49,10 +49,15 @@ export default function EventHolder({ events }) {
 				filteredEvents = eventsList.filter((event) =>
 					moment(event.date, format).isBefore(moment())
 				)
-			} else if (selectedFilter === "future") {
+			} else if (selectedFilter === "Mine") {
+				console.log("id", id)
+				filteredEvents = eventsList.filter((event) => event.creator_id == id)
+			} else if (selectedFilter === "Upcoming") {
 				filteredEvents = eventsList.filter((event) =>
 					moment(event.date, format).isAfter(moment())
 				)
+			} else if (selectedFilter === "Attending") {
+				filteredEvents = eventsList.filter((event) => event.creator_id != id)
 			}
 			filteredEvents.sort(sortFilter) // Sorts in ascending order
 			console.log(filteredEvents)
@@ -66,11 +71,15 @@ export default function EventHolder({ events }) {
 				selectedFilter={selectedFilter}
 				setSelectedFilter={setSelectedFilter}
 			/>
-			<View style={styles.list}>
-				{eventsList != 0 ? (
+			{console.log("filteredEvents", filteredEvents != 0)}
+			{filteredEvents != 0 ? (
+				<View style={styles.list}>
 					<FlatList
 						data={filteredEvents}
-						keyExtractor={(item) => item.id} // Assuming 'id' is the unique identifier
+						keyExtractor={(item) => item.id}
+						contentContainerStyle={{
+							paddingBottom: 130,
+						}}
 						renderItem={({ item }) => (
 							<EventCard
 								handlePress={() => {
@@ -83,10 +92,10 @@ export default function EventHolder({ events }) {
 							/>
 						)}
 					/>
-				) : (
-					<Text>add events</Text>
-				)}
-			</View>
+				</View>
+			) : (
+				<Text>Add events</Text>
+			)}
 
 			<GestureRecognizer onSwipeDown={() => setModalShow(false)}>
 				<Modal style={styles.modal} visible={modalshow} animationType="slide">
@@ -113,7 +122,7 @@ const styles = StyleSheet.create({
 		backgroundColor: "#FF6363",
 		padding: 20,
 	},
-	list: { paddingTop: 20, paddingBottom: 60 },
+	list: { paddingTop: 20, paddingBottom: 100 },
 })
 
 async function getEvents() {
