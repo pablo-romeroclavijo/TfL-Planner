@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { View, Text, FlatList, Dimensions, StyleSheet } from 'react-native';
 import { ScrollView} from 'react-native';
 
@@ -6,41 +6,13 @@ import moment from 'moment';
 
 const { width } = Dimensions.get('window');
 
-async function getEvents() {
-	const token = await GetAsync("token")
-	try {
-		const options = {
-			method: "GET",
-			headers: {
-				"Content-Type": "application/json",
-				"Authorization": token,
-			},
-		}
-		const response = await fetch(
-			"https://metro-mingle.onrender.com/event/all",
-			options
-		)
 
-		const data = await response.json()
-
-		if (response.status == 200) {
-			return filterEventsHappeningToday(data.events)
-		} else {
-			console.log("error")
-		}
-	} catch (error) {
-		console.log(error)
-	}
-}
-
-	//filter for today event
-  const filterEventsHappeningToday = (events) => {
-    const today = moment().format('YYYY-MM-DD');
-    return events.filter(event => moment(event.date).isSame(today, 'day'));
-  };
   
   const ViewEventsCarousel = ({ events, title }) => {
   const [activeSlide, setActiveSlide] = useState(0);
+
+
+  console.log(events)
 
   const handleScroll = (event) => {
     const slideIndex = Math.round(event.nativeEvent.contentOffset.x / width);
@@ -75,9 +47,11 @@ async function getEvents() {
             <ScrollView style={styles.contentScroll}>
               <View style={styles.newEventContainer}>
               <Text style={styles.eventheader}>{event.title}</Text>
-              <Text>Date: {event.date}</Text>
-              <Text>Time: {event.time}</Text>
-              <Text>Location: {event.location}</Text>
+              <Text>Date: {moment(event.date).format("ddd, DD MMM YYYY")}</Text>
+              <Text>Time: {moment(event.date).format("HH:mm")}</Text>
+              <Text>Description: {event.description}</Text>
+              <Text>Invite code: {event.share_code}</Text>
+              <Text>Postcode: {event.postcode}</Text>
           </View>
             </ScrollView>
         
