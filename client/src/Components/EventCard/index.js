@@ -34,7 +34,7 @@ const EventCard = ({ event, handlePress, key, id }) => {
 
 const styles = StyleSheet.create({
 	card: {
-		backgroundColor: "#CDE4D0", // Set your desired color
+		backgroundColor: "lightblue",
 		borderRadius: 10,
 		padding: 16,
 		margin: 20,
@@ -43,9 +43,8 @@ const styles = StyleSheet.create({
 		shadowOpacity: 0.25,
 		shadowRadius: 3.84,
 		elevation: 10,
-		width: 350,
-		justifyContent: "center",
-		alignContent: "center",
+		width: "90%", // Use a percentage or "auto" for responsiveness
+		alignSelf: "center", // Center the card horizontally
 	},
 	header: {
 		flexDirection: "row",
@@ -56,13 +55,13 @@ const styles = StyleSheet.create({
 	dateTimeContainer: {
 		flexDirection: "column", // Align date and time horizontally
 		alignItems: "center", // Align items vertically
-		marginRigh: 4,
+		marginRight: 4,
 	},
 	dateText: {
 		fontSize: 16,
 		color: "#555",
 		fontWeight: "bold",
-		marginRight: 4, // Add some space between the date and time
+		marginRight: 0, // Add some space between the date and time
 	},
 	timeText: {
 		fontSize: 16,
@@ -74,10 +73,6 @@ const styles = StyleSheet.create({
 		fontWeight: "bold",
 		color: "#333", // Choose your text color
 	},
-	dateText: {
-		fontSize: 16,
-		color: "#555", // Choose your text color
-	},
 	body: {
 		marginBottom: 8,
 		flexDirection: "column",
@@ -86,11 +81,6 @@ const styles = StyleSheet.create({
 	},
 	bodyText: {
 		fontSize: 16,
-		color: "#333", // Choose your text color
-	},
-	timeText: {
-		fontSize: 16,
-		fontWeight: "bold",
 		color: "#333", // Choose your text color
 	},
 	locationText: {
