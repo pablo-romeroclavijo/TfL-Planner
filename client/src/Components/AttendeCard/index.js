@@ -17,7 +17,7 @@ export default function AttendeeCard({ person }) {
 					<Text style={styles.attendeeName}>{person.username}</Text>
 					<Text style={styles.attendeeStatus}>Status: {person.status}</Text>
 					<Text style={styles.attendeeETA}>
-						ETA: {moment(person.ETA).format("HH:mm")}
+					ETA: {person.ETA == null ? null: (moment(person.ETA).format("HH:mm"))}
 					</Text>
 				</View>
 			</Pressable>
