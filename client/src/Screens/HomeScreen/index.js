@@ -20,14 +20,17 @@ import {
 	GetAsync,
 	CreateAsync,
 } from "../../Components"
+import moment from "moment"
 
 export default function Home({ navigation }) {
 	const [createEvent, setCreateEvent] = useState(false)
 	const [joinEvent, setJoinEvent] = useState(false)
 	const [viewEvent, setViewEvent] = useState(false)
+	const [events, setEvents] = useState([]);
 
 	useEffect(() => {
 		setPreferenceTokens()
+		getEvents().then((events) => setEvents(events));
 	}, [])
 
 	async function clickCreateEvent() {
@@ -38,7 +41,8 @@ export default function Home({ navigation }) {
 		setViewEvent(!joinEvent)
 	}
 
-	const events = [
+
+	const invites = [
 		{
 			title: "La Fosse Reunion",
 			date: "2023-12-01",
@@ -53,6 +57,7 @@ export default function Home({ navigation }) {
 			location: "Venue 2",
 		},
 	]
+
 
 	return (
 		// <ImageBackground source={image} style={{ width: "100%", height: "100%" }}>
@@ -70,9 +75,11 @@ export default function Home({ navigation }) {
 					/>
 				) : null}
 			</View>
+
 			<ViewEventsCarousel  title = {'My events'}events={events} button = {false}/>
 
-			<ViewEventsCarousel  title = {'My invites'}events={events} button ={true}/>
+			<ViewEventsCarousel  title = {'My invites'}events={invites} button ={true}/>
+
 			{/* <View>
 				<AppButton title="Join Event" onPress={clickJoinEvent} />
 				<Modal
@@ -180,3 +187,35 @@ async function setPreferenceTokens() {
 		console.log("Walk Speed", await GetAsync("walkingSpeed"))
 	}
 }
+async function getEvents() {
+	const token = await GetAsync("token")
+	try {
+		const options = {
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json",
+				"Authorization": token,
+			},
+		}
+		const response = await fetch(
+			"https://metro-mingle.onrender.com/event/all",
+			options
+		)
+
+		const data = await response.json()
+
+		if (response.status == 200) {
+			return filterEventsHappeningToday(data.events)
+		} else {
+			console.log("error")
+		}
+	} catch (error) {
+		console.log(error)
+	}
+}
+
+	//filter for today event
+  const filterEventsHappeningToday = (events) => {
+    const today = moment().format('YYYY-MM-DD');
+    return events.filter(event => moment(event.date).isSame(today, 'day'));
+  };

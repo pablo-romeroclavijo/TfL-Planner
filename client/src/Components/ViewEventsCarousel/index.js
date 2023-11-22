@@ -1,43 +1,14 @@
-import React, {useState} from 'react';
+
 import { View, Text, FlatList, Dimensions, StyleSheet, Alert} from 'react-native';
 import { ScrollView, TouchableOpacity} from 'react-native';
-import colors from "../../config/colors";
+import React, {useState, useEffect} from 'react';
+
+
 import moment from 'moment';
 
 const { width } = Dimensions.get('window');
 
-async function getEvents() {
-	const token = await GetAsync("token")
-	try {
-		const options = {
-			method: "GET",
-			headers: {
-				"Content-Type": "application/json",
-				"Authorization": token,
-			},
-		}
-		const response = await fetch(
-			"https://metro-mingle.onrender.com/event/all",
-			options
-		)
 
-		const data = await response.json()
-
-		if (response.status == 200) {
-			return filterEventsHappeningToday(data.events)
-		} else {
-			console.log("error")
-		}
-	} catch (error) {
-		console.log(error)
-	}
-}
-
-	//filter for today event
-  const filterEventsHappeningToday = (events) => {
-    const today = moment().format('YYYY-MM-DD');
-    return events.filter(event => moment(event.date).isSame(today, 'day'));
-  };
   
   const acceptInvite = async (sharecode) => {
     const token = await GetAsync("token")
@@ -64,6 +35,9 @@ async function getEvents() {
   }
   const ViewEventsCarousel = ({ events, title , button}) => {
   const [activeSlide, setActiveSlide] = useState(0);
+
+
+  console.log(events)
 
   const handleScroll = (event) => {
     const slideIndex = Math.round(event.nativeEvent.contentOffset.x / width);
@@ -100,6 +74,7 @@ async function getEvents() {
           <View key={index}>
             <ScrollView>
               <View style={styles.newEventContainer}>
+
                 <View  style={styles.header}>
                   <Text style={styles.eventheader}>{event.title}</Text>
                   <Text style={styles.location}>{event.location}</Text>
@@ -119,6 +94,7 @@ async function getEvents() {
                   </View>}
                 </View>
             </View>
+
             </ScrollView>
         
           </View>
