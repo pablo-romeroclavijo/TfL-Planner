@@ -50,9 +50,9 @@ export default function Home({ navigation }) {
 			sharecode: 'm1q9384gWF'
 		},
 		{
-			title: "Event 2",
-			date: "Wed, 22 Nov 2023 18:01:00 GMT",
-			location: "Venue 2",
+			title: "Graduation",
+			date: "Wed, 24 Nov 2023 14:30:00 GMT",
+			location: "Artillery House",
 		},
 	]
 
@@ -63,7 +63,7 @@ export default function Home({ navigation }) {
 		<ScrollView style={styles.container}>
 			<Header />
 			<View style={{ alignSelf: "center" }}></View>
-			<Text style={styles.title}>My Home</Text>
+			{/* <Text style={styles.title}>My Home</Text> */}
 			<View style={styles.newEventContainer}>
 				<AppButton onPress={clickCreateEvent} title="Create Event" />
 				{createEvent ? (

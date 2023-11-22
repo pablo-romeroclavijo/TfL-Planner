@@ -441,6 +441,7 @@ const styles = StyleSheet.create({
     paddingVertical: height * 0.02, // Add padding to top and bottom
     paddingHorizontal: width * 0.05, // Add padding to left and right
     backgroundColor: "#f2f2f2", // Adjust the background color as needed
+    borderRadius: 5,
   },
   title: {
     fontSize: height * 0.025, // Adjust the size as needed
