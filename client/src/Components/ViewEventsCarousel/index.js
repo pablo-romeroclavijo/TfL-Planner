@@ -56,6 +56,31 @@ const { width } = Dimensions.get('window');
     console.log(statement)
   }
 
+  function splitDate(timestamp) {
+    const dateObj = new Date(timestamp);
+    console.log('here', timestamp)
+  
+    // Formatting the date as DDMMYY
+    const day = String(dateObj.getDate()).padStart(2, '0');
+    const month = String(dateObj.getMonth() + 1).padStart(2, '0'); // Months are zero-indexed
+    const year = dateObj.getFullYear().toString().substr(-2);
+    const formattedDate = `${day}-${month}-${year}`;
+    return formattedDate}
+
+  function splitTime(timestamp) {
+    // Formatting the time as HH:MM:SS
+
+    const dateObj = new Date(timestamp);
+    const hours = String(dateObj.getHours()).padStart(2, '0');
+    const minutes = String(dateObj.getMinutes()).padStart(2, '0');
+    const formattedTime = `${hours}:${minutes}`;
+  
+    return formattedTime ;
+  }
+  
+
+  
+  
 
   
     return (
@@ -80,8 +105,8 @@ const { width } = Dimensions.get('window');
                   <Text style={styles.location}>{event.location}</Text>
                 </View>
                 <View  style={styles.body}>
-                  <Text><Text style={{fontWeight: 'bold'}}>Date: </Text>{event.date}</Text>
-                  <Text><Text style={{fontWeight: 'bold'}}>Time: </Text>{event.time}</Text>
+                  <Text><Text style={{fontWeight: 'bold'}}>Date: </Text>{splitDate(event.date)}</Text>
+                  <Text><Text style={{fontWeight: 'bold'}}>Time: </Text>{splitTime(event.date)}</Text>
                 </View>
                 <View>
                  { button && <View style = {styles.buttonContainer}>
@@ -185,6 +210,7 @@ const { width } = Dimensions.get('window');
     },
     
     button1: {
+    
       padding: 10,
       backgroundColor: 'rgb(71,141,185)' ,
       borderRadius: 5,
@@ -196,6 +222,10 @@ const { width } = Dimensions.get('window');
       borderRadius: 5,
       margin: 10,
     },
+    buttonText:{
+      color: "white",
+      fontWeight: '800'
+    }
 
   });
   

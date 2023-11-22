@@ -45,15 +45,13 @@ export default function Home({ navigation }) {
 	const invites = [
 		{
 			title: "La Fosse Reunion",
-			date: "2023-12-01",
-			time: "12:00 PM",
+			date: "Wed, 22 Nov 2023 18:01:00 GMT",
 			location: "Bunga Bunga",
 			sharecode: 'm1q9384gWF'
 		},
 		{
 			title: "Event 2",
-			date: "2023-12-01",
-			time: "2:30 PM",
+			date: "Wed, 22 Nov 2023 18:01:00 GMT",
 			location: "Venue 2",
 		},
 	]
