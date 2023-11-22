@@ -105,11 +105,11 @@ const EventModal = ({ onClose, code, id }) => {
 						<View style={styles.Button}>
 							{user.status == "journey set" ? (
 								<Pressable onPress={() => setRoute(true)}>
-									<Text>Update jounrey </Text>
+									<Text>Update Journey </Text>
 								</Pressable>
 							) : (
 								<Pressable onPress={() => setRoute(true)}>
-									<Text>set jounrey </Text>
+									<Text>Set Journey </Text>
 								</Pressable>
 							)}
 						</View>
@@ -147,6 +147,7 @@ const EventModal = ({ onClose, code, id }) => {
 
 					<GestureRecognizer>
 						<Modal
+							animationType="slide"
 							visible={Route}
 							onPress={() => setRoute(false)}
 							animationType="fade"
@@ -165,7 +166,7 @@ const styles = StyleSheet.create({
 	modalContent: {
 		flex: 1,
 		padding: 20,
-		backgroundColor: "#FF6363", // Red background color
+		backgroundColor: "lightblue", // Red background color
 	},
 	closeButton: {
 		alignSelf: "flex-start",

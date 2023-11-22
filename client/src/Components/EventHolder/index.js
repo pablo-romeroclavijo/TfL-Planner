@@ -98,7 +98,7 @@ export default function EventHolder({ events }) {
 			)}
 
 			<GestureRecognizer onSwipeDown={() => setModalShow(false)}>
-				<Modal style={styles.modal} visible={modalshow}>
+				<Modal style={styles.modal} visible={modalshow} animationType="slide">
 					<EventModal
 						code={event.share_code}
 						onClose={() => setModalShow(false)}

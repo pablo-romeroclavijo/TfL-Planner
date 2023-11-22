@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
 	title: {
 		fontSize: 24,
 		fontWeight: "bold",
-		maginTop: 10,
+		marginTop: 10,
 	},
 	inputContainer:{
 		width: 250,
