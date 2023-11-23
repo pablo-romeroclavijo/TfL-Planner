@@ -16,6 +16,7 @@ const FilterDropdown = ({ selectedFilter, setSelectedFilter }) => {
 	return (
 		<View style={styles.container}>
 			<View>
+				<Text style={styles.text}> Filter Events:</Text>
 				<Pressable
 					title="Filter"
 					style={styles.dropwonButton}
@@ -64,6 +65,10 @@ const styles = StyleSheet.create({
 		justifyContent: "center",
 		alignItems: "center",
 		paddingBottom: 20,
+		marginBottom: 10
+	},
+	text:{
+		color: "black"
 	},
 	modalContainer: {
 		flex: 1,
@@ -90,7 +95,7 @@ const styles = StyleSheet.create({
 		height: 40,
 	},
 	dropwonButton: {
-		backgroundColor: "#007bff",
+		backgroundColor: "lightblue",
 		padding: 10,
 		borderRadius: 5,
 		width: 100,

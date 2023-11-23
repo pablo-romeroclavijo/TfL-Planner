@@ -15,9 +15,9 @@ export default function AttendeeCard({ person }) {
 			<Pressable onLongPress={() => setModalVisible(true)}>
 				<View style={styles.attendee} key={person.user_id}>
 					<Text style={styles.attendeeName}>{person.username}</Text>
-					<Text style={styles.attendeeStatus}>Status: {person.status}</Text>
-					<Text style={styles.attendeeETA}>
-					ETA: {person.ETA == null ? null: (moment(person.ETA).format("HH:mm"))}
+					<Text style={styles.attendeeStatus}><Text style={{fontWeight: 'bold'}}>Status: </Text> {person.status}</Text>
+					<Text style={styles.attendeeETA}><Text style={{fontWeight: 'bold'}}>ETA: </Text>
+					{person.ETA == null ? null: (moment(person.ETA).format("HH:mm"))}
 					</Text>
 				</View>
 			</Pressable>
@@ -30,10 +30,12 @@ export default function AttendeeCard({ person }) {
 			>
 				<ScrollView>
 					<View style={styles.view}>
-						<Pressable onPress={() => setModalVisible(false)}>
-							<Text>Close</Text>
-						</Pressable>
+						
 						<SVG journey={person.route} user={true} />
+					
+					<Pressable style ={styles.button1}onPress={() => setModalVisible(false)}>
+							<Text style ={styles.buttonText}>Close</Text>
+					</Pressable>
 					</View>
 				</ScrollView>
 			</Modal>
@@ -42,7 +44,7 @@ export default function AttendeeCard({ person }) {
 }
 const styles = StyleSheet.create({
 	attendee: {
-		backgroundColor: "#FFD1D1", // Light red background for each attendee
+		backgroundColor: "lightblue", // Light red background for each attendee
 		padding: 10,
 		marginBottom: 10,
 		borderRadius: 8,
@@ -61,16 +63,31 @@ const styles = StyleSheet.create({
 		color: "#333", // Dark text color
 	}, // Style for the outermost view
 	view: {
+		marginTop: 200,
+		borderColor:' black',
 		justifyContent: "center",
 		alignItems: "center",
 		alignSelf: "center",
-		backgroundColor: "grey", // White background
-		opacity: 0.8, // Semi-transparent
+		backgroundColor: "white", // White background
+		opacity: 1, // Semi-transparent
 		width: 300,
 		height: "fit-content",
 
+
 		borderRadius: 8,
 
-		paddingTop: 50,
+		paddingTop: 0,
 	},
+
+button1: {
+  padding: 10,
+  backgroundColor: 'rgb(71,141,185)' ,
+  borderRadius: 5,
+  margin: 10,
+},
+buttonText:{
+  color: "white",
+  fontWeight: '800',
+  alignSelf: "center"
+}
 })

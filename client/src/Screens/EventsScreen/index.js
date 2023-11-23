@@ -22,10 +22,11 @@ const styles = StyleSheet.create({
 		color: "black",
 	},
 	heading: {
-		fontSize: 30,
+		fontSize:22,
 		fontWeight: "bold",
 		color: "black",
-		paddingTop: 20,
+		paddingTop: 15,
+		paddingBottom: 15
 	},
 	newEventContainer: {
 		width: 350,

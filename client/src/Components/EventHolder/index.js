@@ -67,6 +67,7 @@ export default function EventHolder({ events }) {
 
 	return (
 		<SafeAreaView>
+			
 			<FilterDropdown
 				selectedFilter={selectedFilter}
 				setSelectedFilter={setSelectedFilter}

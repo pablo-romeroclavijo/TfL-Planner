@@ -37,13 +37,13 @@ const styles = StyleSheet.create({
 		backgroundColor: "lightblue",
 		borderRadius: 10,
 		padding: 16,
-		margin: 20,
+		margin: 10,
 		shadowColor: "#000",
 		shadowOffset: { width: 0, height: 2 },
 		shadowOpacity: 0.25,
 		shadowRadius: 3.84,
 		elevation: 10,
-		width: "90%", // Use a percentage or "auto" for responsiveness
+		width: 350, // Use a percentage or "auto" for responsiveness
 		alignSelf: "center", // Center the card horizontally
 	},
 	header: {

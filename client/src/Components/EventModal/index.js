@@ -102,13 +102,31 @@ const EventModal = ({ onClose, code, id }) => {
 
   return (
     <View style={styles.modalContent}>
+      
       <Pressable style={styles.closeButton} onPress={onClose}>
         <Text style={styles.closeButtonText}>Close</Text>
       </Pressable>
+      <View style ={styles.subcontainer}>
       {isLoading ? (
         <Text>Loading...</Text>
       ) : (
         <>
+              <Pressable style={styles.button1} onPress={() => setInviteModalVisible(true)}>
+                <Text style={styles.buttonText}>Invite</Text>
+              </Pressable>
+              <View style={styles.button1}>
+              {user.status == "journey set" ? (
+                <Pressable onPress={() => setRoute(true)}>
+                  <Text style={styles.buttonText}>Update Journey </Text>
+                </Pressable>
+              ) : (
+                <Pressable onPress={() => setRoute(true)}>
+                  <Text style={styles.buttonText}> Set Journey </Text>
+                </Pressable>
+              )}
+
+ 
+            </View>
           <View style={styles.header}>
             <Text style={styles.headerText}> {event.title}</Text>
             <Text style={styles.dateText}>
@@ -118,31 +136,17 @@ const EventModal = ({ onClose, code, id }) => {
               {moment(event.date).format("HH:mm")}
             </Text>
             <Text style={styles.codeText}>{event.code}</Text>
-            <Text style={styles.locationText}>{event.postcode}</Text>
-            <View style={styles.Button}>
-              {user.status == "journey set" ? (
-                <Pressable onPress={() => setRoute(true)}>
-                  <Text>Update Journey </Text>
-                </Pressable>
-              ) : (
-                <Pressable onPress={() => setRoute(true)}>
-                  <Text> Set Journey </Text>
-                </Pressable>
-              )}
-
-              <Pressable style={styles.button1} onPress={() => setInviteModalVisible(true)}>
-                <Text style={styles.buttonText}>Invite</Text>
-              </Pressable>
-            </View>
+            <Text style={styles.locationText}><Text style={{fontWeight: 'bold'}}>Location:</Text> {event.postcode}</Text>
+            
             {user.status == "Pending" ? null : user.status == "journey set" ? (
-              <Pressable
+              <Pressable style ={styles.button2}
                 onPress={async () => {
                   await journeyStarted(user); // Wait for this async operation to complete
                   setRender((prevRender) => prevRender + "s"); // Trigger a re-render
                   fetchAttendeesData(); // Re-fetch the attendees list
                 }}
               >
-                <Text>I have left </Text>
+                <Text style ={styles.buttonText}>I have left </Text>
               </Pressable>
             ) : user.route === "Arrived" ? (
               <Pressable
@@ -156,10 +160,11 @@ const EventModal = ({ onClose, code, id }) => {
               </Pressable>
             ) : null}
           </View>
+          <Text style={styles.h1}>Description: </Text>
           <Text style={styles.descriptionText}>{event.description}</Text>
-          <Text style={styles.descriptionText}>My Route</Text>
+          <Text style={styles.h1}>My Route</Text>
           <AttendeeCard person={user} />
-          <Text style={styles.descriptionText}>Attendees</Text>
+          <Text style={styles.h1}>Attendees</Text>
           <FlatList
             data={attendees}
             keyExtractor={(item) => item.user_id}
@@ -203,18 +208,39 @@ const EventModal = ({ onClose, code, id }) => {
         </>
       )}
     </View>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   modalContent: {
     flex: 1,
+    paddingTop: 10,
+    backgroundColor: 'lightblue', //"rgb(230,230,230)", 
+    
+  },
+  subcontainer:{
+    backgroundColor: 'white',
     padding: 20,
-    backgroundColor: "lightblue", // Red background color
+    height: "88%",
+    marginBottom: 0,
+    margin: 20,
+    borderRadius:20
+
+
+  },
+  h1:{
+    fontSize:18,
+    fontWeight: 'bold',
+    marginBottom:10
   },
   closeButton: {
-    alignSelf: "flex-start",
-    marginBottom: 10,
+    alignSelf: "flex-end",
+    padding: 10,
+    backgroundColor: 'rgb(71,141,185)' ,
+    borderRadius: 5,
+    margin: 10,
+    marginRight:25
   },
   Button: {
     alignSelf: "flex-start",
@@ -222,7 +248,8 @@ const styles = StyleSheet.create({
   },
   closeButtonText: {
     fontSize: 18,
-    color: "#FFF", // White color
+    color: "white", 
+    fontWeight: 'bold'
   },
   header: {
     alignItems: "center",
@@ -231,24 +258,25 @@ const styles = StyleSheet.create({
   headerText: {
     fontSize: 24,
     fontWeight: "bold",
-    color: "#FFF", // White color
+    color: "black", // White color
   },
   dateText: {
     fontSize: 16,
-    color: "#FFF", // White color
+    color: "black", // White color
   },
   codeText: {
     fontSize: 16,
-    color: "#FFF", // White color
+    color: "black", // White color
   },
   locationText: {
     fontSize: 16,
-    color: "#FFF", // White color
+    color: "black", // White color
   },
   descriptionText: {
     fontSize: 16,
-    color: "#FFF", // White color
+    color: "black", // White color
     marginBottom: 20,
+    marginLeft: 10
   },
 
   container: {
@@ -286,6 +314,12 @@ const styles = StyleSheet.create({
 	borderRadius: 5,
 	margin: 10,
   },
+  button2: {
+    padding: 10,
+    backgroundColor: 'green' ,
+    borderRadius: 5,
+    margin: 10,
+    },
   buttonText:{
 	color: "white",
 	fontWeight: '800',
