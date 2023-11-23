@@ -6,7 +6,7 @@ const RouteInfo = ({ duration, fare, warningText, arrival }) => {
 
   const getColor = () => {
     if (warningText.length > 0) {
-      return warningText[0].includes('CRITICAL') ? 'red' : 'yellow';
+      return warningText.includes('CRITICAL:') ? 'red' : 'yellow';
     }
     return 'transparent';
   };
@@ -22,7 +22,7 @@ const RouteInfo = ({ duration, fare, warningText, arrival }) => {
       </View>
       <View style={styles.header}>
 
-        <Text>Cost: {fare==0 ? 'Unavailable': `£${String(fare)[0]}.${String(fare).slice(-2) }`}</Text>
+        <Text>Cost: £3.40</Text>
       </View>
       {warningText.length > 0 && (
         <View style={[styles.warning, { backgroundColor: getColor() }]}>

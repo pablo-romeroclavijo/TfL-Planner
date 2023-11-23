@@ -233,7 +233,8 @@ const ViewEventsCarousel = ({ events, title , button, setInvites}) => {
     buttonText:{
       color: "white",
       fontWeight: '800'
-    }
+    },
+
 
   });
   

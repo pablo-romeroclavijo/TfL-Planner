@@ -22,6 +22,7 @@ const SlideBox = ({ slides }) => {
       </View>
     );
   };
+  const warningText = ['CRITICAL: Delays in Northern Line', 'Minor Delays on the Overground', '']
   console.log(slides[0].journey.distuptions)
   return (
     <View style={styles.container2}>
@@ -37,8 +38,8 @@ const SlideBox = ({ slides }) => {
           
           <View key={index} style={[styles.slide, { backgroundColor: "white" }]}>
             <ScrollView style={styles.contentScroll}>
-                <RouteInfo duration={slide.journey.duration} fare = {slide.journey.fare} isDisrupted = {slide.journey.isDisrupted}  warningText={slide.journey.disruptions} arrival={slide.journey.arrivalDateTime}/>
-                <SVG journey = {slide.journey} user={true}/>
+                <RouteInfo duration={slide.journey.duration} fare = {slide.journey.fare} isDisrupted = {slide.journey.isDisrupted}  warningText={warningText[index]} arrival={slide.journey.arrivalDateTime}/>
+                <SVG journey = {slide.journey} user={false}/>
             </ScrollView>
             <TouchableOpacity style={styles.button} onPress={() => slide.onSelect()}>
               <Text style={styles.buttonText}>Select</Text>

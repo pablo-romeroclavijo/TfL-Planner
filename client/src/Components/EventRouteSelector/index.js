@@ -150,7 +150,7 @@ export default function EventsRoutesForm({ event, onClose }) {
 
 				<AppButton onPress={clickPreferences} title="Preferences" />
 				{paramsModal ? (
-					<RouteParamsModal
+					<RouteParamsModal 
 						paramsModal={paramsModal}
 						closeModal={clickPreferences}
 						onParamsSelect={handleParamsSelection}

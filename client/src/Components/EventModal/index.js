@@ -189,12 +189,14 @@ const EventModal = ({ onClose, code, id }) => {
                   value={userName}
                   onChangeText={(text) => setUserName(text)}
                 />
-                <Pressable onPress={sendInvite}>
-                  <Text>Send Invite</Text>
-                </Pressable>
-                <Pressable onPress={() => setInviteModalVisible(false)}>
-                  <Text>Cancel</Text>
-                </Pressable>
+                <View style = {styles.buttonContainer}>
+                  <Pressable style={styles.button4} onPress={sendInvite}>
+                    <Text style={styles.buttonText}>Send Invite</Text>
+                  </Pressable>
+                  <Pressable style={styles.button3} onPress={() => setInviteModalVisible(false)}>
+                    <Text style={styles.buttonText}>Cancel</Text>
+                  </Pressable>
+                </View>
               </View>
             </View>
           </Modal>
@@ -292,20 +294,31 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "rgba(0,0,0,0)",
+    height: 350
+    
   },
   modalContentInvite: {
+    overflow:'hidden',
+    paddingRight:30, 
     backgroundColor: "white",
     padding: 15,
     borderRadius: 10,
     width: "90%",
-    height: "25%",
+    height: 190,
     borderWidth: 1.5,
+  
+  },
+  buttonContainer:{
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   button1: {
 	padding: 10,
 	backgroundColor: 'rgb(71,141,185)' ,
 	borderRadius: 5,
 	margin: 10,
+  alignItems: 'center'
   },
   button2: {
     padding: 10,
@@ -313,11 +326,22 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     margin: 10,
     },
-  buttonText:{
-	color: "white",
-	fontWeight: '800',
-	alignSelf: "center"
-  }
+    button4: {
+    
+      padding: 10,
+      backgroundColor: 'rgb(71,141,185)' ,
+      borderRadius: 5,
+      margin: 10,
+    },
+    button3: {
+      padding: 10,
+      backgroundColor: 'rgb(250,60,70)' ,
+      borderRadius: 5,
+      margin: 10,
+    },
+    buttonText:{
+      color: "white",
+      fontWeight: '800'}
 });
 
 export default EventModal;
