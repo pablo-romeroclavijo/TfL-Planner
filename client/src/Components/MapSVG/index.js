@@ -61,46 +61,27 @@ const SVG = ({ journey, user }) => {
 			</Text>
 		)
 
-		// Add a line to represent the leg
-		let styling = line_object[leg.mode] // make sure line_object is defined and accessible
-		if (leg.mode == "tube") {
-			styling.color = tube_lines[leg.line].boxColor
-		}
+// Add a line to represent the leg
+let styling = line_object[leg.mode]
+if (leg.mode == "tube") {
+	styling.color = tube_lines[leg.line].boxColor
+}
+elements.push(
+	<Line
+		x1="50" y1={currentY + 6} x2="50" y2={currentY + legSpacing} stroke={styling.color}
+		strokeWidth="3" strokeDasharray={styling.line_dash} key={"line-" + legIndex}
+	/>
+)
+//Add user's live tracker
+if (user == true) {
+	if (now < arrival && now > departure) {
+		let minutes = (now.getTime() - departure.getTime()) / 60000
+		let userY = currentY + (legSpacing * minutes) / leg.duration
+
 		elements.push(
-			<Line
-				x1="50"
-				y1={currentY + 6}
-				x2="50"
-				y2={currentY + legSpacing}
-				stroke={styling.color}
-				strokeWidth="3"
-				strokeDasharray={styling.line_dash}
-				key={"line-" + legIndex}
+			<Circle	cx="50"cy={userY}r={5}fill="red"stroke="red"strokeWidth="3"key={"user" + legIndex}
 			/>
-		)
-
-		if (user == true) {
-			//console.log(now < arrival && now > departure)
-			if (now < arrival && now > departure) {
-				let minutes = (now.getTime() - departure.getTime()) / 60000
-				let userY = currentY + (legSpacing * minutes) / leg.duration
-				// elements.push(
-				//   <BlinkingCircle userY = {userY}/>
-				// );
-
-				elements.push(
-					<Circle
-						cx="50"
-						cy={userY}
-						r={5}
-						fill="red"
-						stroke="red"
-						strokeWidth="3"
-						key={"user" + legIndex}
-					/>
-				)
-			}
-		}
+		)}}
 
 		let stopsText
 		if (leg.mode === "walking") {
