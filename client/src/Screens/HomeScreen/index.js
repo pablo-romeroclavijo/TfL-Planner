@@ -27,6 +27,19 @@ export default function Home({ navigation }) {
 	const [joinEvent, setJoinEvent] = useState(false)
 	const [viewEvent, setViewEvent] = useState(false)
 	const [events, setEvents] = useState([]);
+	const [invites, setInvites] = useState([
+		{
+			title: "La Fosse Reunion",
+			date: "Wed, 22 Nov 2023 18:01:00 GMT",
+			location: "Bunga Bunga",
+			sharecode: 'm1q9384gWF'
+		},
+		{
+			title: "Graduation",
+			date: "Wed, 24 Nov 2023 14:30:00 GMT",
+			location: "Artillery House",
+		},
+	]);
 
 	useEffect(() => {
 		setPreferenceTokens()
@@ -42,19 +55,7 @@ export default function Home({ navigation }) {
 	}
 
 
-	const invites = [
-		{
-			title: "La Fosse Reunion",
-			date: "Wed, 22 Nov 2023 18:01:00 GMT",
-			location: "Bunga Bunga",
-			sharecode: 'm1q9384gWF'
-		},
-		{
-			title: "Graduation",
-			date: "Wed, 24 Nov 2023 14:30:00 GMT",
-			location: "Artillery House",
-		},
-	]
+
 
 
 	return (
@@ -76,7 +77,7 @@ export default function Home({ navigation }) {
 
 			<ViewEventsCarousel  title = {`Today's events`}events={events} button = {false}/>
 
-			<ViewEventsCarousel  title = {'My invites'}events={invites} button ={true}/>
+			<ViewEventsCarousel  title = {'My invites'}events={invites} button ={true} setInvites={setInvites}/>
 
 			{/* <View>
 				<AppButton title="Join Event" onPress={clickJoinEvent} />

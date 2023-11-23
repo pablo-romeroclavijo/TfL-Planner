@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { Text, View, Button, Platform } from "react-native"
+import { Text, View, Button, Platform, StyleSheet } from "react-native"
 import validator from "validator"
 import DateTimePicker from "@react-native-community/datetimepicker"
 
@@ -120,7 +120,7 @@ export default function CreateEventForm({ closeModal }) {
   }
 
 	return (
-		<View style={{ alignContent: "center" }}>
+		<View style={styles.container}>
 			<AppTextInput
 				placeholder="Enter Postcode"
 				onChangeText={(text) => setPostcodeInput(text)}
@@ -166,3 +166,16 @@ export default function CreateEventForm({ closeModal }) {
 		</View>
 	)
 }
+
+
+const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: '#fff',
+      alignItems: 'center',
+      textAlign: 'center',
+      color: 'black',
+      padding: 40,
+      borderRadius:10,
+	  marginTop:30
+    }})

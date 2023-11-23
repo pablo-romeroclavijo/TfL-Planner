@@ -23,9 +23,9 @@ const EventCard = ({ event, handlePress, key, id }) => {
 					<Text style={styles.bodyText}>{event.description}</Text>
 				</View>
 				<View style={styles.footer}>
-					{event.creator_id == id ? (
-						<Text style={styles.codeText}>Code: {event.share_code}</Text>
-					) : null}
+					
+					<Text style={styles.codeText}><Text style={{fontWeight: 'bold'}}>Share Code: </Text> {event.share_code}</Text>
+				
 				</View>
 			</View>
 		</Pressable>
@@ -76,8 +76,9 @@ const styles = StyleSheet.create({
 	body: {
 		marginBottom: 8,
 		flexDirection: "column",
-		backgroundColor: "#fff",
+		// backgroundColor: "tran",
 		width: 200,
+		paddingLeft:10
 	},
 	bodyText: {
 		fontSize: 16,
@@ -95,6 +96,7 @@ const styles = StyleSheet.create({
 	codeText: {
 		fontSize: 16,
 		color: "#333", // Choose your text color
+		paddingLeft:10
 	},
 	button: {
 		backgroundColor: "#78A9FF", // Set your desired color

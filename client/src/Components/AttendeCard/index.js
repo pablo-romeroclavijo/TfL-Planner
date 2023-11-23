@@ -4,6 +4,7 @@ import { ScrollView } from "react-native-gesture-handler"
 import SlideBox from "../SlideBox"
 import SVG from "../MapSVG"
 import moment from "moment"
+import RouteInfo from '../RouteDetails';
 
 export default function AttendeeCard({ person }) {
 	const [modalVisible, setModalVisible] = useState(false)
@@ -30,7 +31,6 @@ export default function AttendeeCard({ person }) {
 			>
 				<ScrollView>
 					<View style={styles.view}>
-						
 						<SVG journey={person.route} user={true} />
 					
 					<Pressable style ={styles.button1}onPress={() => setModalVisible(false)}>

@@ -83,14 +83,14 @@ const styles = StyleSheet.create({
   },
   button: {
     padding: 10,
-    backgroundColor: 'green',
+    backgroundColor: 'rgb(71,141,185)',
     borderRadius: 5,
     margin: 10,
   },
-  buttonText: {
-    color: 'white',
-    textAlign: 'center',
-    // Add more styling for the button text as needed
+  buttonText:{
+    color: "white",
+    fontWeight: '800',
+    alignSelf: "center"
   },
   dotContainer: {
     flexDirection: 'row',

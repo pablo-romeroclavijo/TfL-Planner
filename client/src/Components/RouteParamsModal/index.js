@@ -56,7 +56,7 @@ export default function RouteParamsModal({ closeModal, paramsModal, onParamsSele
             <View>
             <Text style={styles.header2}>Select Journey Preference:</Text>
             <Picker style={styles.picker} selectedValue={journeyPref} onValueChange={(itemValue) => setJourneyPref(itemValue)}>
-                <Picker.Item style={styles.pickerLabel} label="Any" value="" />
+                <Picker.Item style={styles.pickerLabel} label="Least Walking" value="" />
                 <Picker.Item style={styles.pickerLabel} label="Least Time Possible" value="leasttime" />
                 <Picker.Item style={styles.pickerLabel} label="Least Interchange" value="leastinterchange" />
             </Picker>
@@ -68,13 +68,16 @@ export default function RouteParamsModal({ closeModal, paramsModal, onParamsSele
                 <Picker.Item style={styles.pickerLabel} label="Any" value="" />
                 <Picker.Item style={styles.pickerLabel} label="Overground" value="overground" />
                 <Picker.Item style={styles.pickerLabel} label="Tube" value="tube" />
+                <Picker.Item style={styles.pickerLabel} label="DLR" value="tube" />
+                <Picker.Item style={styles.pickerLabel} label="National Rail" value="tube" />
+                <Picker.Item style={styles.pickerLabel} label="Car" value="tube" />
+                <Picker.Item style={styles.pickerLabel} label="Uber Boat" value="tube" />
             </Picker>
             </View>
 
             <View>
             <Text style={styles.header2}>Select Walking Speed:</Text>
             <Picker style={styles.picker} selectedValue={walkingSpeed} onValueChange={(itemValue) => setWalkingSpeed(itemValue)}>
-                <Picker.Item style={styles.pickerLabel} label="Any" value={""} />
                 <Picker.Item style={styles.pickerLabel} label="Slow" value="slow" />
                 <Picker.Item style={styles.pickerLabel} label="Average" value="average" />
                 <Picker.Item style={styles.pickerLabel} label="Fast" value="fast" />
@@ -85,19 +88,9 @@ export default function RouteParamsModal({ closeModal, paramsModal, onParamsSele
             <CheckBox title="Taxi Only" checked={taxiOnlyChecked} onPress={() => setTaxiOnlyChecked(!taxiOnlyChecked)}
             checkedIcon="check-square-o"
             uncheckedIcon="square-o"
-            checkedColor="#00FF00"
-            uncheckedColor="#FF0000"
+            checkedColor="rgb(71,141,185)"
+            uncheckedColor="rgb(71,141,185)" 
             containerStyle={styles.box} 
-            center
-            iconRight
-            size={30}
-            textStyle={{ fontSize: 20 }}
-            />
-            <CheckBox title="National Search" checked={nationalSearch} onPress={() => setNationalSearch(!nationalSearch)}checkedIcon="check-square-o"
-            uncheckedIcon="square-o"
-            checkedColor="#00FF00"
-            uncheckedColor="#FF0000" 
-            containerStyle={styles.box}
             center
             iconRight
             size={30}
@@ -114,37 +107,42 @@ export default function RouteParamsModal({ closeModal, paramsModal, onParamsSele
 }
 
 const styles = StyleSheet.create({
-    container: {
-        height: height,
-        backgroundColor: "white"
-    },
-    header1: {
-    fontSize: 30,
-    paddingTop: 30,
-    paddingBottom: 10,
-    fontWeight: "bold",
-    textAlign: "center"
+  container: {
+      height: height,
+      backgroundColor: "white"
   },
-  header2: {
-    paddingTop: 20,
-    fontSize: 30,
-    textAlign: "center"
-  },
-  box: {
-    backgroundColor: "white",
-    borderColor: "white",
-  },
-  picker: {
-    display: "flex",
-    height: 80,
-  },
-  pickerLabel: {
-    fontWeight: "bold",
-    fontSize: 20,
-  },
-  button: {
-    paddingTop: 30,
-    display: "flex",
-    alignItems: "center"
-  }
+  header1: {
+  fontSize: 30,
+  paddingTop: 30,
+  paddingBottom: 10,
+  fontWeight: "bold",
+  textAlign: "center"
+},
+header2: {
+  paddingTop: 20,
+  fontSize: 20,
+  textAlign: "left",
+  paddingLeft: 50,
+  fontWeight:'bold'
+},
+box: {
+  backgroundColor: "white",
+  borderColor: "white",
+},
+picker: {
+  display: "flex",
+  height: 80,
+  width: 300,
+  marginLeft:60
+},
+pickerLabel: {
+  fontWeight: "bold",
+  fontSize: 20,
+
+},
+button: {
+  paddingTop: 30,
+  display: "flex",
+  alignItems: "center"
+}
 })

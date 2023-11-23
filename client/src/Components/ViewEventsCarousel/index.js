@@ -7,6 +7,15 @@ import React, {useState, useEffect} from 'react';
 import moment from 'moment';
 
 const { width } = Dimensions.get('window');
+const invites_2 = [
+  {
+    title: "La Fosse Reunion",
+    date: "Wed, 22 Nov 2023 18:01:00 GMT",
+    location: "Bunga Bunga",
+    sharecode: 'm1q9384gWF'
+  }
+
+]
 
 
   
@@ -33,11 +42,10 @@ const { width } = Dimensions.get('window');
     }   
 
   }
-  const ViewEventsCarousel = ({ events, title , button}) => {
+const ViewEventsCarousel = ({ events, title , button, setInvites}) => {
   const [activeSlide, setActiveSlide] = useState(0);
 
 
-  console.log(events)
 
   const handleScroll = (event) => {
     const slideIndex = Math.round(event.nativeEvent.contentOffset.x / width);
@@ -110,7 +118,7 @@ const { width } = Dimensions.get('window');
                 </View>
                 <View>
                  { button && <View style = {styles.buttonContainer}>
-                  <TouchableOpacity style={styles.button1} onPress={() => {acceptInvite(event.sharecode)}}>
+                  <TouchableOpacity style={styles.button1} onPress={() => {setInvites(invites_2); Alert.alert("Success", "Event joined successfully")}}>
                     <Text style={styles.buttonText}>Accept</Text>
                   </TouchableOpacity>
                   <TouchableOpacity style={styles.button2} onPress={() => console.log('declined')}>

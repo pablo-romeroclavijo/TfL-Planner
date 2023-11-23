@@ -339,10 +339,9 @@ const tube_lines = {
 	},
 	Victoria: {
 		color: "grey",
-		boxColor: "	#0098d4",
-		boxSize: 55,
-		textColor: "black",
-	},
+		boxColor: "#0098D4",
+		boxSize: 50,
+		textColor: "white"},
 	Waterloo: {
 		color: "grey",
 		boxColor: "#95cdba",

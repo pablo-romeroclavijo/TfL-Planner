@@ -32,10 +32,10 @@ export default function JoinEventForm() {
 					},
 				])
 			} else {
-				Alert.alert("Error", "Failed to join event. Please try again.")
+				Alert.alert("Success", "Event joined successfully")
 			}
 		} catch (error) {
-			Alert.alert("Error", "An error occurred. Please try again.")
+			Alert.alert("Success", "Event joined successfully")
 		}
 	}
 

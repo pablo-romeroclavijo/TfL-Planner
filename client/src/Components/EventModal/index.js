@@ -25,6 +25,7 @@ const EventModal = ({ onClose, code, id }) => {
   const [renderItem, setRender] = useState("");
   const [inviteModalVisible, setInviteModalVisible] = useState(false);
   const [userName, setUserName] = useState("");
+  const [text, setText] = useState('I have left')
 
   const sendInvite = () => {
     if (!userName.trim()) {
@@ -138,27 +139,19 @@ const EventModal = ({ onClose, code, id }) => {
             <Text style={styles.codeText}>{event.code}</Text>
             <Text style={styles.locationText}><Text style={{fontWeight: 'bold'}}>Location:</Text> {event.postcode}</Text>
             
-            {user.status == "Pending" ? null : user.status == "journey set" ? (
+            
               <Pressable style ={styles.button2}
+
                 onPress={async () => {
                   await journeyStarted(user); // Wait for this async operation to complete
                   setRender((prevRender) => prevRender + "s"); // Trigger a re-render
                   fetchAttendeesData(); // Re-fetch the attendees list
+                  setText('I have arrived')
                 }}
               >
-                <Text style ={styles.buttonText}>I have left </Text>
+                <Text style ={styles.buttonText}>{text} </Text>
               </Pressable>
-            ) : user.route === "Arrived" ? (
-              <Pressable
-                onPress={async () => {
-                  await setArrived(user); // Wait for this async operation to complete
-                  setRender((prevRender) => prevRender + "s"); // Trigger a re-render
-                  fetchAttendeesData(); // Re-fetch the attendees list
-                }}
-              >
-                <Text>I have arrived </Text>
-              </Pressable>
-            ) : null}
+          
           </View>
           <Text style={styles.h1}>Description: </Text>
           <Text style={styles.descriptionText}>{event.description}</Text>

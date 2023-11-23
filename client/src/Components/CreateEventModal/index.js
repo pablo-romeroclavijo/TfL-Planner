@@ -18,7 +18,7 @@ export default function CreateEventModal({isVisible, closeModal, createEvent}){
                 
                 <View style={styles.row}>
                     <Text style={styles.headerText}>Create Event</Text>
-                    <Pressable onPress={()=> closeModal()}>
+                    <Pressable style={styles.cross} onPress={()=> closeModal()}>
                         <Entypo name="cross" size={24} color="black" />
                     </Pressable>
                 </View>
@@ -40,6 +40,11 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         textAlign: 'center',
         fontSize: 24,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        marginTop:20
+    },
+    cross: {
+        marginRight:25,
+        marginTop: 25
     }
   });
